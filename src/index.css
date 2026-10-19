@@ -525,5 +525,4 @@ html.lenis, html.lenis body { height: auto; }
 html:not([data-loaded]) .slide-up-in { animation-play-state: paused; opacity: 0; }
 
 @media (prefers-reduced-motion: reduce) {
-  .preloader *, .preloader { animation-duration: 0.01ms !important; animation-delay: 0ms !important; }
 }

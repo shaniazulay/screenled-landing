@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 const TOTAL = 3000; // visible time before the exit starts
 const EXIT = 750; // band wipe duration (incl. stagger)
 const BANDS = 7;
-const FLY = 1000; // particle flight time
-const SPREAD = 300; // max launch delay spread
+const FLY = 1250; // particle flight time
+const SPREAD = 320; // max launch delay spread
 
 type P = { sx: number; sy: number; tx: number; ty: number; d: number; s: number; c: string; spin: number };
 
@@ -64,17 +64,14 @@ export default function Preloader() {
   useEffect(() => {
     const cv = canvas.current;
     if (!cv || !word.current || !led.current || !box.current) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setAssembled(true);
-      return;
-    }
+    // The intro is a one-off 3s brand moment, so it runs even when the OS asks for reduced motion.
     let raf = 0;
     let cancelled = false;
-    const failSafe = window.setTimeout(() => setAssembled(true), 1700);
+    const failSafe = window.setTimeout(() => setAssembled(true), 2000);
 
     const run = async () => {
       // Make sure the real font is used for sampling (don't wait long on a slow network).
-      await Promise.race([document.fonts.load("800 40px Montserrat").then(() => document.fonts.load("700 40px Montserrat")), new Promise((r) => setTimeout(r, 400))]);
+      await Promise.race([document.fonts.load("800 40px Montserrat").then(() => document.fonts.load("700 40px Montserrat")), new Promise((r) => setTimeout(r, 150))]);
       if (cancelled) return;
       const W = window.innerWidth;
       const H = window.innerHeight;
@@ -110,21 +107,21 @@ export default function Preloader() {
       const pts: P[] = [];
       const cx = W / 2;
       const cy = H / 2;
-      const R = Math.hypot(W, H) * 0.6;
+      const R = Math.hypot(W, H) * 0.5;
       for (let y = 0; y < H; y += step) {
         for (let x = 0; x < W; x += step) {
           const i = (y * W + x) * 4;
           if (img[i + 3] < 140) continue;
           const isLed = img[i + 1] > img[i];
           const a = Math.atan2(y - cy, x - cx) + (Math.random() - 0.5) * 1.6;
-          const rr = R * (0.75 + Math.random() * 0.45);
+          const rr = R * (0.45 + Math.random() * 0.5); // starts on screen, visible from the first frame
           pts.push({
             sx: cx + Math.cos(a) * rr,
             sy: cy + Math.sin(a) * rr,
             tx: x,
             ty: y,
             d: Math.random() * SPREAD * 0.6 + (Math.abs(x - cx) / W) * SPREAD * 0.8,
-            s: step * (isLed ? 0.78 : 0.72),
+            s: step * (isLed ? 0.95 : 0.9),
             c: isLed ? "#d4ff5a" : Math.random() < 0.18 ? "#8f93ff" : Math.random() < 0.5 ? "#d4ff5a" : "#ffffff",
             spin: (Math.random() < 0.5 ? -1 : 1) * (1.2 + Math.random() * 1.6),
           });
@@ -160,13 +157,13 @@ export default function Preloader() {
           const dy = (p.sy - p.ty) * (1 - e);
           const x = p.tx + dx * Math.cos(ang) - dy * Math.sin(ang);
           const y = p.ty + dx * Math.sin(ang) + dy * Math.cos(ang);
-          const tw = t < 1 ? 0.55 + 0.45 * Math.sin(now / 60 + p.tx) : 1;
-          ctx.globalAlpha = Math.min(1, t * 3) * tw;
+          const tw = t < 1 ? 0.6 + 0.4 * Math.sin(now / 55 + p.tx * 0.7) : 1;
+          ctx.globalAlpha = Math.min(1, 0.35 + t * 3) * tw;
           ctx.fillStyle = p.c;
           const s = p.s * (1 + (1 - e) * 1.2);
           // LED glow while in flight
           ctx.shadowColor = p.c;
-          ctx.shadowBlur = t < 1 ? 8 : 3;
+          ctx.shadowBlur = t < 1 ? 12 : 4;
           ctx.fillRect(x - s / 2, y - s / 2, s, s);
         }
         ctx.globalAlpha = 1;

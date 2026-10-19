@@ -122,6 +122,8 @@ function HeroDesktop() {
   // Fit the content width and the screen height (24px page padding above and below).
   const { ref, scale, width } = useFitScale<HTMLDivElement>(1392, 940, 48);
   const canvasW = Math.max(1392, width / scale);
+  // The photo keeps its distance to the right-hand copy, so it grows when the canvas widens (design: 760 of 1344).
+  const photoW = canvasW - 48 - 584;
   return (
     <div ref={ref} className="relative hidden overflow-hidden lg:block" style={{ height: 940 * scale }}>
       <div
@@ -137,17 +139,18 @@ function HeroDesktop() {
             backgroundImage: "linear-gradient(153deg, #4b4fd8 0%, #5b4fe0 100%)",
           }}
         >
-          <span className="absolute left-[102px] top-[220px] size-[620px]">
+          <span className="absolute top-[220px] size-[620px]" style={{ left: 102 + (photoW - 760) / 2 }}>
             <img loading="lazy" src={asset("violet-glow.svg")} alt="" className="absolute inset-[-27.42%] block size-[154.84%] max-w-none" />
           </span>
-          <img loading="eager" fetchPriority="high" src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="absolute left-0 top-[84px] h-[820px] w-[760px] object-cover opacity-[0.92]" />
+          <img loading="eager" fetchPriority="high" src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="absolute left-0 top-[84px] h-[820px] object-cover opacity-[0.92]"
+            style={{ width: photoW }} />
           <span
-            className="absolute left-0 top-[84px] h-[820px] w-[760px]"
-            style={{ backgroundImage: "linear-gradient(to right, rgba(75,79,216,0.15), rgba(79,79,220,0.35) 55%, #5250de)" }}
+            className="absolute left-0 top-[84px] h-[820px]"
+            style={{ width: photoW, backgroundImage: "linear-gradient(to right, rgba(75,79,216,0.15), rgba(79,79,220,0.35) 55%, #5250de)" }}
           />
           {/* soften the photo-fade edge into the panel fill */}
-          <span className="absolute left-[759px] top-[84px] h-[820px] w-[260px] bg-gradient-to-r from-[#5250de] to-[rgba(82,80,222,0)]" />
-          <span className="absolute left-0 top-0 h-[220px] w-[760px] bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
+          <span className="absolute top-[84px] h-[820px] w-[260px] bg-gradient-to-r from-[#5250de] to-[rgba(82,80,222,0)]" style={{ left: photoW - 1 }} />
+          <span style={{ width: photoW }} className="absolute left-0 top-0 h-[220px] bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
         </div>
 
         {/* Header row */}
@@ -217,7 +220,7 @@ function HeroDesktop() {
         </a>
 
         {/* Jewels */}
-        <GlassChip icon="icon-chip-white.svg" className="absolute left-[571px] top-[720px]">
+        <GlassChip icon="icon-chip-white.svg" className="absolute right-[633px] top-[720px]">
           חזית מסחרית · מרכז העיר
         </GlassChip>
         <span className="absolute right-[510px] top-[766px] h-[40px] w-[26px] rounded-[13px] border-[1.4px] border-white/60" aria-hidden>

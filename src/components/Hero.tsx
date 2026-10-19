@@ -217,64 +217,10 @@ function HeroDesktop() {
   );
 }
 
-/** Mobile / tablet hero: same content, stacked. */
-function HeroMobile() {
-  return (
-    <div className="relative overflow-hidden rounded-[28px] bg-night p-[10px] lg:hidden">
-      <div className="flex items-center justify-between px-[10px] pb-[14px] pt-[8px]">
-        <Logo />
-        <a href="#contact" className="flex items-center gap-[10px]">
-          <span className="font-rubik text-[15px] font-medium text-white">קבלו הצעת מחיר</span>
-          <img src={asset("tab-arrow.svg")} alt="" className="size-[32px]" />
-        </a>
-      </div>
-      <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#4b4fd8] to-[#5b4fe0]">
-        <div className="relative h-[300px] sm:h-[380px]">
-          <img src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="absolute inset-0 size-full object-cover opacity-[0.92]" />
-          <span className="absolute inset-0 bg-gradient-to-b from-[rgba(75,79,216,0.25)] via-[rgba(79,79,220,0.35)] to-[#5250de]" />
-          <GlassChip className="absolute right-[16px] top-[16px] !gap-[6px] !py-[4px] !pl-[6px] !pr-[12px]">
-            <span className="font-heebo text-[12px] font-medium text-white/75">· המסך דולק עכשיו</span>
-            <span className="font-mont text-[12px] font-bold tracking-[1.68px]" dir="ltr">
-              LIVE
-            </span>
-            <LivePulse />
-          </GlassChip>
-        </div>
-        <div className="relative -mt-[60px] flex flex-col items-start gap-[18px] px-[20px] pb-[24px] sm:px-[32px]">
-          <span className="rounded-full border-[1.2px] border-white/90 px-[14px] py-[5px] font-rubik text-[14px] text-white">קירות וידאו ומסכי LED</span>
-          <HeroHeadline className="text-[52px] leading-[52px] tracking-[-1px] sm:text-[72px] sm:leading-[70px]" />
-          <p className="font-heebo text-[17px] leading-[27px] text-white/90">{SUB}</p>
-          <SecondaryActions />
-          <div className="mt-[6px] flex w-full flex-col gap-[10px]">
-            <span className="flex w-fit items-center gap-[8px] rounded-full bg-[rgba(21,21,25,0.55)] px-[14px] py-[6px]">
-              <span className="font-heebo text-[14px] font-medium text-white">ניווט מהיר לקטלוג</span>
-              <img src={asset("dot-lime.svg")} alt="" className="size-[7px]" />
-            </span>
-            <div className="grid gap-[10px] sm:grid-cols-2">
-              {CATALOG.map((c) => (
-                <CatalogButton key={c.name} {...c} />
-              ))}
-            </div>
-          </div>
-          <div className="flex h-[37px] items-center gap-[6px] rounded-full bg-white/[0.14] px-[14px]">
-            <Stars size={13} />
-            <span className="font-heebo text-[14px] font-medium text-white">5.0 בגוגל</span>
-          </div>
-        </div>
-      </div>
-      <a href="#contact" className="mt-[10px] flex h-[64px] items-center justify-between rounded-[20px] bg-lime pl-[16px] pr-[22px]">
-        <span className="font-rubik text-[18px] font-medium text-ink">לשיחת ייעוץ חינם</span>
-        <img src={asset("hero-cta-arrow.svg")} alt="" className="size-[38px]" />
-      </a>
-    </div>
-  );
-}
-
 export default function Hero() {
   return (
     <header id="top">
       <HeroDesktop />
-      <HeroMobile />
     </header>
   );
 }

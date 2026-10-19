@@ -24,15 +24,15 @@ export function PixelsMark({ dark = false }: { dark?: boolean }) {
 }
 
 /** Section label: "label —— 01 ▦" (reads right-to-left). */
-export function SectionTag({ label, num, dark = false, className = "" }: { label: string; num: string; dark?: boolean; className?: string }) {
+export function SectionTag({ label, num, dark = false, small = false, className = "" }: { label: string; num: string; dark?: boolean; small?: boolean; className?: string }) {
   return (
     <div className={`flex items-center gap-[10px] ${className}`}>
       <PixelsMark dark={dark} />
-      <span className={`font-mont text-[13px] font-bold leading-none tracking-[0.78px] ${dark ? "text-lime" : "text-indigo"}`} dir="ltr">
+      <span className={`font-mont font-bold leading-none ${small ? "text-[12px] tracking-[0.72px]" : "text-[13px] tracking-[0.78px]"} ${dark ? "text-lime" : "text-indigo"}`} dir="ltr">
         {num}
       </span>
       <span className={`h-[1.2px] w-[28px] ${dark ? "bg-white/35" : "bg-[rgba(18,22,51,0.35)]"}`} />
-      <span className={`whitespace-nowrap font-rubik text-[14px] font-medium leading-[17px] tracking-[0.56px] ${dark ? "text-white" : "text-navy"}`}>
+      <span className={`whitespace-nowrap font-rubik font-medium ${small ? "text-[13px] leading-[15px] tracking-[0.52px]" : "text-[14px] leading-[17px] tracking-[0.56px]"} ${dark ? "text-white" : "text-navy"}`}>
         {label}
       </span>
     </div>
@@ -40,7 +40,8 @@ export function SectionTag({ label, num, dark = false, className = "" }: { label
 }
 
 /** Decorative 3×3 pixel cluster (34×34) placed in card corners. */
-export function PixelCluster({ color, mirror = false, style, className = "" }: { color: "lime" | "indigo"; mirror?: boolean; style?: CSSProperties; className?: string }) {
+export function PixelCluster({ color, mirror = false, small = false, style, className = "" }: { color: "lime" | "indigo"; mirror?: boolean; small?: boolean; style?: CSSProperties; className?: string }) {
+  const cell = small ? 5 : 6, step = small ? 10.5 : 14;
   const rgb = color === "lime" ? "212,255,90" : "84,87,224";
   // [col, row, alpha] — col 0 is the "anchor" corner
   const cells: [number, number, number][] = [
@@ -49,12 +50,12 @@ export function PixelCluster({ color, mirror = false, style, className = "" }: {
     [0, 2, 0.5], [1, 2, 0.32],
   ];
   return (
-    <span className={`pointer-events-none absolute size-[34px] overflow-hidden ${className}`} style={style} aria-hidden>
+    <span className={`pointer-events-none absolute overflow-hidden ${className}`} style={{ width: small ? 26 : 34, height: small ? 26 : 34, ...style }} aria-hidden>
       {cells.map(([c, r, a], i) => (
         <span
           key={i}
-          className="absolute size-[6px] rounded-[1.5px]"
-          style={{ [mirror ? "right" : "left"]: c * 14, top: r * 14, background: `rgba(${rgb},${a})` }}
+          className="absolute"
+          style={{ width: cell, height: cell, borderRadius: small ? 1.2 : 1.5, [mirror ? "right" : "left"]: c * step, top: r * step, background: `rgba(${rgb},${a})` }}
         />
       ))}
     </span>

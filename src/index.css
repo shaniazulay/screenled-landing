@@ -98,3 +98,15 @@
     transform: translateX(-1283px);
   }
 }
+
+/* Mobile marquee: 648px set, design offset -248px */
+.marquee-track-m {
+  animation: marquee 20s linear infinite;
+  animation-delay: -12.35s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track-m {
+    animation: none;
+    transform: translateX(-248px);
+  }
+}

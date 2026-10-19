@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="13.2" height="13.2" viewBox="0 0 13.2 13.2" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Sparkle" filter="url(#filter0_d_0_21)">
+<path d="M6.6 3.6L6.98184 6.21816L9.6 6.6L6.98184 6.98184L6.6 9.6L6.21816 6.98184L3.6 6.6L6.21816 6.21816L6.6 3.6Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d_0_21" x="0" y="0" width="13.2" height="13.2" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="1.8"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_21"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_21" result="shape"/>
+</filter>
+</defs>
+</svg>

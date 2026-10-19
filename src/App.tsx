@@ -26,7 +26,7 @@ export default function App() {
   return (
     <>
     <MobileHome />
-    <div className="relative mx-auto hidden max-w-[1440px] overflow-x-clip lg:block">
+    <div className="relative mx-auto hidden max-w-[1440px] overflow-clip lg:block">
       {CANVAS_GLOWS.map((g, i) => (
         <Glow key={i} src="canvas-glow.svg" box={{ ...g, width: 700, height: 700 }} inset="-31.43%" className="hidden lg:block" />
       ))}

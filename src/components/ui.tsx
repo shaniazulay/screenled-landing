@@ -146,8 +146,8 @@ export function Card({ children, className = "", id, dark = false }: { children:
     <section
       id={id}
       data-reveal
-      className={`relative overflow-hidden rounded-[28px] lg:rounded-[36px] ${
-        dark ? "bg-night" : "bg-white shadow-[0_20px_60px_rgba(91,63,208,0.08)]"
+      className={`sd-zoom relative overflow-hidden rounded-[28px] lg:rounded-[36px] ${
+        dark ? "spotlight bg-night" : "bg-white shadow-[0_20px_60px_rgba(91,63,208,0.08)]"
       } ${className}`}
     >
       {children}

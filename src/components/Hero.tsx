@@ -77,8 +77,8 @@ function HeroHeadline({ className = "" }: { className?: string }) {
       <span className="block" data-reveal style={{ ["--d" as string]: "280ms" }}>
         יעצור <span className="text-lime">כל</span>
       </span>
-      <span className="block text-lime" data-reveal style={{ ["--d" as string]: "410ms" }}>
-        עובר אורח
+      <span className="block" data-reveal style={{ ["--d" as string]: "410ms" }}>
+        <span className="shimmer">עובר אורח</span>
       </span>
     </h1>
   );
@@ -186,7 +186,7 @@ function HeroDesktop() {
               {...{ fetchpriority: "high" }}
               src={asset("hero-photo.png")}
               alt="מסך LED ענק על חזית בניין בלילה"
-              className="ken-burns size-full object-cover opacity-[0.92]"
+              className="ken-burns sd-hero-photo size-full object-cover opacity-[0.92]"
             />
           </div>
           <span
@@ -230,7 +230,7 @@ function HeroDesktop() {
         </div>
 
         {/* Copy */}
-        <div className="absolute right-[110px] flex w-[542px] flex-col items-start gap-[26px]" style={{ top: 16 + band + 46 }}>
+        <div className="sd-hero-copy absolute right-[110px] flex w-[542px] flex-col items-start gap-[26px]" style={{ top: 16 + band + 46 }}>
           <span data-reveal className="rounded-full border-[1.2px] border-white/90 px-[16px] py-[6px] font-rubik text-[15px] leading-[18px] text-white" style={ui("right top")}>
             קירות וידאו ומסכי LED
           </span>

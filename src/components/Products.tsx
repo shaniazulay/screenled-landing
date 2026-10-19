@@ -18,7 +18,7 @@ function ProductCard({ p, i }: { p: (typeof PRODUCTS)[number]; i: number }) {
     <article
       data-reveal
       style={{ ["--d" as string]: `${i * 110}ms` }}
-      className="card-lift zoom-parent relative flex h-[520px] flex-col overflow-hidden rounded-[22px] bg-white shadow-[0_14px_40px_rgba(27,33,64,0.08)] xl:h-[560px]"
+      className="card-lift tilt zoom-parent relative flex h-[520px] flex-col overflow-hidden rounded-[22px] bg-white shadow-[0_14px_40px_rgba(27,33,64,0.08)] xl:h-[560px]"
     >
       <div className="h-[270px] w-full shrink-0 overflow-hidden">
         <img loading="lazy" src={asset(p.img)} alt={p.name} className="zoom-img size-full object-cover" />
@@ -35,7 +35,7 @@ function ProductCard({ p, i }: { p: (typeof PRODUCTS)[number]; i: number }) {
         <div className="flex-1" />
         <div className="flex items-baseline gap-[8px]">
           <span className="font-heebo text-[14px] font-medium text-slate-body">החל מ-</span>
-          <span className="font-heebo text-[28px] font-bold leading-[41px] text-indigo">{p.price}</span>
+          <span className="font-heebo text-[28px] font-bold leading-[41px] text-indigo"><span data-count={Number(p.price.replace(/[^0-9]/g, ""))} data-prefix="₪">{p.price}</span></span>
         </div>
         {p.cart ? (
           <button onClick={add} className="btn-lime flex h-[50px] w-full items-center justify-center gap-[8px] rounded-full bg-lime px-[24px]">
@@ -66,7 +66,7 @@ export default function Products() {
       <div className="relative flex flex-col gap-[24px] xl:h-[200px] xl:flex-row xl:items-start xl:justify-between xl:gap-0">
         <div className="flex flex-col items-start gap-[14px] xl:-mr-[2px]">
           <SectionTag label="מוצרים מובילים" num="02" />
-          <h2 className="font-rubik text-[34px] font-semibold leading-[42px] text-navy xl:text-[46px] xl:leading-[58px]">
+          <h2 className="sd-text font-rubik text-[34px] font-semibold leading-[42px] text-navy xl:text-[46px] xl:leading-[58px]">
             הנבחרים <span className="text-indigo">מהקטלוג שלנו</span>
           </h2>
           <div className="flex flex-wrap gap-[8px] xl:mr-[7px] xl:mt-[29px]">

@@ -46,7 +46,7 @@ export default function Projects() {
 
       <div className="flex flex-col items-center px-[20px] text-center">
         <SectionTag label="פרויקטים מהשטח" num="03" dark className="xl:-translate-x-[32.3px]" />
-        <h2 className="mt-[20px] font-rubik text-[34px] font-semibold leading-[42px] tracking-[-0.54px] text-white xl:mt-[21.8px] xl:text-[54px] xl:leading-[64px]">
+        <h2 className="sd-text mt-[20px] font-rubik text-[34px] font-semibold leading-[42px] tracking-[-0.54px] text-white xl:mt-[21.8px] xl:text-[54px] xl:leading-[64px]">
           <span className="block">לא תמונות מקטלוג.</span>
           <span className="block text-lime">פרויקטים אמיתיים שהתקנו.</span>
         </h2>

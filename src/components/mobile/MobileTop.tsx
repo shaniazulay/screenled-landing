@@ -13,7 +13,7 @@ export function MCard({ children, className = "", id, style, dark = false }: { c
       id={id}
       style={style}
       data-reveal
-      className={`relative flex flex-col items-start gap-[16px] overflow-hidden rounded-[28px] px-[20px] py-[28px] ${
+      className={`sd-zoom relative flex flex-col items-start gap-[16px] overflow-hidden rounded-[28px] px-[20px] py-[28px] ${
         dark ? "bg-night" : "bg-white shadow-[0_12px_30px_rgba(91,63,208,0.08)]"
       } ${className}`}
     >
@@ -102,7 +102,7 @@ export function MHero() {
             <img loading="lazy" src={m("hero-glow.svg")} alt="" className="absolute inset-[-36.67%] block size-[173.34%] max-w-none" />
           </span>
           <div className="absolute left-0 top-[40px] h-[290px] w-full overflow-hidden">
-            <img loading="eager" {...{ fetchpriority: "high" }} src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="ken-burns size-full object-cover" />
+            <img loading="eager" {...{ fetchpriority: "high" }} src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="ken-burns sd-hero-photo size-full object-cover" />
           </div>
           <span className="absolute left-0 top-[39px] h-[111px] w-full bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
           <span className="absolute left-0 top-[180px] h-[151px] w-full bg-gradient-to-b from-[rgba(77,79,218,0)] to-[#4d4fda]" />
@@ -118,8 +118,8 @@ export function MHero() {
             <span className="block" data-reveal style={{ ["--d" as string]: "240ms" }}>
               יעצור <span className="text-lime">כל</span>
             </span>
-            <span className="block text-lime" data-reveal style={{ ["--d" as string]: "360ms" }}>
-              עובר אורח
+            <span className="block" data-reveal style={{ ["--d" as string]: "360ms" }}>
+              <span className="shimmer">עובר אורח</span>
             </span>
           </h1>
           <p className="font-heebo text-[15px] leading-[24px] text-white/[0.88]">
@@ -261,12 +261,12 @@ export function MWhyUs() {
     <MCard id="why-m">
       <PixelCluster color="indigo" small style={{ left: 16, top: 16 }} />
       <SectionTag label="למה SCREENLED" num="01" small />
-      <h2 className="font-rubik text-[34px] font-bold leading-[40px] tracking-[-0.34px] text-navy">
+      <h2 className="sd-text font-rubik text-[34px] font-bold leading-[40px] tracking-[-0.34px] text-navy">
         כל מה שצריך למסך <span className="text-indigo">מושלם.</span>
       </h2>
       <p className="font-heebo text-[15px] leading-[24px] text-slate-muted">צוות אחד שמלווה אתכם מהבחירה בטכנולוגיה ועד התחזוקה השוטפת.</p>
       <div className="relative h-[280px] w-full overflow-hidden rounded-[22px]">
-        <img loading="lazy" src={asset("macro-led.png")} alt="תקריב של פיקסלים במסך LED" className="ken-burns absolute inset-0 size-full object-cover" />
+        <img loading="lazy" src={asset("macro-led.png")} alt="תקריב של פיקסלים במסך LED" className="ken-burns sd-parallax absolute inset-0 size-full object-cover" />
         <span className="absolute left-[70px] top-[90px] size-[78px]">
           <img loading="lazy" src={m("magnifier.svg")} alt="" className="absolute inset-[-17.95%] block size-[135.9%] max-w-none" />
         </span>
@@ -334,7 +334,7 @@ export function MProducts() {
     <MCard id="products-m">
       <PixelCluster color="indigo" small style={{ left: 16, top: 16 }} />
       <SectionTag label="מוצרים מובילים" num="02" small />
-      <h2 className="font-rubik text-[32px] font-bold leading-[38px] tracking-[-0.32px] text-navy">
+      <h2 className="sd-text font-rubik text-[32px] font-bold leading-[38px] tracking-[-0.32px] text-navy">
         הנבחרים <span className="text-indigo">מהקטלוג שלנו</span>
       </h2>
       <div className="flex w-full flex-wrap gap-[6px]">
@@ -354,7 +354,7 @@ export function MProducts() {
               <p className="font-heebo text-[11px] leading-[16px] text-slate-muted">{p.spec}</p>
               <div className="flex items-baseline gap-[4px]">
                 <span className="font-heebo text-[10px] text-slate-muted">החל מ-</span>
-                <span className="font-heebo text-[17px] font-bold leading-[25px] text-indigo">{p.price}</span>
+                <span className="font-heebo text-[17px] font-bold leading-[25px] text-indigo"><span data-count={Number(p.price.replace(/[^0-9]/g, ""))} data-prefix="₪">{p.price}</span></span>
               </div>
               {p.cart ? (
                 <button className="btn-lime flex h-[34px] w-full items-center justify-center rounded-full bg-lime font-rubik text-[12px] font-semibold text-ink">להוספה לסל</button>
@@ -395,7 +395,7 @@ export function MProjects() {
     <MCard id="projects-m" dark className="items-center">
       <PixelCluster color="lime" small style={{ left: 16, top: 16 }} />
       <SectionTag label="פרויקטים מהשטח" num="03" dark small />
-      <h2 className="text-center font-rubik text-[30px] font-bold leading-[36px] tracking-[-0.3px] text-white">
+      <h2 className="sd-text text-center font-rubik text-[30px] font-bold leading-[36px] tracking-[-0.3px] text-white">
         לא תמונות מקטלוג. <span className="text-lime">פרויקטים אמיתיים שהתקנו.</span>
       </h2>
       <div className="relative h-[270px] w-full overflow-hidden">
@@ -438,7 +438,7 @@ export function MProblemSolution() {
         <img loading="lazy"
           src={asset("solution.png")}
           alt="חלון ראווה עם מסך LED"
-          className="ken-burns absolute inset-0 size-full object-cover transition-[filter] duration-500"
+          className="ken-burns sd-parallax absolute inset-0 size-full object-cover transition-[filter] duration-500"
           style={{ filter: after ? "none" : "grayscale(1) brightness(0.55)" }}
         />
         <div className="absolute left-[14px] top-[14px] flex gap-[4px] rounded-full bg-[rgba(21,21,25,0.6)] p-[4px] backdrop-blur-[6px]">

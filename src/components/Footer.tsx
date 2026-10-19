@@ -24,7 +24,7 @@ function ColTitle({ children }: { children: string }) {
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden rounded-[28px] bg-night px-[20px] pb-[20px] pt-[40px] sm:px-[40px] lg:rounded-[36px] xl:px-[89px] xl:pb-[17px] xl:pt-[78px]">
+    <footer className="sd-zoom spotlight relative overflow-hidden rounded-[28px] bg-night px-[20px] pb-[20px] pt-[40px] sm:px-[40px] lg:rounded-[36px] xl:px-[89px] xl:pb-[17px] xl:pt-[78px]">
       <PixelCluster color="lime" mirror style={{ right: 30, top: 30 }} className="hidden xl:block" />
 
       <div className="grid grid-cols-2 gap-x-[24px] gap-y-[36px] sm:grid-cols-3 xl:flex xl:h-[320px] xl:items-start xl:gap-0">

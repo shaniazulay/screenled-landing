@@ -29,7 +29,7 @@ export default function WhyUs() {
         {/* Copy + list (right column) */}
         <div className="flex flex-col items-start">
           <SectionTag label="למה SCREENLED" num="01" className="xl:-mr-[6px] xl:mt-[3.2px]" />
-          <h2 className="mt-[20px] font-rubik text-[40px] font-semibold leading-[46px] tracking-[-0.6px] text-navy xl:mt-[23.8px] xl:text-[64px] xl:leading-[70px] xl:tracking-[-0.96px]">
+          <h2 className="sd-text mt-[20px] font-rubik text-[40px] font-semibold leading-[46px] tracking-[-0.6px] text-navy xl:mt-[23.8px] xl:text-[64px] xl:leading-[70px] xl:tracking-[-0.96px]">
             <span className="block">כל מה שצריך</span>
             <span className="block">
               למסך <span className="text-indigo">מושלם.</span>
@@ -82,7 +82,7 @@ export default function WhyUs() {
 
         {/* Macro photo (left column) */}
         <div className="relative h-[460px] overflow-hidden rounded-[28px] sm:h-[600px] xl:mt-[4px] xl:h-[924px]">
-          <img loading="lazy" src={asset("macro-led.png")} alt="תקריב של פיקסלים במסך LED" className="ken-burns absolute inset-0 size-full object-cover" />
+          <img loading="lazy" src={asset("macro-led.png")} alt="תקריב של פיקסלים במסך LED" className="ken-burns sd-parallax absolute inset-0 size-full object-cover" />
           <span className="absolute inset-x-0 bottom-0 h-[220px] bg-gradient-to-b from-[rgba(21,21,25,0)] to-[rgba(21,21,25,0.85)]" />
           <p className="absolute bottom-[32px] right-[32px] font-rubik text-[20px] font-medium leading-[30px] text-white">
             כל פיקסל במקום.

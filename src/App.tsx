@@ -13,6 +13,7 @@ import { asset, Glow } from "@/components/ui";
 import MobileHome from "@/components/mobile/MobileHome";
 import FitSection from "@/components/FitSection";
 import { useReveal } from "@/components/useReveal";
+import { useMotion } from "@/components/useMotion";
 
 const CANVAS_GLOWS = [
   { left: 1100, top: 600 },
@@ -23,8 +24,10 @@ const CANVAS_GLOWS = [
 
 export default function App() {
   useReveal();
+  useMotion();
   return (
     <>
+    <div className="scroll-progress" aria-hidden />
     <MobileHome />
     <div className="relative mx-auto hidden max-w-[1440px] overflow-clip lg:block">
       {CANVAS_GLOWS.map((g, i) => (

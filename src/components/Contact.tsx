@@ -89,7 +89,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden rounded-[28px] px-[16px] pb-[24px] pt-[40px] sm:px-[40px] lg:rounded-[36px] xl:px-[89px] xl:pb-[120px] xl:pt-[110px]"
+      className="sd-zoom spotlight relative overflow-hidden rounded-[28px] px-[16px] pb-[24px] pt-[40px] sm:px-[40px] lg:rounded-[36px] xl:px-[89px] xl:pb-[120px] xl:pt-[110px]"
       style={{ backgroundImage: "linear-gradient(150.0516deg, #4b4fd8 0%, #6a55e8 71.429%)" }}
     >
       <Glow src="glow-cta-violet.svg" box={{ left: 56, top: 138, width: 700, height: 420 }} inset="-42.86% -25.71%" />
@@ -103,9 +103,11 @@ export default function Contact() {
       <div className="relative grid gap-[40px] xl:grid-cols-[minmax(0,520px)_minmax(0,540px)] xl:justify-between xl:gap-[24px]">
         <div className="flex flex-col items-start gap-[24px] xl:mt-[30px]">
           <SectionTag label="בואו נתחיל" num="07" dark />
-          <h2 className="font-rubik text-[42px] font-semibold leading-[50px] text-white sm:text-[60px] sm:leading-[70px]">
+          <h2 className="sd-text font-rubik text-[42px] font-semibold leading-[50px] text-white sm:text-[60px] sm:leading-[70px]">
             <span className="block">המסך הבא שלכם</span>
-            <span className="block text-lime">מתחיל כאן</span>
+            <span className="block">
+              <span className="shimmer">מתחיל כאן</span>
+            </span>
           </h2>
           <p className="font-rubik text-[18px] leading-[30px] text-[#c9cde6] sm:text-[20px] sm:leading-[33px]">
             עשרות פרויקטים בארץ ובעולם. ספרו לנו מה אתם מתכננים, ונהפוך את הרעיון למציאות.

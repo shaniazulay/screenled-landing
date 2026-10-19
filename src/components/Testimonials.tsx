@@ -19,7 +19,7 @@ const QUOTE = "המסך בכניסה שינה את התנועה במתחם. אנ
 
 function SideCard({ c, className = "", style }: { c: Side; className?: string; style?: React.CSSProperties }) {
   return (
-    <div className={`card-lift zoom-parent group overflow-hidden rounded-[24px] shadow-[0_24px_50px_rgba(10,14,41,0.28)] ${className}`} style={style}>
+    <div className={`card-lift tilt zoom-parent group overflow-hidden rounded-[24px] shadow-[0_24px_50px_rgba(10,14,41,0.28)] ${className}`} style={style}>
       <img loading="lazy" src={asset(c.img)} alt={c.label} className="zoom-img absolute inset-0 size-full object-cover" />
       <span className="absolute inset-0 bg-gradient-to-b from-[rgba(5,8,26,0)] from-45% to-[rgba(5,8,26,0.85)]" />
       <span className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0" style={{ background: `rgba(21,21,25,${c.dim})` }} />
@@ -32,7 +32,7 @@ function SideCard({ c, className = "", style }: { c: Side; className?: string; s
 
 function ActiveCard({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <figure className={`card-lift zoom-parent m-0 overflow-hidden rounded-[24px] shadow-[0_30px_60px_rgba(10,14,41,0.4)] ${className}`} style={style}>
+    <figure className={`card-lift tilt zoom-parent m-0 overflow-hidden rounded-[24px] shadow-[0_30px_60px_rgba(10,14,41,0.4)] ${className}`} style={style}>
       <img loading="lazy" src={asset("project-2.png")} alt="קיר וידאו באטריום קניון" className="zoom-img absolute inset-0 size-full object-cover" />
       <span className="absolute inset-0 bg-gradient-to-b from-[rgba(5,8,26,0)] from-45% to-[rgba(5,8,26,0.85)]" />
       <span className="absolute right-[20px] top-[20px] rounded-full bg-white/[0.18] px-[10px] py-[5px] font-heebo text-[12px] font-medium leading-[18px] text-white backdrop-blur-[5px]">
@@ -67,7 +67,7 @@ export default function Testimonials() {
       <div className="relative flex flex-col items-center gap-[24px] xl:block xl:h-[166px]">
         <div className="flex flex-col items-center gap-[14px] xl:absolute xl:left-1/2 xl:top-0 xl:-translate-x-[calc(50%+4px)]">
           <SectionTag label="המלצות" num="06" />
-          <h2 className="whitespace-nowrap text-center font-rubik text-[32px] font-semibold leading-[40px] text-navy sm:text-[46px] sm:leading-[58px] xl:text-[40px] min-[1380px]:text-[46px]">
+          <h2 className="sd-text whitespace-nowrap text-center font-rubik text-[32px] font-semibold leading-[40px] text-navy sm:text-[46px] sm:leading-[58px] xl:text-[40px] min-[1380px]:text-[46px]">
             מה הלקוחות שלנו <span className="text-indigo">אומרים</span>
           </h2>
         </div>

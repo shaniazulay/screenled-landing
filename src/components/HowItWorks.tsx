@@ -20,7 +20,7 @@ export default function HowItWorks() {
       <div className={`mt-[16px] xl:mt-0 ${rule}`} />
 
       <div className="flex flex-col gap-[28px] py-[32px] xl:h-[361px] xl:flex-row xl:justify-between xl:gap-[24px] xl:py-0">
-        <h2 className="font-rubik text-[56px] font-bold leading-[56px] tracking-[-0.04em] text-navy sm:text-[80px] sm:leading-[76px] xl:mt-[47px] xl:whitespace-nowrap xl:text-[clamp(72px,8.2vw,118px)] xl:leading-[0.949]">
+        <h2 className="sd-text font-rubik text-[56px] font-bold leading-[56px] tracking-[-0.04em] text-navy sm:text-[80px] sm:leading-[76px] xl:mt-[47px] xl:whitespace-nowrap xl:text-[clamp(72px,8.2vw,118px)] xl:leading-[0.949]">
           <span className="block">שלושה צעדים</span>
           <span className="block">
             למסך המושלם<span className="text-indigo">.</span>
@@ -55,7 +55,7 @@ export default function HowItWorks() {
           <li key={s.title} data-reveal style={{ ["--d" as string]: `${i * 120}ms` }} className="step-row zoom-parent relative">
             <div className={rule} />
             <div className="flex flex-col gap-[14px] py-[28px] xl:h-[219px] xl:flex-row xl:items-start xl:gap-0 xl:py-0">
-              <span className="outline-num text-right font-mont text-[72px] font-light leading-[72px] tracking-[-0.04em] xl:mt-[39px] xl:w-[267px] xl:shrink-0 xl:text-[120px] xl:leading-[120px]" dir="ltr">
+              <span className="outline-num sd-slide text-right font-mont text-[72px] font-light leading-[72px] tracking-[-0.04em] xl:mt-[39px] xl:w-[267px] xl:shrink-0 xl:text-[120px] xl:leading-[120px]" dir="ltr">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div className="xl:mt-[43px] xl:w-[400px] xl:shrink-0">
@@ -67,7 +67,7 @@ export default function HowItWorks() {
                 ({String(i + 1).padStart(2, "0")})
               </span>
               <div className="h-[180px] w-full overflow-hidden rounded-[18px] sm:w-[270px] xl:mt-[29px] xl:h-[160px] xl:shrink-0">
-                <img loading="lazy" src={asset(s.img)} alt={s.title} className="zoom-img size-full object-cover" />
+                <img loading="lazy" src={asset(s.img)} alt={s.title} className="zoom-img sd-parallax size-full object-cover" />
               </div>
             </div>
           </li>

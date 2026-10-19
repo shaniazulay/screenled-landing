@@ -153,7 +153,7 @@ export function MHowItWorks() {
         <SectionTag label="איך זה עובד" num="05" small />
         <span className="font-heebo text-[12px] font-medium leading-[18px] tracking-[0.48px] text-slate-muted">תהליך עבודה · 3 שלבים</span>
       </div>
-      <h2 className="font-rubik text-[44px] font-bold leading-[44px] tracking-[-1.1px] text-navy">
+      <h2 className="sd-text font-rubik text-[44px] font-bold leading-[44px] tracking-[-1.1px] text-navy">
         שלושה צעדים למסך המושלם<span className="text-indigo">.</span>
       </h2>
       <div className="flex w-full items-center gap-[16px]">
@@ -179,14 +179,16 @@ export function MHowItWorks() {
       <ol className="w-full">
         {STEPS.map((s, i) => (
           <li key={s.title} data-reveal style={{ ["--d" as string]: `${i * 110}ms` }} className={`step-row flex items-center gap-[12px] border-t border-[rgba(18,22,51,0.14)] py-[14px] ${i === STEPS.length - 1 ? "border-b" : ""}`}>
-            <span className="outline-num font-mont text-[40px] font-light leading-[40px] tracking-[-1.2px] [-webkit-text-stroke-width:1px]" dir="ltr">
+            <span className="outline-num sd-slide font-mont text-[40px] font-light leading-[40px] tracking-[-1.2px] [-webkit-text-stroke-width:1px]" dir="ltr">
               {String(i + 1).padStart(2, "0")}
             </span>
             <span className="flex min-w-0 flex-1 flex-col gap-[3px]">
               <span className="font-rubik text-[18px] font-semibold leading-[23px] tracking-[-0.09px] text-navy">{s.title}</span>
               <span className="font-heebo text-[13px] leading-[19px] text-slate-muted">{s.desc}</span>
             </span>
-            <img loading="lazy" src={asset(s.img)} alt={s.title} className="size-[76px] shrink-0 rounded-[14px] object-cover" />
+            <span className="size-[76px] shrink-0 overflow-hidden rounded-[14px]">
+              <img loading="lazy" src={asset(s.img)} alt={s.title} className="sd-parallax size-full object-cover" />
+            </span>
           </li>
         ))}
       </ol>
@@ -219,7 +221,7 @@ export function MTestimonials() {
         ”
       </span>
       <SectionTag label="המלצות" num="06" small />
-      <h2 className="text-center font-rubik text-[30px] font-bold leading-[36px] tracking-[-0.3px] text-navy">
+      <h2 className="sd-text text-center font-rubik text-[30px] font-bold leading-[36px] tracking-[-0.3px] text-navy">
         מה הלקוחות שלנו <span className="text-indigo">אומרים</span>
       </h2>
       <div className="flex items-center gap-[10px] rounded-[16px] border border-[rgba(18,22,51,0.08)] bg-white px-[16px] py-[10px]">
@@ -287,7 +289,7 @@ export function MContact() {
     <section
       id="contact-m"
       data-reveal
-      className="relative flex flex-col items-start gap-[16px] overflow-hidden rounded-[28px] px-[20px] py-[28px]"
+      className="sd-zoom relative flex flex-col items-start gap-[16px] overflow-hidden rounded-[28px] px-[20px] py-[28px]"
       style={{ backgroundImage: "linear-gradient(116.035deg, #4b4fd8 0%, #6a55e8 71.429%)" }}
     >
       <span className="pointer-events-none absolute left-[-80px] top-[120px] size-[320px]" aria-hidden>
@@ -295,8 +297,8 @@ export function MContact() {
       </span>
       <PixelCluster color="lime" small style={{ left: 16, top: 16 }} />
       <SectionTag label="בואו נתחיל" num="07" dark small className="relative" />
-      <h2 className="relative font-rubik text-[34px] font-bold leading-[40px] tracking-[-0.34px] text-white">
-        המסך הבא שלכם <span className="text-lime">מתחיל כאן</span>
+      <h2 className="sd-text relative font-rubik text-[34px] font-bold leading-[40px] tracking-[-0.34px] text-white">
+        המסך הבא שלכם <span className="shimmer">מתחיל כאן</span>
       </h2>
       <p className="relative font-rubik text-[15px] leading-[24px] text-white/80">עשרות פרויקטים בארץ ובעולם. ספרו לנו מה אתם מתכננים, ונהפוך את הרעיון למציאות.</p>
       {CHECKS.map((c, i) => (
@@ -389,7 +391,7 @@ const CONTACT = [
 
 export function MFooter() {
   return (
-    <footer data-reveal className="relative flex flex-col items-start gap-[18px] overflow-hidden rounded-[28px] bg-night px-[20px] py-[28px]">
+    <footer data-reveal className="sd-zoom relative flex flex-col items-start gap-[18px] overflow-hidden rounded-[28px] bg-night px-[20px] py-[28px]">
       <PixelCluster color="lime" small style={{ left: 16, top: 16 }} />
       <a href="#top" className="flex items-center gap-[8px]" dir="ltr" aria-label="SCREENLED">
         <span className="rounded-[5px] bg-white px-[8px] py-[3px] font-mont text-[16px] font-extrabold leading-[20px] text-ink">SCREEN</span>

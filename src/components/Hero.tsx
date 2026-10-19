@@ -111,25 +111,61 @@ function SecondaryActions() {
 }
 
 /**
- * The Figma panel outline (tab top-left, notches bottom-left/right) for a panel of width `w` (design: 1344).
- * Left features keep their x; right features move with the right edge so corners never distort.
+ * The Figma panel outline for a panel of width `w` (design: 1344×900, every corner radius 28).
+ * `k` enlarges the header tab, the top band and the two bottom notches (k = 1 is the exact design),
+ * so the header and buttons that sit in them can stay close to their original on-screen size.
  */
-function panelPath(w: number) {
-  const r = (x: number) => x + (w - 1344);
-  return `M0 28C0 12.5356 12.5356 0 28 0H254C269.464 0 282 12.5356 282 28V56C282 71.4644 294.536 84 310 84H${r(1316)}C${r(1331.46)} 84 ${r(1344)} 96.5356 ${r(1344)} 112V784C${r(1344)} 799.464 ${r(1331.46)} 812 ${r(1316)} 812H${r(1020)}C${r(1004.54)} 812 ${r(992)} 824.536 ${r(992)} 840V872C${r(992)} 887.464 ${r(979.464)} 900 ${r(964)} 900H194C178.536 900 166 887.464 166 872C166 856.536 153.464 844 138 844H28C12.5356 844 0 831.464 0 816V28Z`;
+function panelPath(w: number, k: number) {
+  const T = 282 * k; // tab right edge
+  const B = 84 * k; // top band height
+  const NX = w - 352 * k; // right notch left edge
+  const NY = 900 - 88 * k; // right notch top
+  const LX = 166 * k; // left notch right edge
+  const LY = 900 - 56 * k; // left notch top
+  const c = 12.5356; // 28 − bezier handle
+  return [
+    `M0 28C0 ${c} ${c} 0 28 0`,
+    `H${T - 28}C${T - c} 0 ${T} ${c} ${T} 28`,
+    `V${B - 28}C${T} ${B - c} ${T + c} ${B} ${T + 28} ${B}`,
+    `H${w - 28}C${w - c} ${B} ${w} ${B + c} ${w} ${B + 28}`,
+    `V${NY - 28}C${w} ${NY - c} ${w - c} ${NY} ${w - 28} ${NY}`,
+    `H${NX + 28}C${NX + c} ${NY} ${NX} ${NY + c} ${NX} ${NY + 28}`,
+    `V872C${NX} ${900 - c} ${NX - c} 900 ${NX - 28} 900`,
+    `H${LX + 28}C${LX + c} 900 ${LX} ${900 - c} ${LX} 872`,
+    `C${LX} ${LY + c} ${LX - c} ${LY} ${LX - 28} ${LY}`,
+    `H28C${c} ${LY} 0 ${LY - c} 0 ${LY - 28}V28Z`,
+  ].join("");
 }
 
+/** Smallest on-screen size (vs. the 1440 design) for the header and buttons when the hero shrinks to fit. */
+const MIN_UI = 0.85;
+
 /**
- * Desktop hero: the 1392×940 Figma composition. It scales to fit the screen height
- * (so the whole hero is visible without scrolling) and, when that makes it narrower than the page,
- * the canvas widens instead of leaving side gaps: left/right-anchored elements stay pinned to their edges.
+ * Desktop hero: the 1392×940 Figma composition. It scales to fit the screen height (so the whole hero is
+ * visible without scrolling) and widens instead of leaving side gaps. The header, chips and buttons are
+ * counter-scaled so they never drop below MIN_UI of their design size, and the panel's tab/notches grow to hold them.
  */
 function HeroDesktop() {
   // Fit the content width and the screen height (24px page padding above and below).
   const { ref, scale, width } = useFitScale<HTMLDivElement>(1392, 940, 48);
   const canvasW = Math.max(1392, width / scale);
+  const k = Math.min(1.6, Math.max(1, MIN_UI / scale)); // counter-scale for UI chrome
+  const P = canvasW - 48; // panel width
+  const band = 84 * k; // panel top band (header row)
+  const bandMid = 16 + band / 2;
+  const notchW = 352 * k;
+  const notchTop = 16 + 900 - 88 * k;
+  const leftNotchTop = 16 + 900 - 56 * k;
   // The photo keeps its distance to the right-hand copy, so it grows when the canvas widens (design: 760 of 1344).
-  const photoW = canvasW - 48 - 584;
+  const photoW = P - 584;
+  const photoTop = band;
+  const ui = (origin: string) => ({ transform: `scale(${k})`, transformOrigin: origin });
+  const ratingBottom = leftNotchTop - 23 * k;
+  const catalogBottom = ratingBottom - 65 * k; // 37px rating + 28px gap
+  // The catalog stack shrinks a little if it would run into the LIVE chip above it.
+  const liveBottom = 16 + band + 28 * k + 40 * k;
+  const kCat = Math.max(1, Math.min(k, (catalogBottom - liveBottom - 16) / 337));
+
   return (
     <div ref={ref} className="relative hidden overflow-hidden lg:block" style={{ height: 940 * scale }}>
       <div
@@ -139,45 +175,62 @@ function HeroDesktop() {
         {/* Shaped violet panel */}
         <div
           className="absolute left-[24px] top-[16px] h-[900px] overflow-hidden"
-          style={{
-            width: canvasW - 48,
-            clipPath: `path("${panelPath(canvasW - 48)}")`,
-            backgroundImage: "linear-gradient(153deg, #4b4fd8 0%, #5b4fe0 100%)",
-          }}
+          style={{ width: P, clipPath: `path("${panelPath(P, k)}")`, backgroundImage: "linear-gradient(153deg, #4b4fd8 0%, #5b4fe0 100%)" }}
         >
           <span className="absolute top-[220px] size-[620px]" style={{ left: 102 + (photoW - 760) / 2 }}>
             <img loading="lazy" src={asset("violet-glow.svg")} alt="" className="absolute inset-[-27.42%] block size-[154.84%] max-w-none" />
           </span>
-          <img loading="eager" {...{ fetchpriority: "high" }} src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="ken-burns absolute left-0 top-[84px] h-[820px] object-cover opacity-[0.92]"
-            style={{ width: photoW }} />
+          <img
+            loading="eager"
+            {...{ fetchpriority: "high" }}
+            src={asset("hero-photo.png")}
+            alt="מסך LED ענק על חזית בניין בלילה"
+            className="ken-burns absolute left-0 object-cover opacity-[0.92]"
+            style={{ width: photoW, top: photoTop, height: 904 - photoTop }}
+          />
           <span
-            className="absolute left-0 top-[84px] h-[820px]"
-            style={{ width: photoW, backgroundImage: "linear-gradient(to right, rgba(75,79,216,0.15), rgba(79,79,220,0.35) 55%, #5250de)" }}
+            className="absolute left-0"
+            style={{
+              width: photoW,
+              top: photoTop,
+              height: 904 - photoTop,
+              backgroundImage: "linear-gradient(to right, rgba(75,79,216,0.15), rgba(79,79,220,0.35) 55%, #5250de)",
+            }}
           />
           {/* soften the photo-fade edge into the panel fill */}
-          <span className="absolute top-[84px] h-[820px] w-[260px] bg-gradient-to-r from-[#5250de] to-[rgba(82,80,222,0)]" style={{ left: photoW - 1 }} />
-          <span style={{ width: photoW }} className="absolute left-0 top-0 h-[220px] bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
+          <span className="absolute w-[260px] bg-gradient-to-r from-[#5250de] to-[rgba(82,80,222,0)]" style={{ left: photoW - 1, top: photoTop, height: 904 - photoTop }} />
+          <span style={{ width: photoW, top: photoTop - 84 }} className="absolute left-0 h-[220px] bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
         </div>
 
-        {/* Header row */}
-        <div className="absolute right-[72px] top-[42px]">
-          <Logo />
+        {/* Header row — centred in the top band */}
+        <div className="absolute right-[72px] -translate-y-1/2" style={{ top: bandMid }}>
+          <div style={ui("right center")}>
+            <Logo />
+          </div>
         </div>
-        <nav className="absolute right-[325px] top-[47px] flex gap-[38px]" aria-label="ניווט ראשי">
-          {NAV.map((n) => (
-            <a key={n.label} href={n.href} className="nav-link whitespace-nowrap font-heebo text-[15px] leading-[22px] text-white">
-              {n.label}
-            </a>
-          ))}
+        <nav
+          className="absolute flex -translate-x-1/2 -translate-y-1/2 gap-[38px]"
+          style={{ left: `${(811 / 1392) * 100}%`, top: bandMid }}
+          aria-label="ניווט ראשי"
+        >
+          <span className="flex gap-[38px]" style={ui("center")}>
+            {NAV.map((n) => (
+              <a key={n.label} href={n.href} className="nav-link whitespace-nowrap font-heebo text-[15px] leading-[22px] text-white">
+                {n.label}
+              </a>
+            ))}
+          </span>
         </nav>
-        <a href="#contact" className="nav-link group absolute left-[80px] top-[39px] flex items-center gap-[14px]">
-          <span className="whitespace-nowrap font-rubik text-[17px] font-medium leading-[20px] text-white">קבלו הצעת מחיר</span>
-          <img loading="lazy" src={asset("tab-arrow.svg")} alt="" className="size-[38px] transition-transform duration-200 group-hover:rotate-45" />
-        </a>
+        <div className="absolute -translate-y-1/2" style={{ left: 24 + 56 * k, top: bandMid }}>
+          <a href="#contact" className="nav-link group flex items-center gap-[14px]" style={ui("left center")}>
+            <span className="whitespace-nowrap font-rubik text-[17px] font-medium leading-[20px] text-white">קבלו הצעת מחיר</span>
+            <img loading="lazy" src={asset("tab-arrow.svg")} alt="" className="size-[38px] transition-transform duration-200 group-hover:rotate-45" />
+          </a>
+        </div>
 
         {/* Copy */}
-        <div className="absolute right-[110px] top-[146px] flex w-[542px] flex-col items-start gap-[26px]">
-          <span data-reveal className="rounded-full border-[1.2px] border-white/90 px-[16px] py-[6px] font-rubik text-[15px] leading-[18px] text-white">
+        <div className="absolute right-[110px] flex w-[542px] flex-col items-start gap-[26px]" style={{ top: 16 + band + 46 }}>
+          <span data-reveal className="rounded-full border-[1.2px] border-white/90 px-[16px] py-[6px] font-rubik text-[15px] leading-[18px] text-white" style={ui("right top")}>
             קירות וידאו ומסכי LED
           </span>
           <HeroHeadline className="whitespace-nowrap text-[108px] leading-[104px] tracking-[-2.16px]" />
@@ -185,13 +238,13 @@ function HeroDesktop() {
             {SUB}
           </p>
           <span className="grow-x h-[1.2px] w-[220px] bg-white/80" />
-          <div data-reveal style={{ ["--d" as string]: "680ms" }}>
+          <div data-reveal style={{ ["--d" as string]: "680ms", ...ui("right top") }}>
             <SecondaryActions />
           </div>
         </div>
 
-        {/* Left column: live chip, quick catalog, rating, dots */}
-        <GlassChip className="absolute left-[48px] top-[128px] !gap-[6px] !py-[5px] !pl-[8px] !pr-[14px]">
+        {/* Left column: live chip (top), then quick catalog, rating and dots stacked up from the bottom notch */}
+        <GlassChip className="absolute !gap-[6px] !py-[5px] !pl-[8px] !pr-[14px]" style={{ left: 24 + 24 * k, top: 16 + band + 28 * k, ...ui("left top") }}>
           <span className="font-heebo text-[12px] font-medium leading-[18px] text-white/75">· המסך דולק עכשיו</span>
           <span className="font-mont text-[12px] font-bold tracking-[1.68px]" dir="ltr">
             LIVE
@@ -199,7 +252,7 @@ function HeroDesktop() {
           <LivePulse />
         </GlassChip>
 
-        <div className="absolute left-[48px] top-[435px] flex w-[300px] flex-col items-end gap-[12px]">
+        <div className="absolute flex w-[300px] flex-col items-end gap-[12px]" style={{ left: 24 + 24 * k, bottom: 940 - catalogBottom, transform: `scale(${kCat})`, transformOrigin: "left bottom" }}>
           <span className="flex items-center gap-[8px] rounded-full bg-[rgba(21,21,25,0.55)] px-[14px] py-[6px] backdrop-blur-[6px]">
             <span className="font-heebo text-[14px] font-medium leading-[21px] text-white">ניווט מהיר לקטלוג</span>
             <img loading="lazy" src={asset("dot-lime.svg")} alt="" className="size-[7px]" />
@@ -209,12 +262,21 @@ function HeroDesktop() {
           ))}
         </div>
 
-        <div data-reveal="left" style={{ ["--d" as string]: "750ms" }} className="absolute left-[48px] top-[800px] flex h-[37px] items-center gap-[6px] rounded-full bg-white/[0.14] px-[14px] backdrop-blur-[6px]">
+        <div
+          data-reveal="left"
+          className="absolute flex h-[37px] items-center gap-[6px] rounded-full bg-white/[0.14] px-[14px] backdrop-blur-[6px]"
+          style={{ ["--d" as string]: "750ms", left: 24 + 24 * k, bottom: 940 - ratingBottom, ...ui("left bottom") }}
+        >
           <Stars size={13} />
           <span className="font-heebo text-[14px] font-medium leading-[21px] text-white">5.0 בגוגל</span>
         </div>
 
-        <div className="absolute left-[52px] top-[876px] flex h-[31px] items-center gap-[6px] rounded-[14px] bg-[#1e1e24] px-[18px]" dir="ltr" aria-hidden>
+        <div
+          className="absolute flex h-[31px] -translate-y-1/2 items-center gap-[6px] rounded-[14px] bg-[#1e1e24] px-[18px]"
+          style={{ left: 24 + 28 * k, top: leftNotchTop + (916 - leftNotchTop) / 2 + 3.5 * k, ...ui("left center") }}
+          dir="ltr"
+          aria-hidden
+        >
           <span className="size-[7px] rounded-[4px] bg-[#7c7cf0]" />
           <span className="h-[7px] w-[22px] rounded-[4px] bg-white" />
           <span className="size-[7px] rounded-[4px] bg-[#7c7cf0]" />
@@ -223,29 +285,35 @@ function HeroDesktop() {
         </div>
 
         {/* Primary CTA sitting in the panel notch */}
-        <a
-          href="#contact"
-          data-reveal="scale"
-          style={{ ["--d" as string]: "850ms" }}
-          className="btn-lime group absolute right-[24px] top-[840px] flex h-[76px] w-[338px] items-center justify-between rounded-[22px] bg-lime pl-[22px] pr-[28px]"
-        >
-          <span className="font-rubik text-[20px] font-medium leading-[24px] text-ink">לשיחת ייעוץ חינם</span>
-          <img loading="lazy" src={asset("hero-cta-arrow.svg")} alt="" className="size-[40px] transition-transform duration-200 group-hover:rotate-45" />
-        </a>
+        <div className="absolute bottom-[24px] right-[24px]" style={ui("right bottom")}>
+          <a
+            href="#contact"
+            data-reveal="scale"
+            style={{ ["--d" as string]: "850ms" }}
+            className="btn-lime group flex h-[76px] w-[338px] items-center justify-between rounded-[22px] bg-lime pl-[22px] pr-[28px]"
+          >
+            <span className="font-rubik text-[20px] font-medium leading-[24px] text-ink">לשיחת ייעוץ חינם</span>
+            <img loading="lazy" src={asset("hero-cta-arrow.svg")} alt="" className="size-[40px] transition-transform duration-200 group-hover:rotate-45" />
+          </a>
+        </div>
 
         {/* Jewels */}
-        <GlassChip icon="icon-chip-white.svg" className="float-y absolute right-[633px] top-[720px]">
+        <GlassChip icon="icon-chip-white.svg" className="float-y absolute top-[720px]" style={{ right: 633 + 430 * (k - 1), ...ui("right top") }}>
           חזית מסחרית · מרכז העיר
         </GlassChip>
-        <span className="absolute right-[510px] top-[766px] h-[40px] w-[26px] rounded-[13px] border-[1.4px] border-white/60" aria-hidden>
+        <span
+          className="absolute h-[40px] w-[26px] rounded-[13px] border-[1.4px] border-white/60"
+          style={{ right: 24 + notchW + 134, top: notchTop - 62, display: k > 1.05 ? "none" : undefined }}
+          aria-hidden
+        >
           <span className="scroll-wheel absolute left-[8.7px] top-[5.2px] h-[8px] w-[3px] rounded-[2px] bg-lime" />
         </span>
-        <Sparkle src="sparkle-hero-22.svg" size={22} style={{ right: 664, top: 226.4 }} />
-        <Sparkle src="sparkle-hero-10.svg" size={10} style={{ right: 650, top: 204.4 }} />
-        <Sparkle src="sparkle-hero-12.svg" size={12} style={{ right: 144, top: 526.4 }} />
+        <Sparkle src="sparkle-hero-22.svg" size={22} style={{ right: 664, top: 226.4 + (band - 84) }} />
+        <Sparkle src="sparkle-hero-10.svg" size={10} style={{ right: 650, top: 204.4 + (band - 84) }} />
+        <Sparkle src="sparkle-hero-12.svg" size={12} style={{ right: 144, top: 526.4 + (band - 84) }} />
         <Sparkle src="sparkle-9.svg" size={9} style={{ left: 536, top: 276 }} />
         <Sparkle src="sparkle-7.svg" size={7} style={{ left: 446, top: 536 }} />
-        <PixelCluster color="lime" mirror style={{ right: 72, top: 872 }} />
+        <PixelCluster color="lime" mirror style={{ right: 72, top: 916 - 44 * k }} />
       </div>
     </div>
   );

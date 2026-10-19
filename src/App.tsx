@@ -49,9 +49,8 @@ export default function App() {
         <FitSection>
           <Domains />
         </FitSection>
-        <FitSection>
-          <HowItWorks />
-        </FitSection>
+        {/* Shown at its natural design size (taller than a short laptop screen) so it matches Figma exactly */}
+        <HowItWorks />
         <FitSection>
           <Testimonials />
         </FitSection>

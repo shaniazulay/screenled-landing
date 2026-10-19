@@ -436,11 +436,21 @@ html.lenis, html.lenis body { height: auto; }
 
 /* ═══════════════════════ Preloader ═══════════════════════ */
 .preloader { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; overflow: hidden; }
-.pl-band { position: absolute; left: 0; right: 0; background: #151519; transform-origin: top; }
-.pl-band:nth-child(even) { transform-origin: bottom; }
+/* The backdrop: a transparent window with a huge dark shadow around it */
+.pl-hole {
+  position: absolute;
+  box-shadow: 0 0 0 2px rgba(212, 255, 90, 0), 0 0 0 300vmax #151519;
+  pointer-events: none;
+}
 .preloader.is-out { pointer-events: none; }
-.preloader.is-out .pl-band { animation: pl-band 0.5s cubic-bezier(0.7, 0, 0.2, 1) calc(var(--i) * 45ms) forwards; }
-@keyframes pl-band { to { transform: scaleY(0); } }
+.preloader.is-out .pl-hole {
+  box-shadow: 0 0 0 2px #d4ff5a, 0 0 28px 4px rgba(212, 255, 90, 0.55), 0 0 0 300vmax #151519;
+  animation: pl-hole-rim 0.95s ease forwards;
+}
+@keyframes pl-hole-rim {
+  0%, 70% { filter: none; }
+  100% { box-shadow: 0 0 0 2px rgba(212, 255, 90, 0), 0 0 0 0 rgba(212, 255, 90, 0), 0 0 0 300vmax #151519; }
+}
 
 /* LED dot field + soft violet glow */
 .pl-dots {
@@ -463,8 +473,13 @@ html.lenis, html.lenis body { height: auto; }
 .preloader.is-out .pl-dots, .preloader.is-out .pl-glow { opacity: 0; transition: opacity 0.3s ease; }
 
 .pl-stage { position: relative; display: flex; flex-direction: column; align-items: center; gap: clamp(18px, 3vh, 28px); }
-.preloader.is-out .pl-stage { animation: pl-stage-out 0.4s cubic-bezier(0.6, 0, 0.4, 1) forwards; }
-@keyframes pl-stage-out { to { opacity: 0; transform: scale(1.12); filter: blur(6px); } }
+/* On exit the box empties (its white fill and letters fade) so the site shows through it */
+.preloader.is-out .pl-fill,
+.preloader.is-out .pl-word,
+.preloader.is-out .pl-scan { opacity: 0; transition: opacity 0.14s ease; }
+.preloader.is-out .pl-led,
+.preloader.is-out .pl-tag,
+.preloader.is-out .pl-meter { opacity: 0; transform: translateY(-8px); transition: opacity 0.25s ease, transform 0.25s ease; }
 
 /* Logo — hidden until the particle swarm has assembled it */
 .pl-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; transition: opacity 0.5s ease 0.15s; }
@@ -501,17 +516,8 @@ html.lenis, html.lenis body { height: auto; }
 @keyframes pl-scan { to { left: 110%; } }
 .pl-led { display: flex; color: #fff; font-weight: 700; font-size: clamp(33px, 5.9vw, 57px); line-height: 1.2; }
 .pl-led > span { opacity: 0; }
-.preloader.is-assembled .pl-led > span { animation: pl-neon 0.9s steps(1, end) var(--d) forwards, pl-neon-glow 2.4s ease-in-out calc(var(--d) + 0.9s) infinite; }
-@keyframes pl-neon {
-  0% { opacity: 1; color: #d4ff5a; text-shadow: 0 0 14px #d4ff5a, 0 0 32px rgba(212, 255, 90, 0.6); }
-  12% { opacity: 0.15; }
-  22% { opacity: 1; }
-  30% { opacity: 0.3; }
-  45% { opacity: 1; }
-  55% { opacity: 0.6; }
-  65%, 100% { opacity: 1; color: #fff; text-shadow: 0 0 12px rgba(212, 255, 90, 0.55); }
-}
-@keyframes pl-neon-glow { 50% { text-shadow: 0 0 18px rgba(212, 255, 90, 0.85), 0 0 36px rgba(212, 255, 90, 0.35); } }
+.pl-led > span { filter: blur(6px); }
+.preloader.is-assembled .pl-led > span { animation: pl-letter 0.4s ease var(--d) forwards; }
 
 .pl-tag { color: #d4ff5a; font-family: Heebo, sans-serif; font-weight: 600; font-size: clamp(15px, 1.6vw, 18px); opacity: 0; animation: pl-tag 0.6s ease 2.05s forwards; letter-spacing: 0.02em; }
 @keyframes pl-tag { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }

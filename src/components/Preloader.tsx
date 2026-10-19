@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 const TOTAL = 3000; // visible time before the exit starts
-const EXIT = 750; // band wipe duration (incl. stagger)
-const BANDS = 7;
+const EXIT = 950; // "screen opens into the site" transition
 const FLY = 1250; // particle flight time
 const SPREAD = 320; // max launch delay spread
 
@@ -18,6 +17,9 @@ export default function Preloader() {
   const [phase, setPhase] = useState<"in" | "out" | "gone">("in");
   const [assembled, setAssembled] = useState(false);
   const [count, setCount] = useState(0);
+  // The dark backdrop is a giant shadow around this "window"; growing it from the logo box to the
+  // full viewport reveals the site through the SCREEN box.
+  const [hole, setHole] = useState<CSSProperties>({ left: "50%", top: "50%", width: 0, height: 0, borderRadius: 12 });
   const overlay = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const word = useRef<HTMLSpanElement>(null);
@@ -44,6 +46,24 @@ export default function Preloader() {
     raf = requestAnimationFrame(tick);
 
     const t1 = window.setTimeout(() => {
+      const r = box.current?.getBoundingClientRect();
+      if (r) {
+        const radius = parseFloat(getComputedStyle(box.current!).borderRadius) || 12;
+        setHole({ left: r.left, top: r.top, width: r.width, height: r.height, borderRadius: radius, transition: "none" });
+        // next frames: open the window to the whole screen
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() =>
+            setHole({
+              left: 0,
+              top: 0,
+              width: window.innerWidth,
+              height: window.innerHeight,
+              borderRadius: 0,
+              transition: "left 0.85s cubic-bezier(0.85, 0, 0.15, 1) 0.12s, top 0.85s cubic-bezier(0.85, 0, 0.15, 1) 0.12s, width 0.85s cubic-bezier(0.85, 0, 0.15, 1) 0.12s, height 0.85s cubic-bezier(0.85, 0, 0.15, 1) 0.12s, border-radius 0.85s ease 0.12s",
+            }),
+          ),
+        );
+      }
       setPhase("out");
       html.style.overflow = "";
       html.dataset.loaded = "1";
@@ -196,9 +216,7 @@ export default function Preloader() {
       role="status"
       aria-label="טוען את האתר"
     >
-      {Array.from({ length: BANDS }).map((_, i) => (
-        <span key={i} className="pl-band" style={{ top: `${(i * 100) / BANDS}%`, height: `${100 / BANDS + 0.5}%`, ["--i" as string]: i }} />
-      ))}
+      <span className="pl-hole" style={hole} aria-hidden />
 
       <div className="pl-dots" aria-hidden />
       <div className="pl-glow" aria-hidden />

@@ -42,7 +42,7 @@ function LeadForm() {
       {sent ? (
         <div className="flex w-full flex-1 flex-col items-center justify-center gap-[12px] py-[60px] text-center">
           <span className="flex size-[64px] items-center justify-center rounded-full bg-lime">
-            <img src={asset("icon-check-dark.svg")} alt="" className="size-[28px]" />
+            <img loading="lazy" src={asset("icon-check-dark.svg")} alt="" className="size-[28px]" />
           </span>
           <p className="font-rubik text-[22px] font-semibold text-navy">תודה! הפרטים התקבלו</p>
           <p className="font-heebo text-[16px] text-slate-body">נחזור אליכם תוך יום עסקים.</p>
@@ -77,7 +77,7 @@ function LeadForm() {
             className="group flex h-[60px] w-full items-center justify-between rounded-[20px] bg-lime pl-[12px] pr-[22px] transition-[filter] hover:brightness-105"
           >
             <span className="font-rubik text-[18px] font-medium leading-[21px] text-ink">קבלו הצעת מחיר מותאמת</span>
-            <img src={asset("arrow-dark-38.svg")} alt="" className="size-[38px] transition-transform group-hover:rotate-45" />
+            <img loading="lazy" src={asset("arrow-dark-38.svg")} alt="" className="size-[38px] transition-transform group-hover:rotate-45" />
           </button>
         </>
       )}
@@ -114,7 +114,7 @@ export default function Contact() {
             {CHECKS.map((c) => (
               <li key={c} className="flex items-center gap-[12px]">
                 <span className="flex size-[28px] shrink-0 items-center justify-center rounded-full bg-lime">
-                  <img src={asset("icon-check-dark.svg")} alt="" className="size-[16px]" />
+                  <img loading="lazy" src={asset("icon-check-dark.svg")} alt="" className="size-[16px]" />
                 </span>
                 <span className="font-rubik text-[17px] font-medium leading-[21px] text-white sm:text-[18px]">{c}</span>
               </li>
@@ -128,14 +128,14 @@ export default function Contact() {
               <span className="font-rubik text-[18px] font-semibold leading-[21px] text-white" dir="ltr">
                 054-4228606
               </span>
-              <img src={asset("icon-phone-white.svg")} alt="" className="size-[20px]" />
+              <img loading="lazy" src={asset("icon-phone-white.svg")} alt="" className="size-[20px]" />
             </a>
             <a
               href="https://wa.me/972544228606"
               className="flex h-[56px] w-[160px] items-center justify-center gap-[8px] rounded-full border-[1.5px] border-white/75 px-[24px] transition-colors hover:bg-white/10"
             >
               <span className="font-rubik text-[18px] font-semibold leading-[21px] text-white">וואטסאפ</span>
-              <img src={asset("icon-whatsapp-outline.svg")} alt="" className="size-[20px]" />
+              <img loading="lazy" src={asset("icon-whatsapp-outline.svg")} alt="" className="size-[20px]" />
             </a>
           </div>
         </div>
@@ -143,7 +143,7 @@ export default function Contact() {
         <div className="relative">
           <LeadForm />
           <span className="absolute right-[25px] top-[-16px] flex items-center gap-[7px] rounded-full bg-lime px-[12px] py-[6px] shadow-[0_6px_18px_rgba(212,255,90,0.5)]">
-            <img src={asset("icon-clock.svg")} alt="" className="size-[14px]" />
+            <img loading="lazy" src={asset("icon-clock.svg")} alt="" className="size-[14px]" />
             <span className="whitespace-nowrap font-rubik text-[13px] font-medium leading-[15px] text-ink">מענה תוך יום עסקים</span>
           </span>
         </div>

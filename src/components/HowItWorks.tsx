@@ -30,8 +30,8 @@ export default function HowItWorks() {
           <p className="font-heebo text-[17px] leading-[28px] text-slate-muted xl:text-left">בלי הפתעות ובלי כאבי ראש. תהליך אחד, ברור ושקוף, מהשיחה הראשונה ועד שהמסך דולק.</p>
           <div className="relative size-[150px] shrink-0">
             <span className="orbit pointer-events-none absolute left-[-12px] top-[-12px] size-[174px]" aria-hidden>
-              <img src={asset("orbit-ring.png")} alt="" className="absolute inset-0 size-full" />
-              <img src={asset("orbit-satellite.svg")} alt="" className="absolute left-[82px] top-[-5px] size-[10px]" />
+              <img loading="lazy" src={asset("orbit-ring.png")} alt="" className="absolute inset-0 size-full" />
+              <img loading="lazy" src={asset("orbit-satellite.svg")} alt="" className="absolute left-[82px] top-[-5px] size-[10px]" />
             </span>
             <a href="#contact" className="group absolute inset-0 overflow-hidden rounded-full bg-lime transition-[filter] hover:brightness-105">
               <span className="absolute left-1/2 top-[46px] -translate-x-1/2 whitespace-nowrap text-center font-rubik text-[17px] font-bold leading-[22px] text-ink">
@@ -39,7 +39,7 @@ export default function HowItWorks() {
                 <br />
                 שיחת איפיון
               </span>
-              <img src={asset("arrow-down-dark.svg")} alt="" className="absolute left-[64px] top-[98px] size-[22px] transition-transform group-hover:translate-y-[2px]" />
+              <img loading="lazy" src={asset("arrow-down-dark.svg")} alt="" className="absolute left-[64px] top-[98px] size-[22px] transition-transform group-hover:translate-y-[2px]" />
             </a>
             <LightChip icon="icon-check-chip.svg" className="absolute left-[13px] top-[168px] hidden xl:inline-flex">
               ללא התחייבות
@@ -66,7 +66,7 @@ export default function HowItWorks() {
               <span className="hidden font-mont text-[12px] font-medium leading-[15px] tracking-[0.72px] text-slate-muted xl:ml-[20px] xl:mt-[31px] xl:block" dir="ltr">
                 ({String(i + 1).padStart(2, "0")})
               </span>
-              <img src={asset(s.img)} alt={s.title} className="h-[180px] w-full rounded-[18px] object-cover sm:w-[270px] xl:mt-[29px] xl:h-[160px] xl:shrink-0" />
+              <img loading="lazy" src={asset(s.img)} alt={s.title} className="h-[180px] w-full rounded-[18px] object-cover sm:w-[270px] xl:mt-[29px] xl:h-[160px] xl:shrink-0" />
             </div>
           </li>
         ))}

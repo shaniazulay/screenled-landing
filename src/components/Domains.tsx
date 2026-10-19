@@ -28,7 +28,7 @@ function TextTile({ title, sub, deg, className }: { title: string; sub: string; 
     <a href="#contact" className={`group relative block overflow-hidden rounded-[20px] ${className}`} style={violet(deg)}>
       <span className="absolute right-[24px] top-[22px] whitespace-nowrap font-rubik text-[22px] font-bold leading-[26px] text-white">{title}</span>
       <span className="absolute right-[24px] top-[58px] w-[215px] font-heebo text-[13px] leading-[20px] text-white/75">{sub}</span>
-      <img src={asset("icon-arrow-diag.svg")} alt="" className="absolute left-[20px] top-[24px] size-[20px] transition-transform group-hover:-translate-x-[3px] group-hover:-translate-y-[3px]" />
+      <img loading="lazy" src={asset("icon-arrow-diag.svg")} alt="" className="absolute left-[20px] top-[24px] size-[20px] transition-transform group-hover:-translate-x-[3px] group-hover:-translate-y-[3px]" />
     </a>
   );
 }
@@ -56,7 +56,7 @@ export default function Domains() {
         {/* Column 1 (right): featured + intro + controls */}
         <div className="flex flex-col gap-[12px]">
           <div className="relative h-[312px] overflow-hidden rounded-[20px]">
-            <img key={f.img} src={asset(f.img)} alt={f.title} className="absolute inset-0 size-full object-cover" />
+            <img key={f.img} loading="lazy" src={asset(f.img)} alt={f.title} className="absolute inset-0 size-full object-cover" />
             <span className="absolute inset-0 bg-gradient-to-l from-[rgba(5,8,26,0.75)] to-[rgba(5,8,26,0)] to-60%" />
             <div className="absolute bottom-[32px] left-[24px] right-[24px] flex flex-col items-start gap-[4px] xl:left-[32px] xl:right-[32px]">
               <span className="font-rubik text-[34px] font-bold leading-[40px] tracking-[-0.52px] text-white sm:text-[52px] sm:leading-[58px]">{f.title}</span>
@@ -75,7 +75,7 @@ export default function Domains() {
               </p>
             </div>
             <div className="relative h-[246px] overflow-hidden rounded-[20px]">
-              <img src={asset("domain-museum.png")} alt="מוזיאון עם קיר וידאו" className="absolute inset-0 size-full object-cover" />
+              <img loading="lazy" src={asset("domain-museum.png")} alt="מוזיאון עם קיר וידאו" className="absolute inset-0 size-full object-cover" />
               <PhotoCaption left={134} top={206}>
                 מוזיאונים ומרכזי מבקרים
               </PhotoCaption>
@@ -86,7 +86,7 @@ export default function Domains() {
               <span className="absolute left-[61%] top-[25.5px] -translate-x-1/2 whitespace-nowrap font-rubik text-[13px] font-bold leading-[17px] tracking-[0.28px] text-ink sm:text-[14px]">
                 לייעוץ חינם לפי התחום שלכם
               </span>
-              <img src={asset("arrow-dark-34.svg")} alt="" className="absolute left-[16px] top-[19px] hidden size-[34px] transition-transform group-hover:rotate-45 sm:block" />
+              <img loading="lazy" src={asset("arrow-dark-34.svg")} alt="" className="absolute left-[16px] top-[19px] hidden size-[34px] transition-transform group-hover:rotate-45 sm:block" />
             </a>
             <button onClick={() => go(-1)} className="rounded-[20px] bg-[#4b4fd8] font-rubik text-[14px] font-semibold leading-[17px] tracking-[0.56px] text-white transition-colors hover:bg-[#5a5ee6]">
               הקודם
@@ -101,7 +101,7 @@ export default function Domains() {
         <div className="flex flex-col gap-[12px]">
           <TextTile title="פרסום חוצות" sub="נראה מכל זווית, בכל מזג אוויר" deg={160.4417} className="h-[135px] shrink-0" />
           <div className="relative h-[355px] shrink-0 overflow-hidden rounded-[20px]">
-            <img src={asset("domain-outdoor.png")} alt="מסך פרסום חוצות" className="absolute inset-0 size-full object-cover" />
+            <img loading="lazy" src={asset("domain-outdoor.png")} alt="מסך פרסום חוצות" className="absolute inset-0 size-full object-cover" />
           </div>
           <TextTile title="אירועים ותערוכות" sub="הבמה שלכם, בגדול. מסכים ניידים ומודולריים." deg={159.7751} className="h-[140px] shrink-0" />
         </div>
@@ -109,7 +109,7 @@ export default function Domains() {
         {/* Column 3 (left) */}
         <div className="flex flex-col gap-[12px]">
           <div className="relative h-[320px] shrink-0 overflow-hidden rounded-[20px]">
-            <img src={asset("domain-pool.png")} alt="מסך LED ליד בריכה" className="absolute inset-0 size-full object-cover" />
+            <img loading="lazy" src={asset("domain-pool.png")} alt="מסך LED ליד בריכה" className="absolute inset-0 size-full object-cover" />
             <PhotoCaption left={80} top={280}>
               חצר ובריכה · המסך שעובד גם בחוץ
             </PhotoCaption>
@@ -117,7 +117,7 @@ export default function Domains() {
           <div className="relative h-[322px] shrink-0 overflow-hidden rounded-[20px] bg-[#b4b2ff]">
             <span className="absolute right-[24px] top-[22px] whitespace-nowrap font-rubik text-[22px] font-bold leading-[26px] text-white">קולנוע ביתי ואולמות</span>
             <span className="absolute right-[24px] top-[58px] whitespace-nowrap font-heebo text-[13px] leading-[19px] text-white/80">תמונה של אולם קולנוע, בבית</span>
-            <img
+            <img loading="lazy"
               src={asset("domain-cinema.png")}
               alt="קולנוע ביתי"
               className="absolute inset-x-[24px] top-[118px] h-[180px] w-[calc(100%-48px)] rounded-[4px] object-cover shadow-[0_12px_24px_rgba(0,0,0,0.3)]"

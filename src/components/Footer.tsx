@@ -39,7 +39,7 @@ export default function Footer() {
           <div className="flex gap-[10px]">
             {["social-4.svg", "social-3.svg", "social-2.svg", "social-1.svg"].map((s) => (
               <a key={s} href="#" className="flex size-[42px] items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.06] transition-colors hover:bg-white/[0.14]" aria-label="רשת חברתית">
-                <img src={asset(s)} alt="" className="size-[18px]" />
+                <img loading="lazy" src={asset(s)} alt="" className="size-[18px]" />
               </a>
             ))}
           </div>
@@ -68,7 +68,7 @@ export default function Footer() {
           {CONTACT.map((c) => {
             const inner = (
               <>
-                <img src={asset(c.icon)} alt="" className="size-[16px]" />
+                <img loading="lazy" src={asset(c.icon)} alt="" className="size-[16px]" />
                 <span dir={c.ltr ? "ltr" : undefined}>{c.text}</span>
               </>
             );
@@ -88,7 +88,7 @@ export default function Footer() {
         <span className="hidden flex-1 xl:block" />
         <a href="#top" className="group col-span-2 flex w-fit flex-col items-center gap-[8px] justify-self-end sm:col-span-3 xl:mt-[12px]">
           <span className="flex size-[56px] items-center justify-center rounded-full bg-lime transition-transform group-hover:-translate-y-[3px]">
-            <img src={asset("icon-arrow-up.svg")} alt="" className="size-[22px]" />
+            <img loading="lazy" src={asset("icon-arrow-up.svg")} alt="" className="size-[22px]" />
           </span>
           <span className="font-heebo text-[12px] font-medium leading-[18px] text-white/60">למעלה</span>
         </a>

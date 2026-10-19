@@ -66,7 +66,7 @@ export function PixelCluster({ color, mirror = false, small = false, style, clas
 export function Sparkle({ src, size, style, className = "" }: { src: string; size: number; style?: CSSProperties; className?: string }) {
   return (
     <span className={`pointer-events-none absolute ${className}`} style={{ width: size, height: size, ...style }} aria-hidden>
-      <img src={asset(src)} alt="" className="absolute inset-[-60%] block size-[220%] max-w-none" />
+      <img loading="lazy" src={asset(src)} alt="" className="absolute inset-[-60%] block size-[220%] max-w-none" />
     </span>
   );
 }
@@ -93,7 +93,7 @@ export function LimeButton({
       className={`group flex items-center justify-between rounded-[20px] bg-lime pl-[12px] pr-[22px] transition-[filter,box-shadow] duration-200 hover:shadow-[0_8px_24px_rgba(212,255,90,0.45)] hover:brightness-105 ${className}`}
     >
       <span className={`whitespace-nowrap font-rubik font-medium leading-none text-ink ${textClass}`}>{label}</span>
-      <img
+      <img loading="lazy"
         src={asset(arrow)}
         alt=""
         className="shrink-0 transition-transform duration-200 group-hover:rotate-45"
@@ -107,7 +107,7 @@ export function LimeButton({
 export function GlassChip({ children, icon, className = "", style }: { children: ReactNode; icon?: string; className?: string; style?: CSSProperties }) {
   return (
     <span className={`glass-dark inline-flex items-center gap-[7px] whitespace-nowrap rounded-full px-[12px] py-[6px] font-rubik text-[13px] font-medium leading-[15px] text-white ${className}`} style={style}>
-      {icon && <img src={asset(icon)} alt="" className="size-[14px]" />}
+      {icon && <img loading="lazy" src={asset(icon)} alt="" className="size-[14px]" />}
       {children}
     </span>
   );
@@ -120,7 +120,7 @@ export function LightChip({ children, icon, className = "", style }: { children:
       className={`inline-flex items-center gap-[7px] whitespace-nowrap rounded-full border border-[rgba(18,22,51,0.14)] bg-white px-[12px] py-[6px] font-rubik text-[13px] font-medium leading-[15px] text-navy ${className}`}
       style={style}
     >
-      {icon && <img src={asset(icon)} alt="" className="size-[14px]" />}
+      {icon && <img loading="lazy" src={asset(icon)} alt="" className="size-[14px]" />}
       {children}
     </span>
   );
@@ -131,7 +131,7 @@ export function Glow({ src, box, inset, className = "" }: { src: string; box: CS
   return (
     <span className={`pointer-events-none absolute ${className}`} style={box} aria-hidden>
       <span className="absolute" style={{ inset }}>
-        <img src={asset(src)} alt="" className="block size-full max-w-none" />
+        <img loading="lazy" src={asset(src)} alt="" className="block size-full max-w-none" />
       </span>
     </span>
   );

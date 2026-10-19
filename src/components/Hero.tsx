@@ -38,7 +38,7 @@ function CatalogButton({ name, price }: { name: string; price: string }) {
         <span className="whitespace-nowrap font-heebo text-[17px] font-semibold leading-[25px] text-ink">{name}</span>
         <span className="whitespace-nowrap font-heebo text-[13px] leading-[19px] text-ink/70">החל מ- {price}</span>
       </span>
-      <img src={asset("catalog-arrow.svg")} alt="" className="size-[36px] transition-transform duration-[250ms] ease-out group-hover:rotate-45" />
+      <img loading="lazy" src={asset("catalog-arrow.svg")} alt="" className="size-[36px] transition-transform duration-[250ms] ease-out group-hover:rotate-45" />
     </a>
   );
 }
@@ -49,7 +49,7 @@ function Stars({ size }: { size: number }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <span key={i} className="relative" style={{ width: size, height: size }}>
           <span className="absolute inset-[0_2.45%_9.55%_2.45%]">
-            <img src={asset("star-rating.svg")} alt="" className="block size-full max-w-none" />
+            <img loading="lazy" src={asset("star-rating.svg")} alt="" className="block size-full max-w-none" />
           </span>
         </span>
       ))}
@@ -61,7 +61,7 @@ function LivePulse() {
   return (
     <span className="relative block size-[28px]">
       <span className="live-ring absolute left-[9px] top-[9px] size-[10px] rounded-full bg-lime/70" />
-      <img src={asset("live-pulse.svg")} alt="" className="absolute inset-0 size-full" />
+      <img loading="lazy" src={asset("live-pulse.svg")} alt="" className="absolute inset-0 size-full" />
     </span>
   );
 }
@@ -91,7 +91,7 @@ function SecondaryActions() {
           {PHONE}
         </span>
         <span className="flex size-[34px] items-center justify-center rounded-full bg-lime">
-          <img src={asset("phone-icon.svg")} alt="" className="size-[16px]" />
+          <img loading="lazy" src={asset("phone-icon.svg")} alt="" className="size-[16px]" />
         </span>
       </a>
       <a href="https://wa.me/972544228606" className="rounded-full border-[1.2px] border-white/80 px-[18px] py-[10px] font-rubik text-[15px] font-medium leading-[18px] text-white transition-colors hover:bg-white/10">
@@ -123,9 +123,9 @@ function HeroDesktop() {
           }}
         >
           <span className="absolute left-[102px] top-[220px] size-[620px]">
-            <img src={asset("violet-glow.svg")} alt="" className="absolute inset-[-27.42%] block size-[154.84%] max-w-none" />
+            <img loading="lazy" src={asset("violet-glow.svg")} alt="" className="absolute inset-[-27.42%] block size-[154.84%] max-w-none" />
           </span>
-          <img src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="absolute left-0 top-[84px] h-[820px] w-[760px] object-cover opacity-[0.92]" />
+          <img loading="eager" fetchPriority="high" src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="absolute left-0 top-[84px] h-[820px] w-[760px] object-cover opacity-[0.92]" />
           <span
             className="absolute left-0 top-[84px] h-[820px] w-[760px]"
             style={{ backgroundImage: "linear-gradient(to right, rgba(75,79,216,0.15), rgba(79,79,220,0.35) 55%, #5250de)" }}
@@ -146,7 +146,7 @@ function HeroDesktop() {
         </nav>
         <a href="#contact" className="group absolute left-[80px] top-[39px] flex items-center gap-[14px]">
           <span className="whitespace-nowrap font-rubik text-[17px] font-medium leading-[20px] text-white">קבלו הצעת מחיר</span>
-          <img src={asset("tab-arrow.svg")} alt="" className="size-[38px] transition-transform duration-200 group-hover:rotate-45" />
+          <img loading="lazy" src={asset("tab-arrow.svg")} alt="" className="size-[38px] transition-transform duration-200 group-hover:rotate-45" />
         </a>
 
         {/* Copy */}
@@ -170,7 +170,7 @@ function HeroDesktop() {
         <div className="absolute left-[48px] top-[435px] flex w-[300px] flex-col items-end gap-[12px]">
           <span className="flex items-center gap-[8px] rounded-full bg-[rgba(21,21,25,0.55)] px-[14px] py-[6px] backdrop-blur-[6px]">
             <span className="font-heebo text-[14px] font-medium leading-[21px] text-white">ניווט מהיר לקטלוג</span>
-            <img src={asset("dot-lime.svg")} alt="" className="size-[7px]" />
+            <img loading="lazy" src={asset("dot-lime.svg")} alt="" className="size-[7px]" />
           </span>
           {CATALOG.map((c) => (
             <CatalogButton key={c.name} {...c} />
@@ -196,7 +196,7 @@ function HeroDesktop() {
           className="group absolute left-[1030px] top-[840px] flex h-[76px] w-[338px] items-center justify-between rounded-[22px] bg-lime pl-[22px] pr-[28px] transition-[filter] hover:brightness-105"
         >
           <span className="font-rubik text-[20px] font-medium leading-[24px] text-ink">לשיחת ייעוץ חינם</span>
-          <img src={asset("hero-cta-arrow.svg")} alt="" className="size-[40px] transition-transform duration-200 group-hover:rotate-45" />
+          <img loading="lazy" src={asset("hero-cta-arrow.svg")} alt="" className="size-[40px] transition-transform duration-200 group-hover:rotate-45" />
         </a>
 
         {/* Jewels */}

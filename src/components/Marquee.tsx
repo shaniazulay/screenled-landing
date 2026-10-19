@@ -19,7 +19,7 @@ function Set() {
           <span className="whitespace-nowrap font-rubik text-[18px] font-bold leading-[26px] text-ink xl:text-[22px]" dir="rtl">
             {d}
           </span>
-          <img src={asset("marquee-star.svg")} alt="" className="size-[14px]" />
+          <img loading="lazy" src={asset("marquee-star.svg")} alt="" className="size-[14px]" />
         </span>
       ))}
     </>

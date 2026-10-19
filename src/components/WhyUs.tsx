@@ -57,7 +57,7 @@ export default function WhyUs() {
                     {it.title}
                   </h3>
                   <p className="mt-[8px] max-w-[420px] font-heebo text-[16px] leading-[26px] text-slate-body xl:text-[17px] xl:leading-[28px]">{it.desc}</p>
-                  <img src={asset(it.icon)} alt="" className="absolute left-0 top-[28px] hidden size-[36px] sm:block xl:top-[30px]" />
+                  <img loading="lazy" src={asset(it.icon)} alt="" className="absolute left-0 top-[28px] hidden size-[36px] sm:block xl:top-[30px]" />
                 </li>
               );
             })}
@@ -68,7 +68,7 @@ export default function WhyUs() {
 
         {/* Macro photo (left column) */}
         <div className="relative h-[460px] overflow-hidden rounded-[28px] sm:h-[600px] xl:mt-[4px] xl:h-[924px]">
-          <img src={asset("macro-led.png")} alt="תקריב של פיקסלים במסך LED" className="absolute inset-0 size-full object-cover" />
+          <img loading="lazy" src={asset("macro-led.png")} alt="תקריב של פיקסלים במסך LED" className="absolute inset-0 size-full object-cover" />
           <span className="absolute inset-x-0 bottom-0 h-[220px] bg-gradient-to-b from-[rgba(21,21,25,0)] to-[rgba(21,21,25,0.85)]" />
           <p className="absolute bottom-[32px] right-[32px] font-rubik text-[20px] font-medium leading-[30px] text-white">
             כל פיקסל במקום.
@@ -81,9 +81,9 @@ export default function WhyUs() {
 
           {/* Magnifier callout */}
           <span className="absolute left-[187px] top-[272px] hidden size-[104px] xl:block" aria-hidden>
-            <img src={asset("magnifier-ring.svg")} alt="" className="absolute inset-[-15.38%] block size-[130.77%] max-w-none" />
+            <img loading="lazy" src={asset("magnifier-ring.svg")} alt="" className="absolute inset-[-15.38%] block size-[130.77%] max-w-none" />
           </span>
-          <img src={asset("dot-lime-6.svg")} alt="" className="absolute left-[236px] top-[321px] hidden size-[6px] xl:block" />
+          <img loading="lazy" src={asset("dot-lime-6.svg")} alt="" className="absolute left-[236px] top-[321px] hidden size-[6px] xl:block" />
           <span className="absolute left-[291px] top-[324px] hidden h-[1.2px] w-[44px] bg-lime/80 min-[1380px]:block" />
           <span className="glass-dark absolute left-[335px] top-[310px] hidden whitespace-nowrap rounded-full px-[12px] py-[6px] font-rubik text-[13px] font-medium leading-[15px] text-white min-[1380px]:block">
             פיקסל אמיתי, מקרוב

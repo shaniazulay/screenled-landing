@@ -29,7 +29,7 @@ export default function ProblemSolution() {
         </div>
 
         <div className="relative h-[420px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_rgba(0,0,0,0.4)] sm:h-[520px] xl:h-[603px]">
-          <img
+          <img loading="lazy"
             src={asset("solution.png")}
             alt="חלון ראווה עם מסך LED"
             className="absolute inset-0 size-full object-cover transition-[filter] duration-500"

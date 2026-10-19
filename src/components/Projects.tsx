@@ -35,11 +35,11 @@ export default function Projects() {
       {/* Curved video wall (scrollable on small screens) */}
       <div className="mt-[40px] overflow-x-auto xl:mt-[60px] xl:overflow-visible [scrollbar-width:none]">
         <div className="relative aspect-[1440/634] min-w-[880px] xl:-mx-[24px] xl:min-w-0">
-          <img src={asset("wall-rim.svg")} alt="" className="absolute inset-0 size-full" />
+          <img loading="lazy" src={asset("wall-rim.svg")} alt="" className="absolute inset-0 size-full" />
           <div className="absolute inset-x-0 top-[3.47%] h-[93.06%] bg-night" style={wallMask}>
             {PANELS.map((p) => (
               <div key={p.img} className="absolute inset-y-0" style={{ left: `${p.left}%`, width: `${p.width}%` }}>
-                <img src={asset(p.img)} alt={p.caption ?? ""} className="absolute inset-0 size-full object-cover" />
+                <img loading="lazy" src={asset(p.img)} alt={p.caption ?? ""} className="absolute inset-0 size-full object-cover" />
                 {p.caption && (
                   <span className="absolute right-[16px] top-[73.39%] whitespace-nowrap rounded-[4px] bg-[rgba(21,21,25,0.7)] px-[12px] py-[6px] font-heebo text-[13px] font-medium leading-[19px] text-white">
                     {p.caption}

@@ -25,7 +25,7 @@ export function MLimeButton({ label, href = "#contact-m" }: { label: string; hre
   return (
     <a href={href} className="group flex h-[56px] w-full items-center justify-between rounded-[18px] bg-lime pl-[10px] pr-[20px] active:brightness-95">
       <span className="font-rubik text-[16px] font-medium leading-[19px] text-ink">{label}</span>
-      <img src={m("arrow-dark-34.svg")} alt="" className="size-[34px] transition-transform group-hover:rotate-45" />
+      <img loading="lazy" src={m("arrow-dark-34.svg")} alt="" className="size-[34px] transition-transform group-hover:rotate-45" />
     </a>
   );
 }
@@ -55,9 +55,9 @@ export function MHero() {
         {/* Panel (tab + notches) */}
         <div className="absolute left-0 top-0 h-[779.2px] w-full overflow-hidden" style={{ ...panelMask, backgroundImage: `url(${m("panel-fill.svg")})`, backgroundSize: "100% 100%" }}>
           <span className="absolute left-[30px] top-[445.2px] size-[300px]">
-            <img src={m("hero-glow.svg")} alt="" className="absolute inset-[-36.67%] block size-[173.34%] max-w-none" />
+            <img loading="lazy" src={m("hero-glow.svg")} alt="" className="absolute inset-[-36.67%] block size-[173.34%] max-w-none" />
           </span>
-          <img src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="absolute left-0 top-[40px] h-[290px] w-full object-cover" />
+          <img loading="eager" fetchPriority="high" src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="absolute left-0 top-[40px] h-[290px] w-full object-cover" />
           <span className="absolute left-0 top-[40px] h-[110px] w-full bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
           <span className="absolute left-0 top-[180px] h-[150px] w-full bg-gradient-to-b from-[rgba(77,79,218,0)] to-[#4d4fda]" />
         </div>
@@ -83,7 +83,7 @@ export function MHero() {
               {PHONE}
             </span>
             <span className="flex size-[40px] items-center justify-center rounded-full bg-lime">
-              <img src={m("phone.svg")} alt="" className="size-[18px]" />
+              <img loading="lazy" src={m("phone.svg")} alt="" className="size-[18px]" />
             </span>
           </a>
           <div className="flex w-full gap-[8px]">
@@ -92,7 +92,7 @@ export function MHero() {
             </a>
             <a href={WA} className="flex h-[46px] flex-1 items-center justify-center gap-[8px] rounded-full border-[1.2px] border-white/80 px-[14px]">
               <span className="font-rubik text-[14px] font-medium text-white">וואטסאפ</span>
-              <img src={m("whatsapp.svg")} alt="" className="size-[16px]" />
+              <img loading="lazy" src={m("whatsapp.svg")} alt="" className="size-[16px]" />
             </a>
           </div>
         </div>
@@ -100,14 +100,14 @@ export function MHero() {
         {/* Top bar */}
         <a href="#contact-m" className="absolute left-[25px] top-[14px] flex items-center gap-[10px]">
           <span className="font-rubik text-[15px] font-medium leading-[18px] text-white">קבלו הצעת מחיר</span>
-          <img src={m("tab-arrow.svg")} alt="" className="size-[32px]" />
+          <img loading="lazy" src={m("tab-arrow.svg")} alt="" className="size-[32px]" />
         </a>
         <a href="#top" className="absolute right-[4px] top-[16px] flex items-center gap-[6px]" dir="ltr" aria-label="SCREENLED">
           <span className="rounded-[5px] bg-white px-[6px] py-[2px] font-mont text-[13px] font-extrabold leading-[16px] text-ink">SCREEN</span>
           <span className="font-mont text-[15px] font-bold leading-[18px] text-white">LED</span>
         </a>
         <button className="absolute right-[124px] top-[14px] size-[24px]" aria-label="תפריט">
-          <img src={m("menu.svg")} alt="" className="size-full" />
+          <img loading="lazy" src={m("menu.svg")} alt="" className="size-full" />
         </button>
 
         <span className={`absolute left-[16px] top-[76px] flex items-center gap-[6px] rounded-full py-[5px] pl-[10px] pr-[12px] ${glass}`}>
@@ -117,7 +117,7 @@ export function MHero() {
           </span>
           <span className="relative size-[8px]">
             <span className="live-ring absolute inset-0 rounded-full bg-lime/70" />
-            <img src={m("live-dot.svg")} alt="" className="absolute inset-0 size-full" />
+            <img loading="lazy" src={m("live-dot.svg")} alt="" className="absolute inset-0 size-full" />
           </span>
         </span>
         <span className={`absolute right-[14px] top-[206px] rounded-full border border-white/[0.18] px-[10px] py-[4px] font-rubik text-[11px] font-medium leading-[13px] text-white ${glass}`}>
@@ -130,7 +130,7 @@ export function MHero() {
         <span className="absolute left-[82px] top-[715.2px] flex flex-col items-center gap-[2px]">
           <span className="relative size-[13px]">
             <span className="absolute inset-[0_2.45%_9.55%_2.45%]">
-              <img src={asset("star-rating.svg")} alt="" className="block size-full" />
+              <img loading="lazy" src={asset("star-rating.svg")} alt="" className="block size-full" />
             </span>
           </span>
           <span className="font-mont text-[13px] font-bold leading-[16px] text-white">5.0</span>
@@ -143,20 +143,20 @@ export function MHero() {
         </span>
         <a href="#contact-m" className="absolute right-0 top-[713.2px] flex h-[74px] w-[224px] items-center justify-between rounded-[18px] bg-lime pl-[10px] pr-[18px]">
           <span className="font-rubik text-[16px] font-medium leading-[19px] text-ink">לשיחת ייעוץ חינם</span>
-          <img src={m("arrow-dark-34.svg")} alt="" className="size-[34px]" />
+          <img loading="lazy" src={m("arrow-dark-34.svg")} alt="" className="size-[34px]" />
         </a>
       </div>
 
       {/* Quick catalog */}
       <div className="flex flex-col items-start gap-[10px] px-[8px] pb-[10px] pt-[4px]">
         <span className="flex items-center gap-[6px]">
-          <img src={asset("dot-lime.svg")} alt="" className="size-[7px]" />
+          <img loading="lazy" src={asset("dot-lime.svg")} alt="" className="size-[7px]" />
           <span className="font-heebo text-[13px] font-medium leading-[19px] text-white">ניווט מהיר לקטלוג</span>
         </span>
         <div className="grid w-full grid-cols-2 gap-[8px]">
           {CATALOG.map((c) => (
             <a key={c.name} href="#products-m" className="flex h-[62px] items-center gap-[8px] rounded-[16px] bg-lime py-[6px] pl-[10px] pr-[6px]">
-              <img src={asset(c.img)} alt="" className="size-[48px] shrink-0 rounded-[11px] object-cover" />
+              <img loading="lazy" src={asset(c.img)} alt="" className="size-[48px] shrink-0 rounded-[11px] object-cover" />
               <span className="flex min-w-0 flex-1 flex-col gap-px">
                 <span className="font-rubik text-[13px] font-semibold leading-[16px] text-ink">{c.name}</span>
                 <span className="font-rubik text-[11px] leading-[13px] text-ink/65">החל מ- {c.price}</span>
@@ -179,7 +179,7 @@ export function MMarquee() {
       <span className="whitespace-nowrap font-heebo text-[16px] font-bold leading-[24px] text-ink" dir="rtl">
         {d}
       </span>
-      <img src={m("marquee-star.svg")} alt="" className="size-[10px]" />
+      <img loading="lazy" src={m("marquee-star.svg")} alt="" className="size-[10px]" />
     </span>
   ));
   return (
@@ -212,12 +212,12 @@ export function MWhyUs() {
       </h2>
       <p className="font-heebo text-[15px] leading-[24px] text-slate-muted">צוות אחד שמלווה אתכם מהבחירה בטכנולוגיה ועד התחזוקה השוטפת.</p>
       <div className="relative h-[280px] w-full overflow-hidden rounded-[22px]">
-        <img src={asset("macro-led.png")} alt="תקריב של פיקסלים במסך LED" className="absolute inset-0 size-full object-cover" />
+        <img loading="lazy" src={asset("macro-led.png")} alt="תקריב של פיקסלים במסך LED" className="absolute inset-0 size-full object-cover" />
         <span className="absolute left-[70px] top-[90px] size-[78px]">
-          <img src={m("magnifier.svg")} alt="" className="absolute inset-[-17.95%] block size-[135.9%] max-w-none" />
+          <img loading="lazy" src={m("magnifier.svg")} alt="" className="absolute inset-[-17.95%] block size-[135.9%] max-w-none" />
         </span>
         <span className="absolute inset-x-0 bottom-0 h-[130px] bg-gradient-to-b from-[rgba(10,14,41,0)] to-[rgba(10,14,41,0.85)]" />
-        <img src={m("dot-lime-5.svg")} alt="" className="absolute left-[106.5px] top-[126.5px] size-[5px]" />
+        <img loading="lazy" src={m("dot-lime-5.svg")} alt="" className="absolute left-[106.5px] top-[126.5px] size-[5px]" />
         <span className="absolute left-[148px] top-[129px] h-[1.2px] w-[30px] bg-lime/80" />
         <span className={`absolute left-[178px] top-[118px] whitespace-nowrap rounded-full border border-white/[0.18] px-[10px] py-[4px] font-rubik text-[11px] font-medium leading-[13px] text-white ${glass}`}>
           פיקסל אמיתי, מקרוב
@@ -247,7 +247,7 @@ export function MWhyUs() {
                 <span className={`font-rubik text-[19px] leading-[26px] ${on ? "font-bold text-indigo" : "font-semibold text-navy"}`}>{w.title}</span>
                 <span className="font-heebo text-[14px] leading-[22px] text-slate-muted">{w.desc}</span>
               </span>
-              <img src={m(w.icon)} alt="" className="size-[26px] shrink-0" />
+              <img loading="lazy" src={m(w.icon)} alt="" className="size-[26px] shrink-0" />
             </li>
           );
         })}
@@ -269,7 +269,7 @@ const M_PRODUCTS = [
 function TrustPill({ children }: { children: string }) {
   return (
     <span className="flex items-center gap-[5px] rounded-full border border-[rgba(18,22,51,0.14)] px-[10px] py-[5px]">
-      <img src={m("check-12.svg")} alt="" className="size-[12px]" />
+      <img loading="lazy" src={m("check-12.svg")} alt="" className="size-[12px]" />
       <span className="font-heebo text-[12px] font-medium leading-[18px] text-navy">{children}</span>
     </span>
   );
@@ -291,7 +291,7 @@ export function MProducts() {
       <div className="grid w-full grid-cols-2 gap-[10px]">
         {M_PRODUCTS.map((p) => (
           <article key={p.name} className="relative flex h-[244px] flex-col overflow-hidden rounded-[18px] border border-[rgba(18,22,51,0.07)] bg-white shadow-[0_8px_20px_rgba(27,33,64,0.07)]">
-            <img src={asset(p.img)} alt={p.name} className="h-[118px] w-full shrink-0 object-cover" />
+            <img loading="lazy" src={asset(p.img)} alt={p.name} className="h-[118px] w-full shrink-0 object-cover" />
             {p.best && (
               <span className="absolute right-[4px] top-[8px] rounded-full bg-lime px-[8px] py-[3px] font-rubik text-[10px] font-medium leading-[12px] text-ink">✦ הנמכר ביותר</span>
             )}
@@ -345,10 +345,10 @@ export function MProjects() {
         לא תמונות מקטלוג. <span className="text-lime">פרויקטים אמיתיים שהתקנו.</span>
       </h2>
       <div className="relative h-[270px] w-full overflow-hidden">
-        <img src={m("rim.svg")} alt="" className="absolute inset-0 size-full" />
+        <img loading="lazy" src={m("rim.svg")} alt="" className="absolute inset-0 size-full" />
         <div className="absolute inset-x-0 top-[10px] h-[250px]" style={wallMask}>
           {M_PANELS.map((p) => (
-            <img key={p.img} src={asset(p.img)} alt="" className="absolute top-0 h-full object-cover" style={{ left: `${p.left}%`, width: "33.74%" }} />
+            <img key={p.img} loading="lazy" src={asset(p.img)} alt="" className="absolute top-0 h-full object-cover" style={{ left: `${p.left}%`, width: "33.74%" }} />
           ))}
           <span className="absolute inset-0" style={{ backgroundImage: "linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(0,0,0,0.55) 100%)" }} />
         </div>
@@ -358,7 +358,7 @@ export function MProjects() {
       </div>
       <div className="flex w-full items-center justify-between">
         <span className="flex items-center gap-[6px] rounded-full border border-white/25 px-[12px] py-[5px]">
-          <img src={asset("icon-drag.svg")} alt="" className="size-[14px]" />
+          <img loading="lazy" src={asset("icon-drag.svg")} alt="" className="size-[14px]" />
           <span className="font-rubik text-[12px] font-medium leading-[14px] text-white">החליקו לצפייה</span>
         </span>
         <span className="relative h-[2px] w-[70px] overflow-hidden rounded-[1px] bg-white/15">
@@ -381,7 +381,7 @@ export function MProblemSolution() {
   return (
     <MCard id="solution-m" className="!pb-[56px]">
       <div className="relative h-[300px] w-full overflow-hidden rounded-[22px]">
-        <img
+        <img loading="lazy"
           src={asset("solution.png")}
           alt="חלון ראווה עם מסך LED"
           className="absolute inset-0 size-full object-cover transition-[filter] duration-500"

@@ -18,7 +18,7 @@ const QUOTE = "המסך בכניסה שינה את התנועה במתחם. אנ
 function SideCard({ c, className = "", style }: { c: Side; className?: string; style?: React.CSSProperties }) {
   return (
     <div className={`overflow-hidden rounded-[24px] shadow-[0_24px_50px_rgba(10,14,41,0.28)] ${className}`} style={style}>
-      <img src={asset(c.img)} alt={c.label} className="absolute inset-0 size-full object-cover" />
+      <img loading="lazy" src={asset(c.img)} alt={c.label} className="absolute inset-0 size-full object-cover" />
       <span className="absolute inset-0 bg-gradient-to-b from-[rgba(5,8,26,0)] from-45% to-[rgba(5,8,26,0.85)]" />
       <span className="absolute inset-0" style={{ background: `rgba(21,21,25,${c.dim})` }} />
       <span className={`absolute bottom-[20px] whitespace-nowrap font-heebo text-[16px] font-bold leading-[24px] text-white ${c.labelSide === "left" ? "left-[20px]" : "right-[20px]"}`}>
@@ -31,19 +31,19 @@ function SideCard({ c, className = "", style }: { c: Side; className?: string; s
 function ActiveCard({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
   return (
     <figure className={`m-0 overflow-hidden rounded-[24px] shadow-[0_30px_60px_rgba(10,14,41,0.4)] ${className}`} style={style}>
-      <img src={asset("project-2.png")} alt="קיר וידאו באטריום קניון" className="absolute inset-0 size-full object-cover" />
+      <img loading="lazy" src={asset("project-2.png")} alt="קיר וידאו באטריום קניון" className="absolute inset-0 size-full object-cover" />
       <span className="absolute inset-0 bg-gradient-to-b from-[rgba(5,8,26,0)] from-45% to-[rgba(5,8,26,0.85)]" />
       <span className="absolute right-[20px] top-[20px] rounded-full bg-white/[0.18] px-[10px] py-[5px] font-heebo text-[12px] font-medium leading-[18px] text-white backdrop-blur-[5px]">
         המלצת וידאו · 0:48
       </span>
-      <img src={asset("stars-87.svg")} alt="5 כוכבים" className="absolute bottom-[159px] right-[28px] h-[15px] w-[87px]" />
+      <img loading="lazy" src={asset("stars-87.svg")} alt="5 כוכבים" className="absolute bottom-[159px] right-[28px] h-[15px] w-[87px]" />
       <blockquote className="absolute bottom-[89px] right-[28px] m-0 w-[calc(100%-80px)] max-w-[320px] font-heebo text-[19px] font-medium leading-[29px] text-white">{QUOTE}</blockquote>
       <figcaption className="absolute bottom-[28px] right-[28px] flex flex-col items-start">
         <span className="font-heebo text-[16px] font-bold leading-[24px] text-white">שם הלקוח</span>
         <span className="font-heebo text-[13px] leading-[19px] text-white/75">מנהל/ת שיווק · קניון</span>
       </figcaption>
       <button className="absolute bottom-[28px] left-[28px] flex size-[54px] items-center justify-center rounded-full bg-white transition-transform hover:scale-105" aria-label="הפעלת סרטון">
-        <img src={asset("icon-play.svg")} alt="" className="ml-[2px] size-[22px]" />
+        <img loading="lazy" src={asset("icon-play.svg")} alt="" className="ml-[2px] size-[22px]" />
       </button>
     </figure>
   );
@@ -75,7 +75,7 @@ export default function Testimonials() {
             5.0
           </span>
           <span className="flex flex-col items-start gap-[4px]">
-            <img src={asset("stars-102.svg")} alt="5 כוכבים" className="h-[18px] w-[102px]" />
+            <img loading="lazy" src={asset("stars-102.svg")} alt="5 כוכבים" className="h-[18px] w-[102px]" />
             <span className="whitespace-nowrap font-heebo text-[14px] leading-[21px] text-slate-body">על סמך ביקורות בגוגל</span>
           </span>
         </div>

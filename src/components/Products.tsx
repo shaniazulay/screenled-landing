@@ -10,11 +10,11 @@ const PRODUCTS = [
 function ProductCard({ p }: { p: (typeof PRODUCTS)[number] }) {
   return (
     <article className="relative flex h-[520px] flex-col overflow-hidden rounded-[22px] bg-white shadow-[0_14px_40px_rgba(27,33,64,0.08)] xl:h-[560px]">
-      <img src={asset(p.img)} alt={p.name} className="h-[270px] w-full shrink-0 object-cover" />
+      <img loading="lazy" src={asset(p.img)} alt={p.name} className="h-[270px] w-full shrink-0 object-cover" />
       {p.best && (
         <span className="absolute right-[14px] top-[14px] flex items-center gap-[6px] rounded-full bg-lime px-[10px] py-[4px]">
           <span className="font-heebo text-[12px] font-medium leading-[18px] text-ink">הנמכר ביותר</span>
-          <img src={asset("star-dark.svg")} alt="" className="size-[10px]" />
+          <img loading="lazy" src={asset("star-dark.svg")} alt="" className="size-[10px]" />
         </span>
       )}
       <div className="flex flex-1 flex-col items-start gap-[8px] p-[22px]">
@@ -28,7 +28,7 @@ function ProductCard({ p }: { p: (typeof PRODUCTS)[number] }) {
         {p.cart ? (
           <button className="flex h-[50px] w-full items-center justify-center gap-[8px] rounded-full bg-lime px-[24px] transition-[filter] hover:brightness-105">
             <span className="font-heebo text-[16px] font-bold leading-[24px] text-ink">להוספה לסל</span>
-            <img src={asset("icon-cart.svg")} alt="" className="size-[18px]" />
+            <img loading="lazy" src={asset("icon-cart.svg")} alt="" className="size-[18px]" />
           </button>
         ) : (
           <a

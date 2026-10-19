@@ -11,6 +11,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { asset, Glow } from "@/components/ui";
 import MobileHome from "@/components/mobile/MobileHome";
+import FitSection from "@/components/FitSection";
 
 const CANVAS_GLOWS = [
   { left: 1100, top: 600 },
@@ -31,15 +32,33 @@ export default function App() {
       <main className="relative flex flex-col gap-[12px] p-[12px] lg:gap-[24px] lg:p-[24px]">
         <Hero />
         <Marquee />
-        <WhyUs />
-        <Products />
-        <Projects />
-        <ProblemSolution />
-        <Domains />
-        <HowItWorks />
-        <Testimonials />
-        <Contact />
-        <Footer />
+        <FitSection>
+          <WhyUs />
+        </FitSection>
+        <FitSection>
+          <Products />
+        </FitSection>
+        <FitSection>
+          <Projects />
+        </FitSection>
+        <FitSection>
+          <ProblemSolution />
+        </FitSection>
+        <FitSection>
+          <Domains />
+        </FitSection>
+        <FitSection>
+          <HowItWorks />
+        </FitSection>
+        <FitSection>
+          <Testimonials />
+        </FitSection>
+        <FitSection>
+          <Contact />
+        </FitSection>
+        <FitSection>
+          <Footer />
+        </FitSection>
       </main>
 
       <a

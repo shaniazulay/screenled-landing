@@ -34,7 +34,7 @@ export default function Projects() {
 
       {/* Curved video wall (scrollable on small screens) */}
       <div className="mt-[40px] overflow-x-auto xl:mt-[60px] xl:overflow-visible [scrollbar-width:none]">
-        <div className="relative aspect-[1440/634] min-w-[880px] xl:-mx-[24px] xl:min-w-0">
+        <div className="relative aspect-[1440/634] min-w-[880px] xl:-mx-[24px] xl:aspect-auto xl:h-[634px] xl:min-w-0">
           <img loading="lazy" src={asset("wall-rim.svg")} alt="" className="absolute inset-0 size-full" />
           <div className="absolute inset-x-0 top-[3.47%] h-[93.06%] bg-night" style={wallMask}>
             {PANELS.map((p) => (

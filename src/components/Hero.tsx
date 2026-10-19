@@ -104,22 +104,37 @@ function SecondaryActions() {
   );
 }
 
-/** Desktop hero: the exact 1392×940 Figma composition, scaled down to fit narrower screens. */
+/**
+ * The Figma panel outline (tab top-left, notches bottom-left/right) for a panel of width `w` (design: 1344).
+ * Left features keep their x; right features move with the right edge so corners never distort.
+ */
+function panelPath(w: number) {
+  const r = (x: number) => x + (w - 1344);
+  return `M0 28C0 12.5356 12.5356 0 28 0H254C269.464 0 282 12.5356 282 28V56C282 71.4644 294.536 84 310 84H${r(1316)}C${r(1331.46)} 84 ${r(1344)} 96.5356 ${r(1344)} 112V784C${r(1344)} 799.464 ${r(1331.46)} 812 ${r(1316)} 812H${r(1020)}C${r(1004.54)} 812 ${r(992)} 824.536 ${r(992)} 840V872C${r(992)} 887.464 ${r(979.464)} 900 ${r(964)} 900H194C178.536 900 166 887.464 166 872C166 856.536 153.464 844 138 844H28C12.5356 844 0 831.464 0 816V28Z`;
+}
+
+/**
+ * Desktop hero: the 1392×940 Figma composition. It scales to fit the screen height
+ * (so the whole hero is visible without scrolling) and, when that makes it narrower than the page,
+ * the canvas widens instead of leaving side gaps: left/right-anchored elements stay pinned to their edges.
+ */
 function HeroDesktop() {
-  const { ref, scale } = useFitScale<HTMLDivElement>(1392);
+  // Fit the content width and the screen height (24px page padding above and below).
+  const { ref, scale, width } = useFitScale<HTMLDivElement>(1392, 940, 48);
+  const canvasW = Math.max(1392, width / scale);
   return (
-    <div ref={ref} className="hidden lg:block" style={{ height: 940 * scale }}>
-      <div className="relative h-[940px] w-[1392px] origin-top-right overflow-hidden rounded-[36px] bg-night" style={{ transform: `scale(${scale})` }}>
+    <div ref={ref} className="relative hidden overflow-hidden lg:block" style={{ height: 940 * scale }}>
+      <div
+        className="absolute right-0 top-0 h-[940px] origin-top-right overflow-hidden rounded-[36px] bg-night"
+        style={{ width: canvasW, transform: `scale(${scale})` }}
+      >
         {/* Shaped violet panel */}
         <div
-          className="absolute left-[24px] top-[16px] h-[900px] w-[1344px] overflow-hidden"
+          className="absolute left-[24px] top-[16px] h-[900px] overflow-hidden"
           style={{
-            WebkitMaskImage: `url(${asset("hero-panel-mask.svg")})`,
-            maskImage: `url(${asset("hero-panel-mask.svg")})`,
-            WebkitMaskSize: "100% 100%",
-            maskSize: "100% 100%",
-            backgroundImage: `url(${asset("hero-panel.svg")})`,
-            backgroundSize: "100% 100%",
+            width: canvasW - 48,
+            clipPath: `path("${panelPath(canvasW - 48)}")`,
+            backgroundImage: "linear-gradient(153deg, #4b4fd8 0%, #5b4fe0 100%)",
           }}
         >
           <span className="absolute left-[102px] top-[220px] size-[620px]">
@@ -130,11 +145,13 @@ function HeroDesktop() {
             className="absolute left-0 top-[84px] h-[820px] w-[760px]"
             style={{ backgroundImage: "linear-gradient(to right, rgba(75,79,216,0.15), rgba(79,79,220,0.35) 55%, #5250de)" }}
           />
+          {/* soften the photo-fade edge into the panel fill */}
+          <span className="absolute left-[759px] top-[84px] h-[820px] w-[260px] bg-gradient-to-r from-[#5250de] to-[rgba(82,80,222,0)]" />
           <span className="absolute left-0 top-0 h-[220px] w-[760px] bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
         </div>
 
         {/* Header row */}
-        <div className="absolute left-[1157px] top-[42px]">
+        <div className="absolute right-[72px] top-[42px]">
           <Logo />
         </div>
         <nav className="absolute right-[325px] top-[47px] flex gap-[38px]" aria-label="ניווט ראשי">
@@ -193,7 +210,7 @@ function HeroDesktop() {
         {/* Primary CTA sitting in the panel notch */}
         <a
           href="#contact"
-          className="group absolute left-[1030px] top-[840px] flex h-[76px] w-[338px] items-center justify-between rounded-[22px] bg-lime pl-[22px] pr-[28px] transition-[filter] hover:brightness-105"
+          className="group absolute right-[24px] top-[840px] flex h-[76px] w-[338px] items-center justify-between rounded-[22px] bg-lime pl-[22px] pr-[28px] transition-[filter] hover:brightness-105"
         >
           <span className="font-rubik text-[20px] font-medium leading-[24px] text-ink">לשיחת ייעוץ חינם</span>
           <img loading="lazy" src={asset("hero-cta-arrow.svg")} alt="" className="size-[40px] transition-transform duration-200 group-hover:rotate-45" />
@@ -203,15 +220,15 @@ function HeroDesktop() {
         <GlassChip icon="icon-chip-white.svg" className="absolute left-[571px] top-[720px]">
           חזית מסחרית · מרכז העיר
         </GlassChip>
-        <span className="absolute left-[856px] top-[766px] h-[40px] w-[26px] rounded-[13px] border-[1.4px] border-white/60" aria-hidden>
+        <span className="absolute right-[510px] top-[766px] h-[40px] w-[26px] rounded-[13px] border-[1.4px] border-white/60" aria-hidden>
           <span className="scroll-wheel absolute left-[8.7px] top-[5.2px] h-[8px] w-[3px] rounded-[2px] bg-lime" />
         </span>
-        <Sparkle src="sparkle-hero-22.svg" size={22} style={{ left: 706, top: 226.4 }} />
-        <Sparkle src="sparkle-hero-10.svg" size={10} style={{ left: 732, top: 204.4 }} />
-        <Sparkle src="sparkle-hero-12.svg" size={12} style={{ left: 1236, top: 526.4 }} />
+        <Sparkle src="sparkle-hero-22.svg" size={22} style={{ right: 664, top: 226.4 }} />
+        <Sparkle src="sparkle-hero-10.svg" size={10} style={{ right: 650, top: 204.4 }} />
+        <Sparkle src="sparkle-hero-12.svg" size={12} style={{ right: 144, top: 526.4 }} />
         <Sparkle src="sparkle-9.svg" size={9} style={{ left: 536, top: 276 }} />
         <Sparkle src="sparkle-7.svg" size={7} style={{ left: 446, top: 536 }} />
-        <PixelCluster color="lime" mirror style={{ left: 1286, top: 872 }} />
+        <PixelCluster color="lime" mirror style={{ right: 72, top: 872 }} />
       </div>
     </div>
   );

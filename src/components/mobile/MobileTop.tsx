@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { asset, PixelCluster, SectionTag, Sparkle } from "../ui";
 
 export const m = (name: string) => asset(`m/${name}`);
@@ -42,25 +42,70 @@ const CATALOG = [
   { name: "מסך LED שקוף", price: "₪5,200", img: "product-transparent.png" },
 ];
 
-const panelMask: CSSProperties = {
-  WebkitMaskImage: `url(${m("panel-mask.svg")})`,
-  maskImage: `url(${m("panel-mask.svg")})`,
-  WebkitMaskSize: "100% 100%",
-  maskSize: "100% 100%",
-};
+
+/** Mobile panel outline (design 350×779.2) for width `w`: left features keep x, right ones follow the right edge. */
+function mPanelPath(w: number) {
+  const R = (x: number) => x + (w - 350);
+  const N = R(118); // CTA notch left edge
+  return `M0 20C0 8.954 8.954 0 20 0H176C187.046 0 196 8.954 196 20V40C196 51.046 204.954 60 216 60H${R(330)}C${R(341.046)} 60 ${w} 68.954 ${w} 80V685.2C${w} 696.246 ${R(341.046)} 705.2 ${R(330)} 705.2H${N + 20}C${N + 8.954} 705.2 ${N} 714.154 ${N} 725.2V759.2C${N} 770.246 ${N - 8.954} 779.2 ${N - 20} 779.2H81C72.7155 779.2 66 772.484 66 764.2C66 755.916 59.2845 749.2 51 749.2H20C8.954 749.2 0 740.246 0 729.2V20Z`;
+}
+
+const HERO_H = 787.2;
+const STICKY_RESERVE = 112; // page top padding + hero padding + sticky call bar
+
+/**
+ * Scale for the mobile hero so it fits the first screen (down to the "לשיחת ייעוץ חינם" button, above the
+ * sticky bar). The canvas widens by 1/scale so it still fills the width. Small height changes caused by the
+ * mobile URL bar showing/hiding are ignored so the hero doesn’t jump while scrolling.
+ */
+function useMobileHeroFit() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [fit, setFit] = useState({ s: 1, w: 350 });
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let lastW = 0;
+    let lastH = 0;
+    const update = () => {
+      const cw = el.clientWidth;
+      const vh = window.innerHeight;
+      if (cw === lastW && Math.abs(vh - lastH) < 140) return;
+      lastW = cw;
+      lastH = vh;
+      const s = Math.max(0.72, Math.min(1, (vh - STICKY_RESERVE) / HERO_H, cw / 350));
+      setFit({ s, w: cw / s });
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    window.addEventListener("resize", update);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+  return { ref, ...fit };
+}
 
 export function MHero() {
+  const { ref, s, w } = useMobileHeroFit();
   return (
     <header id="top" className="flex flex-col gap-[8px] overflow-hidden rounded-[28px] bg-night p-[8px]">
-      <div className="relative h-[787.2px] w-full">
+      <div ref={ref} className="relative w-full" style={{ height: HERO_H * s }}>
+      <div className="absolute right-0 top-0 origin-top-right" style={{ width: w, height: HERO_H, transform: `scale(${s})` }}>
         {/* Panel (tab + notches) */}
-        <div className="absolute left-0 top-0 h-[779.2px] w-full overflow-hidden" style={{ ...panelMask, backgroundImage: `url(${m("panel-fill.svg")})`, backgroundSize: "100% 100%" }}>
+        <div
+          className="absolute left-0 top-0 h-[779.2px] w-full overflow-hidden"
+          style={{ clipPath: `path("${mPanelPath(w)}")`, backgroundImage: "linear-gradient(121deg, #4b4fd8 0px, #5b4fe0 500px)" }}
+        >
           <span className="absolute left-[30px] top-[445.2px] size-[300px]">
             <img loading="lazy" src={m("hero-glow.svg")} alt="" className="absolute inset-[-36.67%] block size-[173.34%] max-w-none" />
           </span>
-          <img loading="eager" {...{ fetchpriority: "high" }} src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="ken-burns absolute left-0 top-[40px] h-[290px] w-full object-cover" />
-          <span className="absolute left-0 top-[40px] h-[110px] w-full bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
-          <span className="absolute left-0 top-[180px] h-[150px] w-full bg-gradient-to-b from-[rgba(77,79,218,0)] to-[#4d4fda]" />
+          <div className="absolute left-0 top-[40px] h-[290px] w-full overflow-hidden">
+            <img loading="eager" {...{ fetchpriority: "high" }} src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="ken-burns size-full object-cover" />
+          </div>
+          <span className="absolute left-0 top-[39px] h-[111px] w-full bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
+          <span className="absolute left-0 top-[180px] h-[151px] w-full bg-gradient-to-b from-[rgba(77,79,218,0)] to-[#4d4fda]" />
         </div>
 
         {/* Copy */}
@@ -148,6 +193,7 @@ export function MHero() {
           <span className="font-rubik text-[16px] font-medium leading-[19px] text-ink">לשיחת ייעוץ חינם</span>
           <img loading="lazy" src={m("arrow-dark-34.svg")} alt="" className="size-[34px]" />
         </a>
+      </div>
       </div>
 
       {/* Quick catalog */}

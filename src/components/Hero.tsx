@@ -180,14 +180,15 @@ function HeroDesktop() {
           <span className="absolute top-[220px] size-[620px]" style={{ left: 102 + (photoW - 760) / 2 }}>
             <img loading="lazy" src={asset("violet-glow.svg")} alt="" className="absolute inset-[-27.42%] block size-[154.84%] max-w-none" />
           </span>
-          <img
-            loading="eager"
-            {...{ fetchpriority: "high" }}
-            src={asset("hero-photo.png")}
-            alt="מסך LED ענק על חזית בניין בלילה"
-            className="ken-burns absolute left-0 object-cover opacity-[0.92]"
-            style={{ width: photoW, top: photoTop, height: 904 - photoTop }}
-          />
+          <div className="absolute left-0 overflow-hidden" style={{ width: photoW, top: photoTop, height: 904 - photoTop }}>
+            <img
+              loading="eager"
+              {...{ fetchpriority: "high" }}
+              src={asset("hero-photo.png")}
+              alt="מסך LED ענק על חזית בניין בלילה"
+              className="ken-burns size-full object-cover opacity-[0.92]"
+            />
+          </div>
           <span
             className="absolute left-0"
             style={{

@@ -50,7 +50,7 @@ export function PixelCluster({ color, mirror = false, small = false, style, clas
     [0, 2, 0.5], [1, 2, 0.32],
   ];
   return (
-    <span className={`pointer-events-none absolute overflow-hidden ${className}`} style={{ width: small ? 26 : 34, height: small ? 26 : 34, ...style }} aria-hidden>
+    <span className={`pixel-blink pointer-events-none absolute overflow-hidden ${className}`} style={{ width: small ? 26 : 34, height: small ? 26 : 34, ...style }} aria-hidden>
       {cells.map(([c, r, a], i) => (
         <span
           key={i}
@@ -65,7 +65,11 @@ export function PixelCluster({ color, mirror = false, small = false, style, clas
 /** Glowing 4-point sparkle. `size` is the star's box; the svg glow bleeds 60% around it. */
 export function Sparkle({ src, size, style, className = "" }: { src: string; size: number; style?: CSSProperties; className?: string }) {
   return (
-    <span className={`pointer-events-none absolute ${className}`} style={{ width: size, height: size, ...style }} aria-hidden>
+    <span
+      className={`twinkle pointer-events-none absolute ${className}`}
+      style={{ width: size, height: size, ["--tw" as string]: `${(((Number(style?.left ?? style?.right ?? 0) + Number(style?.top ?? 0)) % 26) / 10).toFixed(1)}s`, ...style }}
+      aria-hidden
+    >
       <img loading="lazy" src={asset(src)} alt="" className="absolute inset-[-60%] block size-[220%] max-w-none" />
     </span>
   );
@@ -90,7 +94,7 @@ export function LimeButton({
   return (
     <a
       href={href}
-      className={`group flex items-center justify-between rounded-[20px] bg-lime pl-[12px] pr-[22px] transition-[filter,box-shadow] duration-200 hover:shadow-[0_8px_24px_rgba(212,255,90,0.45)] hover:brightness-105 ${className}`}
+      className={`btn-lime group flex items-center justify-between rounded-[20px] bg-lime pl-[12px] pr-[22px] ${className}`}
     >
       <span className={`whitespace-nowrap font-rubik font-medium leading-none text-ink ${textClass}`}>{label}</span>
       <img loading="lazy"
@@ -141,6 +145,7 @@ export function Card({ children, className = "", id, dark = false }: { children:
   return (
     <section
       id={id}
+      data-reveal
       className={`relative overflow-hidden rounded-[28px] lg:rounded-[36px] ${
         dark ? "bg-night" : "bg-white shadow-[0_20px_60px_rgba(91,63,208,0.08)]"
       } ${className}`}

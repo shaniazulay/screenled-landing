@@ -16,7 +16,7 @@ const CONTACT = [
   { text: "אולם תצוגה: כתובת העסק", icon: "ficon-pin.svg" },
 ];
 
-const link = "whitespace-nowrap font-heebo text-[15px] leading-[22px] text-[#aeb3cf] transition-colors hover:text-white";
+const link = "whitespace-nowrap font-heebo text-[15px] leading-[22px] text-[#aeb3cf] transition-[color,translate] duration-200 hover:-translate-x-[3px] hover:text-white";
 
 function ColTitle({ children }: { children: string }) {
   return <h4 className="mb-[16px] font-heebo text-[17px] font-bold leading-[25px] text-white">{children}</h4>;
@@ -38,7 +38,7 @@ export default function Footer() {
           <p className="max-w-[300px] font-heebo text-[15px] leading-[25px] text-[#8a90b4]">תכנון, אספקה והתקנה של קירות וידאו ומסכי LED לעסקים ולבית.</p>
           <div className="flex gap-[10px]">
             {["social-4.svg", "social-3.svg", "social-2.svg", "social-1.svg"].map((s) => (
-              <a key={s} href="#" className="flex size-[42px] items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.06] transition-colors hover:bg-white/[0.14]" aria-label="רשת חברתית">
+              <a key={s} href="#" className="flex size-[42px] items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.06] transition-all duration-300 hover:-translate-y-[3px] hover:border-lime/60 hover:bg-white/[0.14]" aria-label="רשת חברתית">
                 <img loading="lazy" src={asset(s)} alt="" className="size-[18px]" />
               </a>
             ))}

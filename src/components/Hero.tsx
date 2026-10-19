@@ -28,11 +28,13 @@ function Logo() {
   );
 }
 
-function CatalogButton({ name, price }: { name: string; price: string }) {
+function CatalogButton({ name, price, i = 0 }: { name: string; price: string; i?: number }) {
   return (
     <a
       href="#products"
-      className="group flex h-[64px] w-full items-center justify-between rounded-[20px] bg-lime pl-[14px] pr-[22px] drop-shadow-[0_10px_12px_rgba(0,0,0,0.22)] transition-[filter] duration-200 hover:brightness-105"
+      data-reveal="left"
+      style={{ ["--d" as string]: `${350 + i * 90}ms` }}
+      className="btn-lime group flex h-[64px] w-full items-center justify-between rounded-[20px] bg-lime pl-[14px] pr-[22px] drop-shadow-[0_10px_12px_rgba(0,0,0,0.22)]"
     >
       <span className="flex flex-col items-start text-right">
         <span className="whitespace-nowrap font-heebo text-[17px] font-semibold leading-[25px] text-ink">{name}</span>
@@ -69,11 +71,15 @@ function LivePulse() {
 function HeroHeadline({ className = "" }: { className?: string }) {
   return (
     <h1 className={`font-rubik font-bold text-white ${className}`}>
-      <span className="block">המסך שלכם</span>
-      <span className="block">
+      <span className="block" data-reveal style={{ ["--d" as string]: "150ms" }}>
+        המסך שלכם
+      </span>
+      <span className="block" data-reveal style={{ ["--d" as string]: "280ms" }}>
         יעצור <span className="text-lime">כל</span>
       </span>
-      <span className="block text-lime">עובר אורח</span>
+      <span className="block text-lime" data-reveal style={{ ["--d" as string]: "410ms" }}>
+        עובר אורח
+      </span>
     </h1>
   );
 }
@@ -85,7 +91,7 @@ function SecondaryActions() {
     <div className="flex flex-wrap items-center gap-[12px]">
       <a
         href={`tel:${PHONE}`}
-        className="flex items-center gap-[10px] rounded-full bg-white py-[6px] pl-[6px] pr-[18px] shadow-[0_8px_20px_rgba(0,0,0,0.18)]"
+        className="btn-ghost flex items-center gap-[10px] rounded-full bg-white py-[6px] pl-[6px] pr-[18px] shadow-[0_8px_20px_rgba(0,0,0,0.18)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.28)]"
       >
         <span className="font-mont text-[17px] font-bold leading-[21px] text-ink" dir="ltr">
           {PHONE}
@@ -94,10 +100,10 @@ function SecondaryActions() {
           <img loading="lazy" src={asset("phone-icon.svg")} alt="" className="size-[16px]" />
         </span>
       </a>
-      <a href="https://wa.me/972544228606" className="rounded-full border-[1.2px] border-white/80 px-[18px] py-[10px] font-rubik text-[15px] font-medium leading-[18px] text-white transition-colors hover:bg-white/10">
+      <a href="https://wa.me/972544228606" className="btn-ghost rounded-full border-[1.2px] border-white/80 px-[18px] py-[10px] font-rubik text-[15px] font-medium leading-[18px] text-white hover:border-white hover:bg-white/10">
         וואטסאפ
       </a>
-      <a href="#contact" className="rounded-full border-[1.2px] border-white/80 px-[18px] py-[10px] font-rubik text-[15px] font-medium leading-[18px] text-white transition-colors hover:bg-white/10">
+      <a href="#contact" className="btn-ghost rounded-full border-[1.2px] border-white/80 px-[18px] py-[10px] font-rubik text-[15px] font-medium leading-[18px] text-white hover:border-white hover:bg-white/10">
         השאירו פרטים
       </a>
     </div>
@@ -142,7 +148,7 @@ function HeroDesktop() {
           <span className="absolute top-[220px] size-[620px]" style={{ left: 102 + (photoW - 760) / 2 }}>
             <img loading="lazy" src={asset("violet-glow.svg")} alt="" className="absolute inset-[-27.42%] block size-[154.84%] max-w-none" />
           </span>
-          <img loading="eager" fetchPriority="high" src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="absolute left-0 top-[84px] h-[820px] object-cover opacity-[0.92]"
+          <img loading="eager" {...{ fetchpriority: "high" }} src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="ken-burns absolute left-0 top-[84px] h-[820px] object-cover opacity-[0.92]"
             style={{ width: photoW }} />
           <span
             className="absolute left-0 top-[84px] h-[820px]"
@@ -159,23 +165,29 @@ function HeroDesktop() {
         </div>
         <nav className="absolute right-[325px] top-[47px] flex gap-[38px]" aria-label="ניווט ראשי">
           {NAV.map((n) => (
-            <a key={n.label} href={n.href} className="whitespace-nowrap font-heebo text-[15px] leading-[22px] text-white transition-opacity hover:opacity-75">
+            <a key={n.label} href={n.href} className="nav-link whitespace-nowrap font-heebo text-[15px] leading-[22px] text-white">
               {n.label}
             </a>
           ))}
         </nav>
-        <a href="#contact" className="group absolute left-[80px] top-[39px] flex items-center gap-[14px]">
+        <a href="#contact" className="nav-link group absolute left-[80px] top-[39px] flex items-center gap-[14px]">
           <span className="whitespace-nowrap font-rubik text-[17px] font-medium leading-[20px] text-white">קבלו הצעת מחיר</span>
           <img loading="lazy" src={asset("tab-arrow.svg")} alt="" className="size-[38px] transition-transform duration-200 group-hover:rotate-45" />
         </a>
 
         {/* Copy */}
         <div className="absolute right-[110px] top-[146px] flex w-[542px] flex-col items-start gap-[26px]">
-          <span className="rounded-full border-[1.2px] border-white/90 px-[16px] py-[6px] font-rubik text-[15px] leading-[18px] text-white">קירות וידאו ומסכי LED</span>
+          <span data-reveal className="rounded-full border-[1.2px] border-white/90 px-[16px] py-[6px] font-rubik text-[15px] leading-[18px] text-white">
+            קירות וידאו ומסכי LED
+          </span>
           <HeroHeadline className="whitespace-nowrap text-[108px] leading-[104px] tracking-[-2.16px]" />
-          <p className="w-[520px] font-heebo text-[19px] leading-[30px] text-white/90">{SUB}</p>
-          <span className="h-[1.2px] w-[220px] bg-white/80" />
-          <SecondaryActions />
+          <p data-reveal style={{ ["--d" as string]: "540ms" }} className="w-[520px] font-heebo text-[19px] leading-[30px] text-white/90">
+            {SUB}
+          </p>
+          <span className="grow-x h-[1.2px] w-[220px] bg-white/80" />
+          <div data-reveal style={{ ["--d" as string]: "680ms" }}>
+            <SecondaryActions />
+          </div>
         </div>
 
         {/* Left column: live chip, quick catalog, rating, dots */}
@@ -192,12 +204,12 @@ function HeroDesktop() {
             <span className="font-heebo text-[14px] font-medium leading-[21px] text-white">ניווט מהיר לקטלוג</span>
             <img loading="lazy" src={asset("dot-lime.svg")} alt="" className="size-[7px]" />
           </span>
-          {CATALOG.map((c) => (
-            <CatalogButton key={c.name} {...c} />
+          {CATALOG.map((c, i) => (
+            <CatalogButton key={c.name} {...c} i={i} />
           ))}
         </div>
 
-        <div className="absolute left-[48px] top-[800px] flex h-[37px] items-center gap-[6px] rounded-full bg-white/[0.14] px-[14px] backdrop-blur-[6px]">
+        <div data-reveal="left" style={{ ["--d" as string]: "750ms" }} className="absolute left-[48px] top-[800px] flex h-[37px] items-center gap-[6px] rounded-full bg-white/[0.14] px-[14px] backdrop-blur-[6px]">
           <Stars size={13} />
           <span className="font-heebo text-[14px] font-medium leading-[21px] text-white">5.0 בגוגל</span>
         </div>
@@ -213,14 +225,16 @@ function HeroDesktop() {
         {/* Primary CTA sitting in the panel notch */}
         <a
           href="#contact"
-          className="group absolute right-[24px] top-[840px] flex h-[76px] w-[338px] items-center justify-between rounded-[22px] bg-lime pl-[22px] pr-[28px] transition-[filter] hover:brightness-105"
+          data-reveal="scale"
+          style={{ ["--d" as string]: "850ms" }}
+          className="btn-lime group absolute right-[24px] top-[840px] flex h-[76px] w-[338px] items-center justify-between rounded-[22px] bg-lime pl-[22px] pr-[28px]"
         >
           <span className="font-rubik text-[20px] font-medium leading-[24px] text-ink">לשיחת ייעוץ חינם</span>
           <img loading="lazy" src={asset("hero-cta-arrow.svg")} alt="" className="size-[40px] transition-transform duration-200 group-hover:rotate-45" />
         </a>
 
         {/* Jewels */}
-        <GlassChip icon="icon-chip-white.svg" className="absolute right-[633px] top-[720px]">
+        <GlassChip icon="icon-chip-white.svg" className="float-y absolute right-[633px] top-[720px]">
           חזית מסחרית · מרכז העיר
         </GlassChip>
         <span className="absolute right-[510px] top-[766px] h-[40px] w-[26px] rounded-[13px] border-[1.4px] border-white/60" aria-hidden>

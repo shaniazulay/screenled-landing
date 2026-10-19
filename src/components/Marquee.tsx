@@ -28,7 +28,7 @@ function Set() {
 
 export default function Marquee() {
   return (
-    <div className="relative h-[60px] overflow-hidden rounded-full bg-lime xl:h-[74px]" aria-label="תחומי פעילות">
+    <div className="marquee-hover relative h-[60px] overflow-hidden rounded-full bg-lime xl:h-[74px]" aria-label="תחומי פעילות">
       <div className="marquee-track absolute left-0 top-[17px] flex xl:top-[21px]" dir="ltr">
         <Set />
         <Set />

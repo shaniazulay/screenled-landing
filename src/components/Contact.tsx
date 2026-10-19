@@ -23,7 +23,7 @@ function LeadForm() {
       type="button"
       onClick={() => setType(t)}
       aria-pressed={type === t}
-      className={`rounded-full border px-[16px] py-[8px] font-rubik text-[15px] leading-[18px] transition-colors ${
+      className={`rounded-full border px-[16px] py-[8px] font-rubik text-[15px] leading-[18px] transition-all active:scale-95 ${
         type === t ? "border-indigo bg-lime font-semibold text-indigo" : "border-[#dfe2ee] bg-[#f4f5fa] text-slate-body hover:border-indigo/40"
       }`}
     >
@@ -74,7 +74,7 @@ function LeadForm() {
           </label>
           <button
             type="submit"
-            className="group flex h-[60px] w-full items-center justify-between rounded-[20px] bg-lime pl-[12px] pr-[22px] transition-[filter] hover:brightness-105"
+            className="btn-lime group flex h-[60px] w-full items-center justify-between rounded-[20px] bg-lime pl-[12px] pr-[22px]"
           >
             <span className="font-rubik text-[18px] font-medium leading-[21px] text-ink">קבלו הצעת מחיר מותאמת</span>
             <img loading="lazy" src={asset("arrow-dark-38.svg")} alt="" className="size-[38px] transition-transform group-hover:rotate-45" />
@@ -111,8 +111,8 @@ export default function Contact() {
             עשרות פרויקטים בארץ ובעולם. ספרו לנו מה אתם מתכננים, ונהפוך את הרעיון למציאות.
           </p>
           <ul className="flex flex-col items-start gap-[14px]">
-            {CHECKS.map((c) => (
-              <li key={c} className="flex items-center gap-[12px]">
+            {CHECKS.map((c, i) => (
+              <li key={c} data-reveal="right" style={{ ["--d" as string]: `${200 + i * 110}ms` }} className="flex items-center gap-[12px]">
                 <span className="flex size-[28px] shrink-0 items-center justify-center rounded-full bg-lime">
                   <img loading="lazy" src={asset("icon-check-dark.svg")} alt="" className="size-[16px]" />
                 </span>
@@ -123,7 +123,7 @@ export default function Contact() {
           <div className="flex flex-wrap gap-[14px]">
             <a
               href="tel:054-4228606"
-              className="flex h-[56px] w-[190px] items-center justify-center gap-[8px] whitespace-nowrap rounded-full border-[1.5px] border-white/50 px-[16px] transition-colors hover:bg-white/10"
+              className="btn-ghost flex h-[56px] w-[190px] items-center justify-center gap-[8px] whitespace-nowrap rounded-full border-[1.5px] border-white/50 px-[16px] hover:border-white hover:bg-white/10"
             >
               <span className="font-rubik text-[18px] font-semibold leading-[21px] text-white" dir="ltr">
                 054-4228606
@@ -132,7 +132,7 @@ export default function Contact() {
             </a>
             <a
               href="https://wa.me/972544228606"
-              className="flex h-[56px] w-[160px] items-center justify-center gap-[8px] rounded-full border-[1.5px] border-white/75 px-[24px] transition-colors hover:bg-white/10"
+              className="btn-ghost flex h-[56px] w-[160px] items-center justify-center gap-[8px] rounded-full border-[1.5px] border-white/75 px-[24px] hover:border-white hover:bg-white/10"
             >
               <span className="font-rubik text-[18px] font-semibold leading-[21px] text-white">וואטסאפ</span>
               <img loading="lazy" src={asset("icon-whatsapp-outline.svg")} alt="" className="size-[20px]" />
@@ -140,9 +140,9 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative" data-reveal="left" style={{ ["--d" as string]: "150ms" }}>
           <LeadForm />
-          <span className="absolute right-[25px] top-[-16px] flex items-center gap-[7px] rounded-full bg-lime px-[12px] py-[6px] shadow-[0_6px_18px_rgba(212,255,90,0.5)]">
+          <span className="float-y absolute right-[25px] top-[-16px] flex items-center gap-[7px] rounded-full bg-lime px-[12px] py-[6px] shadow-[0_6px_18px_rgba(212,255,90,0.5)]">
             <img loading="lazy" src={asset("icon-clock.svg")} alt="" className="size-[14px]" />
             <span className="whitespace-nowrap font-rubik text-[13px] font-medium leading-[15px] text-ink">מענה תוך יום עסקים</span>
           </span>

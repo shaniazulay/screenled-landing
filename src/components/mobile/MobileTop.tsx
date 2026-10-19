@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { asset, PixelCluster, SectionTag, Sparkle } from "../ui";
 
 export const m = (name: string) => asset(`m/${name}`);
@@ -12,6 +12,7 @@ export function MCard({ children, className = "", id, style, dark = false }: { c
     <section
       id={id}
       style={style}
+      data-reveal
       className={`relative flex flex-col items-start gap-[16px] overflow-hidden rounded-[28px] px-[20px] py-[28px] ${
         dark ? "bg-night" : "bg-white shadow-[0_12px_30px_rgba(91,63,208,0.08)]"
       } ${className}`}
@@ -23,7 +24,7 @@ export function MCard({ children, className = "", id, style, dark = false }: { c
 
 export function MLimeButton({ label, href = "#contact-m" }: { label: string; href?: string }) {
   return (
-    <a href={href} className="group flex h-[56px] w-full items-center justify-between rounded-[18px] bg-lime pl-[10px] pr-[20px] active:brightness-95">
+    <a href={href} className="btn-lime group flex h-[56px] w-full items-center justify-between rounded-[18px] bg-lime pl-[10px] pr-[20px]">
       <span className="font-rubik text-[16px] font-medium leading-[19px] text-ink">{label}</span>
       <img loading="lazy" src={m("arrow-dark-34.svg")} alt="" className="size-[34px] transition-transform group-hover:rotate-45" />
     </a>
@@ -57,28 +58,30 @@ export function MHero() {
           <span className="absolute left-[30px] top-[445.2px] size-[300px]">
             <img loading="lazy" src={m("hero-glow.svg")} alt="" className="absolute inset-[-36.67%] block size-[173.34%] max-w-none" />
           </span>
-          <img loading="eager" fetchPriority="high" src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="absolute left-0 top-[40px] h-[290px] w-full object-cover" />
+          <img loading="eager" {...{ fetchpriority: "high" }} src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="ken-burns absolute left-0 top-[40px] h-[290px] w-full object-cover" />
           <span className="absolute left-0 top-[40px] h-[110px] w-full bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
           <span className="absolute left-0 top-[180px] h-[150px] w-full bg-gradient-to-b from-[rgba(77,79,218,0)] to-[#4d4fda]" />
         </div>
 
         {/* Copy */}
         <div className="absolute inset-x-0 top-[269px] flex flex-col items-start gap-[16px] px-[20px]">
-          <span className="rounded-full border-[1.1px] border-white/85 px-[14px] py-[5px] font-rubik text-[13px] font-medium leading-[15px] text-white">קירות וידאו ומסכי LED</span>
+          <span data-reveal className="rounded-full border-[1.1px] border-white/85 px-[14px] py-[5px] font-rubik text-[13px] font-medium leading-[15px] text-white">קירות וידאו ומסכי LED</span>
           <h1 className="font-rubik text-[42px] font-bold leading-[44px] tracking-[-0.63px] text-white">
-            <span className="block">
+            <span className="block" data-reveal style={{ ["--d" as string]: "120ms" }}>
               <span className="font-extrabold">המסך שלכם</span>
             </span>
-            <span className="block">
+            <span className="block" data-reveal style={{ ["--d" as string]: "240ms" }}>
               יעצור <span className="text-lime">כל</span>
             </span>
-            <span className="block text-lime">עובר אורח</span>
+            <span className="block text-lime" data-reveal style={{ ["--d" as string]: "360ms" }}>
+              עובר אורח
+            </span>
           </h1>
           <p className="font-heebo text-[15px] leading-[24px] text-white/[0.88]">
             ‏SCREENLED מתכננת, מספקת ומתקינה קירות וידאו ומסכי LED מהיצרנים המובילים בעולם, בהתאמה מלאה לכל גודל ומטרה.
           </p>
-          <span className="h-[1.2px] w-[140px] bg-white/75" />
-          <a href={`tel:${PHONE}`} className="flex h-[52px] w-full items-center justify-between rounded-full bg-white pl-[6px] pr-[16px]">
+          <span className="grow-x h-[1.2px] w-[140px] bg-white/75" />
+          <a href={`tel:${PHONE}`} data-reveal style={{ ["--d" as string]: "480ms" }} className="btn-ghost flex h-[52px] w-full items-center justify-between rounded-full bg-white pl-[6px] pr-[16px]">
             <span className="font-mont text-[18px] font-bold leading-[22px] text-ink" dir="ltr">
               {PHONE}
             </span>
@@ -120,7 +123,7 @@ export function MHero() {
             <img loading="lazy" src={m("live-dot.svg")} alt="" className="absolute inset-0 size-full" />
           </span>
         </span>
-        <span className={`absolute right-[14px] top-[206px] rounded-full border border-white/[0.18] px-[10px] py-[4px] font-rubik text-[11px] font-medium leading-[13px] text-white ${glass}`}>
+        <span className={`float-y absolute right-[14px] top-[206px] rounded-full border border-white/[0.18] px-[10px] py-[4px] font-rubik text-[11px] font-medium leading-[13px] text-white ${glass}`}>
           חזית מסחרית · מרכז העיר
         </span>
         <Sparkle src="m/sparkle-10.svg" size={10} style={{ left: 40, top: 320 }} />
@@ -141,7 +144,7 @@ export function MHero() {
           <span className="size-[5px] rounded-[3px] bg-[#7c7cf0]" />
           <span className="size-[5px] rounded-[3px] bg-[#7c7cf0]" />
         </span>
-        <a href="#contact-m" className="absolute right-0 top-[713.2px] flex h-[74px] w-[224px] items-center justify-between rounded-[18px] bg-lime pl-[10px] pr-[18px]">
+        <a href="#contact-m" data-reveal="scale" style={{ ["--d" as string]: "600ms" }} className="btn-lime absolute right-0 top-[713.2px] flex h-[74px] w-[224px] items-center justify-between rounded-[18px] bg-lime pl-[10px] pr-[18px]">
           <span className="font-rubik text-[16px] font-medium leading-[19px] text-ink">לשיחת ייעוץ חינם</span>
           <img loading="lazy" src={m("arrow-dark-34.svg")} alt="" className="size-[34px]" />
         </a>
@@ -154,8 +157,8 @@ export function MHero() {
           <span className="font-heebo text-[13px] font-medium leading-[19px] text-white">ניווט מהיר לקטלוג</span>
         </span>
         <div className="grid w-full grid-cols-2 gap-[8px]">
-          {CATALOG.map((c) => (
-            <a key={c.name} href="#products-m" className="flex h-[62px] items-center gap-[8px] rounded-[16px] bg-lime py-[6px] pl-[10px] pr-[6px]">
+          {CATALOG.map((c, i) => (
+            <a key={c.name} href="#products-m" data-reveal style={{ ["--d" as string]: `${i * 80}ms` }} className="btn-lime flex h-[62px] items-center gap-[8px] rounded-[16px] bg-lime py-[6px] pl-[10px] pr-[6px]">
               <img loading="lazy" src={asset(c.img)} alt="" className="size-[48px] shrink-0 rounded-[11px] object-cover" />
               <span className="flex min-w-0 flex-1 flex-col gap-px">
                 <span className="font-rubik text-[13px] font-semibold leading-[16px] text-ink">{c.name}</span>
@@ -183,7 +186,7 @@ export function MMarquee() {
     </span>
   ));
   return (
-    <div className="relative h-[52px] overflow-hidden rounded-full bg-lime" aria-label="תחומי פעילות">
+    <div className="marquee-hover relative h-[52px] overflow-hidden rounded-full bg-lime" aria-label="תחומי פעילות">
       <div className="marquee-track-m absolute left-0 top-[14px] flex" dir="ltr">
         {set}
         {set}
@@ -203,6 +206,11 @@ const WHY = [
 
 export function MWhyUs() {
   const [active, setActive] = useState(0);
+  // The highlighted benefit advances on its own (tapping a row restarts the timer).
+  useEffect(() => {
+    const t = window.setInterval(() => setActive((a) => (a + 1) % WHY.length), 3800);
+    return () => window.clearInterval(t);
+  }, [active]);
   return (
     <MCard id="why-m">
       <PixelCluster color="indigo" small style={{ left: 16, top: 16 }} />
@@ -212,7 +220,7 @@ export function MWhyUs() {
       </h2>
       <p className="font-heebo text-[15px] leading-[24px] text-slate-muted">צוות אחד שמלווה אתכם מהבחירה בטכנולוגיה ועד התחזוקה השוטפת.</p>
       <div className="relative h-[280px] w-full overflow-hidden rounded-[22px]">
-        <img loading="lazy" src={asset("macro-led.png")} alt="תקריב של פיקסלים במסך LED" className="absolute inset-0 size-full object-cover" />
+        <img loading="lazy" src={asset("macro-led.png")} alt="תקריב של פיקסלים במסך LED" className="ken-burns absolute inset-0 size-full object-cover" />
         <span className="absolute left-[70px] top-[90px] size-[78px]">
           <img loading="lazy" src={m("magnifier.svg")} alt="" className="absolute inset-[-17.95%] block size-[135.9%] max-w-none" />
         </span>
@@ -238,7 +246,7 @@ export function MWhyUs() {
             <li
               key={w.title}
               onClick={() => setActive(i)}
-              className={`flex items-start gap-[12px] py-[16px] ${on ? "border-b-2 border-indigo" : "border-b border-[rgba(18,22,51,0.12)]"}`}
+              className={`flex items-start gap-[12px] py-[16px] transition-colors duration-500 ${on ? "border-b-2 border-indigo" : "border-b border-[rgba(18,22,51,0.12)]"}`}
             >
               <span className={`font-mont text-[12px] font-medium leading-[15px] ${on ? "text-indigo" : "text-slate-muted"}`} dir="ltr">
                 {String(i + 1).padStart(2, "0")}
@@ -247,7 +255,7 @@ export function MWhyUs() {
                 <span className={`font-rubik text-[19px] leading-[26px] ${on ? "font-bold text-indigo" : "font-semibold text-navy"}`}>{w.title}</span>
                 <span className="font-heebo text-[14px] leading-[22px] text-slate-muted">{w.desc}</span>
               </span>
-              <img loading="lazy" src={m(w.icon)} alt="" className="size-[26px] shrink-0" />
+              <img loading="lazy" src={m(w.icon)} alt="" className={`size-[26px] shrink-0 transition-transform duration-500 ${on ? "-rotate-6 scale-110" : ""}`} />
             </li>
           );
         })}
@@ -289,8 +297,8 @@ export function MProducts() {
         <TrustPill>תשלומים נוחים</TrustPill>
       </div>
       <div className="grid w-full grid-cols-2 gap-[10px]">
-        {M_PRODUCTS.map((p) => (
-          <article key={p.name} className="relative flex h-[244px] flex-col overflow-hidden rounded-[18px] border border-[rgba(18,22,51,0.07)] bg-white shadow-[0_8px_20px_rgba(27,33,64,0.07)]">
+        {M_PRODUCTS.map((p, i) => (
+          <article key={p.name} data-reveal style={{ ["--d" as string]: `${(i % 2) * 100}ms` }} className="card-lift relative flex h-[244px] flex-col overflow-hidden rounded-[18px] border border-[rgba(18,22,51,0.07)] bg-white shadow-[0_8px_20px_rgba(27,33,64,0.07)]">
             <img loading="lazy" src={asset(p.img)} alt={p.name} className="h-[118px] w-full shrink-0 object-cover" />
             {p.best && (
               <span className="absolute right-[4px] top-[8px] rounded-full bg-lime px-[8px] py-[3px] font-rubik text-[10px] font-medium leading-[12px] text-ink">✦ הנמכר ביותר</span>
@@ -303,7 +311,7 @@ export function MProducts() {
                 <span className="font-heebo text-[17px] font-bold leading-[25px] text-indigo">{p.price}</span>
               </div>
               {p.cart ? (
-                <button className="flex h-[34px] w-full items-center justify-center rounded-full bg-lime font-rubik text-[12px] font-semibold text-ink">להוספה לסל</button>
+                <button className="btn-lime flex h-[34px] w-full items-center justify-center rounded-full bg-lime font-rubik text-[12px] font-semibold text-ink">להוספה לסל</button>
               ) : (
                 <a href="#contact-m" className="flex h-[34px] w-full items-center justify-center rounded-full border-[1.2px] border-indigo font-rubik text-[12px] font-semibold text-indigo">
                   להצעת מחיר
@@ -362,7 +370,7 @@ export function MProjects() {
           <span className="font-rubik text-[12px] font-medium leading-[14px] text-white">החליקו לצפייה</span>
         </span>
         <span className="relative h-[2px] w-[70px] overflow-hidden rounded-[1px] bg-white/15">
-          <span className="absolute right-0 top-0 h-[2px] w-[18px] rounded-[1px] bg-lime" />
+          <span className="grow-x absolute right-0 top-0 h-[2px] w-[18px] rounded-[1px] bg-lime" />
         </span>
         <span className="font-mont text-[12px] font-medium leading-[15px] text-white/60" dir="ltr">
           01 / 05
@@ -384,7 +392,7 @@ export function MProblemSolution() {
         <img loading="lazy"
           src={asset("solution.png")}
           alt="חלון ראווה עם מסך LED"
-          className="absolute inset-0 size-full object-cover transition-[filter] duration-500"
+          className="ken-burns absolute inset-0 size-full object-cover transition-[filter] duration-500"
           style={{ filter: after ? "none" : "grayscale(1) brightness(0.55)" }}
         />
         <div className="absolute left-[14px] top-[14px] flex gap-[4px] rounded-full bg-[rgba(21,21,25,0.6)] p-[4px] backdrop-blur-[6px]">

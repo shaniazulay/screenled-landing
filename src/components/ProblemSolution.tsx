@@ -32,7 +32,7 @@ export default function ProblemSolution() {
           <img loading="lazy"
             src={asset("solution.png")}
             alt="חלון ראווה עם מסך LED"
-            className="absolute inset-0 size-full object-cover transition-[filter] duration-500"
+            className="ken-burns absolute inset-0 size-full object-cover transition-[filter] duration-500"
             style={{ filter: after ? "none" : "grayscale(1) brightness(0.55)" }}
           />
           <div className="absolute left-[24px] top-[24px] flex gap-[4px] rounded-full bg-[rgba(21,21,25,0.6)] p-[4px] backdrop-blur-[7px]" role="group" aria-label="לפני ואחרי">
@@ -49,7 +49,7 @@ export default function ProblemSolution() {
               אחרי
             </button>
           </div>
-          <GlassChip icon="icon-chip-white.svg" className="absolute bottom-[28px] right-[23px]">
+          <GlassChip icon="icon-chip-white.svg" className="float-y absolute bottom-[28px] right-[23px]">
             חלון ראווה · מסך LED
           </GlassChip>
         </div>

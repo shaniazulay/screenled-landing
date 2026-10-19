@@ -1,4 +1,5 @@
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { countUp } from "../useReveal";
 import { asset, PixelCluster, SectionTag } from "../ui";
 import { m, MCard, MLimeButton } from "./MobileTop";
 
@@ -28,8 +29,8 @@ function TileArrow() {
 
 function PhotoTile({ img, n, title, sub, h, titleTop, className = "", shadeTop = 0 }: { img: string; n: string; title: ReactNode; sub?: string; h: number; titleTop: number; className?: string; shadeTop?: number }) {
   return (
-    <a href="#contact-m" className={`relative block overflow-hidden rounded-[18px] ${className}`} style={{ height: h }}>
-      <img loading="lazy" src={asset(img)} alt="" className="absolute inset-0 size-full object-cover" />
+    <a href="#contact-m" data-reveal className={`zoom-parent relative block overflow-hidden rounded-[18px] ${className}`} style={{ height: h }}>
+      <img loading="lazy" src={asset(img)} alt="" className="zoom-img absolute inset-0 size-full object-cover" />
       <span className="absolute inset-x-0 bottom-0 bg-gradient-to-b from-[rgba(5,8,26,0)] to-[rgba(5,8,26,0.85)]" style={{ top: shadeTop }} />
       <Index n={n} className="right-[12px]" />
       <TileArrow />
@@ -58,8 +59,8 @@ export function MDomains() {
 
       <div className="flex w-full flex-col gap-[8px] rounded-[24px] bg-[#1c1c22] p-[8px]">
         {/* Hero tile */}
-        <a href="#contact-m" className="relative block h-[200px] overflow-hidden rounded-[18px]">
-          <img loading="lazy" src={asset("domain-stores.png")} alt="" className="absolute inset-0 size-full object-cover" />
+        <a href="#contact-m" data-reveal className="relative block h-[200px] overflow-hidden rounded-[18px]">
+          <img loading="lazy" src={asset("domain-stores.png")} alt="" className="ken-burns absolute inset-0 size-full object-cover" />
           <span className="absolute inset-x-0 bottom-0 top-[50px] bg-gradient-to-b from-[rgba(5,8,26,0)] to-[rgba(5,8,26,0.85)]" />
           <Index n="01" className="right-[12px]" />
           <TileArrow />
@@ -120,14 +121,14 @@ export function MDomains() {
 
         {/* Actions */}
         <div className="flex items-center gap-[8px]">
-          <a href="#contact-m" className="flex h-[52px] min-w-0 flex-1 items-center justify-between rounded-[18px] bg-lime pl-[8px] pr-[16px]">
+          <a href="#contact-m" className="btn-lime flex h-[52px] min-w-0 flex-1 items-center justify-between rounded-[18px] bg-lime pl-[8px] pr-[16px]">
             <span className="font-rubik text-[14px] font-semibold leading-[17px] text-ink">ייעוץ לפי תחום</span>
             <img loading="lazy" src={asset("arrow-dark-32.svg")} alt="" className="size-[32px]" />
           </a>
-          <button className="relative size-[52px] shrink-0 rounded-full border-[1.2px] border-white/35" aria-label="הקודם">
+          <button className="btn-ghost relative size-[52px] shrink-0 rounded-full border-[1.2px] border-white/35" aria-label="הקודם">
             <img loading="lazy" src={m("prev.svg")} alt="" className="absolute left-[13.8px] top-[13.8px] size-[22px]" />
           </button>
-          <button className="relative size-[52px] shrink-0 rounded-full" style={violet(143.13)} aria-label="הבא">
+          <button className="btn-ghost relative size-[52px] shrink-0 rounded-full" style={violet(143.13)} aria-label="הבא">
             <img loading="lazy" src={m("next.svg")} alt="" className="absolute left-[15px] top-[15px] size-[22px]" />
           </button>
         </div>
@@ -163,12 +164,12 @@ export function MHowItWorks() {
             <span className="font-rubik text-[12px] font-medium leading-[14px] text-navy">ללא התחייבות</span>
           </span>
         </div>
-        <div className="relative size-[104px] shrink-0">
+        <div className="pulse-ring relative size-[104px] shrink-0">
           <span className="orbit pointer-events-none absolute left-[-9px] top-[-8.8px] size-[122px]" aria-hidden>
             <img loading="lazy" src={m("orbit-ring.png")} alt="" className="absolute inset-0 size-full" />
             <img loading="lazy" src={m("orbit-sat.svg")} alt="" className="absolute left-[57px] top-[-4px] size-[8px]" />
           </span>
-          <a href="#contact-m" className="absolute inset-0 flex items-start justify-center rounded-full bg-lime pt-[30px] text-center font-rubik text-[13px] font-bold leading-[17px] text-ink">
+          <a href="#contact-m" className="btn-lime absolute inset-0 flex items-start justify-center rounded-full bg-lime pt-[30px] text-center font-rubik text-[13px] font-bold leading-[17px] text-ink">
             קבעו
             <br />
             שיחת איפיון
@@ -177,7 +178,7 @@ export function MHowItWorks() {
       </div>
       <ol className="w-full">
         {STEPS.map((s, i) => (
-          <li key={s.title} className={`flex items-center gap-[12px] border-t border-[rgba(18,22,51,0.14)] py-[14px] ${i === STEPS.length - 1 ? "border-b" : ""}`}>
+          <li key={s.title} data-reveal style={{ ["--d" as string]: `${i * 110}ms` }} className={`step-row flex items-center gap-[12px] border-t border-[rgba(18,22,51,0.14)] py-[14px] ${i === STEPS.length - 1 ? "border-b" : ""}`}>
             <span className="outline-num font-mont text-[40px] font-light leading-[40px] tracking-[-1.2px] [-webkit-text-stroke-width:1px]" dir="ltr">
               {String(i + 1).padStart(2, "0")}
             </span>
@@ -209,6 +210,8 @@ function SideCard({ img, label, className, labelRight, labelSize }: { img: strin
 }
 
 export function MTestimonials() {
+  const rating = useRef<HTMLSpanElement>(null);
+  useEffect(() => countUp(rating.current, 5, 1), []);
   return (
     <MCard id="testimonials-m" className="items-center">
       <PixelCluster color="indigo" small style={{ left: 16, top: 16 }} />
@@ -223,7 +226,7 @@ export function MTestimonials() {
         <span className="font-mont text-[28px] font-bold leading-[34px] text-indigo" dir="ltr">
           G
         </span>
-        <span className="font-mont text-[28px] font-bold leading-[34px] text-navy" dir="ltr">
+        <span ref={rating} className="font-mont text-[28px] font-bold leading-[34px] text-navy" dir="ltr">
           5.0
         </span>
         <span className="flex flex-col items-start gap-[2px]">
@@ -246,7 +249,7 @@ export function MTestimonials() {
                 <span className="font-heebo text-[14px] font-bold leading-[21px] text-white">שם הלקוח</span>
                 <span className="font-heebo text-[11px] leading-[16px] text-white/70">מנהל/ת שיווק · קניון</span>
               </span>
-              <button className="relative size-[42px] rounded-full bg-white" aria-label="הפעלת סרטון">
+              <button className="pulse-ring relative size-[42px] rounded-full bg-white" aria-label="הפעלת סרטון">
                 <img loading="lazy" src={m("play.svg")} alt="" className="absolute left-[13px] top-[12px] size-[18px]" />
               </button>
             </span>
@@ -283,6 +286,7 @@ export function MContact() {
   return (
     <section
       id="contact-m"
+      data-reveal
       className="relative flex flex-col items-start gap-[16px] overflow-hidden rounded-[28px] px-[20px] py-[28px]"
       style={{ backgroundImage: "linear-gradient(116.035deg, #4b4fd8 0%, #6a55e8 71.429%)" }}
     >
@@ -295,8 +299,8 @@ export function MContact() {
         המסך הבא שלכם <span className="text-lime">מתחיל כאן</span>
       </h2>
       <p className="relative font-rubik text-[15px] leading-[24px] text-white/80">עשרות פרויקטים בארץ ובעולם. ספרו לנו מה אתם מתכננים, ונהפוך את הרעיון למציאות.</p>
-      {CHECKS.map((c) => (
-        <span key={c} className="relative flex items-center gap-[10px]">
+      {CHECKS.map((c, i) => (
+        <span key={c} data-reveal="right" style={{ ["--d" as string]: `${i * 100}ms` }} className="relative flex items-center gap-[10px]">
           <span className="flex size-[22px] items-center justify-center rounded-full bg-lime">
             <img loading="lazy" src={m("check-dark-12.svg")} alt="" className="size-[12px]" />
           </span>
@@ -316,7 +320,7 @@ export function MContact() {
         </a>
       </div>
 
-      <form onSubmit={submit} className="relative flex w-full flex-col items-start gap-[12px] rounded-[22px] bg-white px-[18px] pb-[20px] pt-[22px] shadow-[0_20px_40px_rgba(0,0,0,0.25)]">
+      <form onSubmit={submit} data-reveal className="relative flex w-full flex-col items-start gap-[12px] rounded-[22px] bg-white px-[18px] pb-[20px] pt-[22px] shadow-[0_20px_40px_rgba(0,0,0,0.25)]">
         <span className="flex items-center gap-[5px] rounded-full bg-lime px-[10px] py-[4px]">
           <img loading="lazy" src={m("clock.svg")} alt="" className="size-[12px]" />
           <span className="font-rubik text-[12px] font-medium leading-[14px] text-ink">מענה תוך יום עסקים</span>
@@ -342,7 +346,7 @@ export function MContact() {
                   type="button"
                   onClick={() => setType(t)}
                   aria-pressed={type === t}
-                  className={`rounded-full border px-[14px] py-[7px] font-rubik text-[14px] leading-[17px] ${type === t ? "border-[#9bc21f] bg-lime font-semibold text-ink" : "border-[#dfe2ee] bg-[#f4f5fa] text-slate-muted"}`}
+                  className={`rounded-full border px-[14px] py-[7px] font-rubik text-[14px] leading-[17px] transition-all active:scale-95 ${type === t ? "border-[#9bc21f] bg-lime font-semibold text-ink" : "border-[#dfe2ee] bg-[#f4f5fa] text-slate-muted"}`}
                 >
                   {t}
                 </button>
@@ -354,7 +358,7 @@ export function MContact() {
               <span className="size-[18px] rounded-[5px] border-[1.4px] border-[#b6bacb] peer-checked:border-indigo peer-checked:bg-indigo" />
               <span className="font-rubik text-[13px] leading-[15px] text-slate-muted">אשמח לקבל עדכונים ומבצעים</span>
             </label>
-            <button type="submit" className="flex h-[56px] w-full items-center justify-between rounded-[18px] bg-lime pl-[10px] pr-[20px]">
+            <button type="submit" className="btn-lime flex h-[56px] w-full items-center justify-between rounded-[18px] bg-lime pl-[10px] pr-[20px]">
               <span className="font-rubik text-[16px] font-medium leading-[19px] text-ink">קבלו הצעת מחיר מותאמת</span>
               <img loading="lazy" src={m("arrow-dark-34.svg")} alt="" className="size-[34px]" />
             </button>
@@ -385,7 +389,7 @@ const CONTACT = [
 
 export function MFooter() {
   return (
-    <footer className="relative flex flex-col items-start gap-[18px] overflow-hidden rounded-[28px] bg-night px-[20px] py-[28px]">
+    <footer data-reveal className="relative flex flex-col items-start gap-[18px] overflow-hidden rounded-[28px] bg-night px-[20px] py-[28px]">
       <PixelCluster color="lime" small style={{ left: 16, top: 16 }} />
       <a href="#top" className="flex items-center gap-[8px]" dir="ltr" aria-label="SCREENLED">
         <span className="rounded-[5px] bg-white px-[8px] py-[3px] font-mont text-[16px] font-extrabold leading-[20px] text-ink">SCREEN</span>
@@ -461,7 +465,7 @@ export function MFooter() {
 
 export function MStickyBar() {
   return (
-    <div className="fixed inset-x-[12px] bottom-[16px] z-50 flex h-[64px] gap-[8px] rounded-[24px] bg-[rgba(21,21,25,0.92)] p-[8px] shadow-[0_10px_30px_rgba(0,0,0,0.3)] backdrop-blur-[10px] lg:hidden">
+    <div className="slide-up-in fixed inset-x-[12px] bottom-[16px] z-50 flex h-[64px] gap-[8px] rounded-[24px] bg-[rgba(21,21,25,0.92)] p-[8px] shadow-[0_10px_30px_rgba(0,0,0,0.3)] backdrop-blur-[10px] lg:hidden">
       <a href={`tel:${PHONE}`} className="flex min-w-0 flex-1 items-center justify-center gap-[8px] rounded-full bg-lime px-[12px]">
         <span className="font-rubik text-[14px] font-medium leading-[17px] text-ink">חייגו עכשיו</span>
         <img loading="lazy" src={m("phone-dark.svg")} alt="" className="size-[16px]" />

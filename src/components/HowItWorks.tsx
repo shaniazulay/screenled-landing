@@ -28,12 +28,12 @@ export default function HowItWorks() {
         </h2>
         <div className="flex shrink-0 flex-col items-start gap-[28px] xl:mt-[59px] xl:w-[300px] xl:items-end">
           <p className="font-heebo text-[17px] leading-[28px] text-slate-muted xl:text-left">בלי הפתעות ובלי כאבי ראש. תהליך אחד, ברור ושקוף, מהשיחה הראשונה ועד שהמסך דולק.</p>
-          <div className="relative size-[150px] shrink-0">
+          <div className="pulse-ring relative size-[150px] shrink-0">
             <span className="orbit pointer-events-none absolute left-[-12px] top-[-12px] size-[174px]" aria-hidden>
               <img loading="lazy" src={asset("orbit-ring.png")} alt="" className="absolute inset-0 size-full" />
               <img loading="lazy" src={asset("orbit-satellite.svg")} alt="" className="absolute left-[82px] top-[-5px] size-[10px]" />
             </span>
-            <a href="#contact" className="group absolute inset-0 overflow-hidden rounded-full bg-lime transition-[filter] hover:brightness-105">
+            <a href="#contact" className="btn-lime group absolute inset-0 rounded-full bg-lime">
               <span className="absolute left-1/2 top-[46px] -translate-x-1/2 whitespace-nowrap text-center font-rubik text-[17px] font-bold leading-[22px] text-ink">
                 קבעו
                 <br />
@@ -52,7 +52,7 @@ export default function HowItWorks() {
 
       <ol>
         {STEPS.map((s, i) => (
-          <li key={s.title} className="relative">
+          <li key={s.title} data-reveal style={{ ["--d" as string]: `${i * 120}ms` }} className="step-row zoom-parent relative">
             <div className={rule} />
             <div className="flex flex-col gap-[14px] py-[28px] xl:h-[219px] xl:flex-row xl:items-start xl:gap-0 xl:py-0">
               <span className="outline-num text-right font-mont text-[72px] font-light leading-[72px] tracking-[-0.04em] xl:mt-[39px] xl:w-[267px] xl:shrink-0 xl:text-[120px] xl:leading-[120px]" dir="ltr">
@@ -66,7 +66,9 @@ export default function HowItWorks() {
               <span className="hidden font-mont text-[12px] font-medium leading-[15px] tracking-[0.72px] text-slate-muted xl:ml-[20px] xl:mt-[31px] xl:block" dir="ltr">
                 ({String(i + 1).padStart(2, "0")})
               </span>
-              <img loading="lazy" src={asset(s.img)} alt={s.title} className="h-[180px] w-full rounded-[18px] object-cover sm:w-[270px] xl:mt-[29px] xl:h-[160px] xl:shrink-0" />
+              <div className="h-[180px] w-full overflow-hidden rounded-[18px] sm:w-[270px] xl:mt-[29px] xl:h-[160px] xl:shrink-0">
+                <img loading="lazy" src={asset(s.img)} alt={s.title} className="zoom-img size-full object-cover" />
+              </div>
             </div>
           </li>
         ))}

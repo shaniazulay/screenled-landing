@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { asset, Card, Glow, LightChip, LimeButton, PixelCluster, SectionTag, Sparkle } from "./ui";
 
 const PRODUCTS = [
@@ -7,10 +8,21 @@ const PRODUCTS = [
   { name: "מסך LED שקוף", spec: "שקיפות 70% · P3.9 · לחלונות ראווה", price: "₪5,200", img: "product-transparent.png", cart: false },
 ];
 
-function ProductCard({ p }: { p: (typeof PRODUCTS)[number] }) {
+function ProductCard({ p, i }: { p: (typeof PRODUCTS)[number]; i: number }) {
+  const [added, setAdded] = useState(false);
+  const add = () => {
+    setAdded(true);
+    window.setTimeout(() => setAdded(false), 1800);
+  };
   return (
-    <article className="relative flex h-[520px] flex-col overflow-hidden rounded-[22px] bg-white shadow-[0_14px_40px_rgba(27,33,64,0.08)] xl:h-[560px]">
-      <img loading="lazy" src={asset(p.img)} alt={p.name} className="h-[270px] w-full shrink-0 object-cover" />
+    <article
+      data-reveal
+      style={{ ["--d" as string]: `${i * 110}ms` }}
+      className="card-lift zoom-parent relative flex h-[520px] flex-col overflow-hidden rounded-[22px] bg-white shadow-[0_14px_40px_rgba(27,33,64,0.08)] xl:h-[560px]"
+    >
+      <div className="h-[270px] w-full shrink-0 overflow-hidden">
+        <img loading="lazy" src={asset(p.img)} alt={p.name} className="zoom-img size-full object-cover" />
+      </div>
       {p.best && (
         <span className="absolute right-[14px] top-[14px] flex items-center gap-[6px] rounded-full bg-lime px-[10px] py-[4px]">
           <span className="font-heebo text-[12px] font-medium leading-[18px] text-ink">הנמכר ביותר</span>
@@ -26,14 +38,14 @@ function ProductCard({ p }: { p: (typeof PRODUCTS)[number] }) {
           <span className="font-heebo text-[28px] font-bold leading-[41px] text-indigo">{p.price}</span>
         </div>
         {p.cart ? (
-          <button className="flex h-[50px] w-full items-center justify-center gap-[8px] rounded-full bg-lime px-[24px] transition-[filter] hover:brightness-105">
-            <span className="font-heebo text-[16px] font-bold leading-[24px] text-ink">להוספה לסל</span>
-            <img loading="lazy" src={asset("icon-cart.svg")} alt="" className="size-[18px]" />
+          <button onClick={add} className="btn-lime flex h-[50px] w-full items-center justify-center gap-[8px] rounded-full bg-lime px-[24px]">
+            <span className="font-heebo text-[16px] font-bold leading-[24px] text-ink">{added ? "נוסף לסל ✓" : "להוספה לסל"}</span>
+            <img loading="lazy" src={asset("icon-cart.svg")} alt="" className={`size-[18px] transition-transform duration-300 ${added ? "-translate-y-[3px] rotate-[-12deg]" : ""}`} />
           </button>
         ) : (
           <a
             href="#contact"
-            className="flex h-[50px] w-full items-center justify-center rounded-full border-[1.5px] border-indigo px-[24px] font-heebo text-[16px] font-bold leading-[24px] text-indigo transition-colors hover:bg-indigo hover:text-white"
+            className="btn-ghost flex h-[50px] w-full items-center justify-center rounded-full border-[1.5px] border-indigo px-[24px] font-heebo text-[16px] font-bold leading-[24px] text-indigo hover:bg-indigo hover:text-white"
           >
             להצעת מחיר
           </a>
@@ -67,8 +79,8 @@ export default function Products() {
       </div>
 
       <div className="relative mt-[28px] grid gap-[22px] sm:grid-cols-2 xl:mt-0 xl:grid-cols-4">
-        {PRODUCTS.map((p) => (
-          <ProductCard key={p.name} p={p} />
+        {PRODUCTS.map((p, i) => (
+          <ProductCard key={p.name} p={p} i={i} />
         ))}
       </div>
     </Card>

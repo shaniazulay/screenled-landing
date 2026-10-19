@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import { asset, Glow } from "@/components/ui";
 import MobileHome from "@/components/mobile/MobileHome";
 import FitSection from "@/components/FitSection";
+import { useReveal } from "@/components/useReveal";
 
 const CANVAS_GLOWS = [
   { left: 1100, top: 600 },
@@ -21,6 +22,7 @@ const CANVAS_GLOWS = [
 ];
 
 export default function App() {
+  useReveal();
   return (
     <>
     <MobileHome />
@@ -64,7 +66,8 @@ export default function App() {
       <a
         href="https://wa.me/972544228606"
         aria-label="שיחה בוואטסאפ"
-        className="fixed bottom-[20px] right-[16px] z-50 flex size-[64px] items-center justify-center rounded-full bg-[#25d366] drop-shadow-[0_8px_12px_rgba(37,211,102,0.45)] transition-transform hover:scale-105"
+        style={{ ["--ring" as string]: "rgba(37,211,102,0.55)" }}
+        className="pulse-ring slide-up-in fixed bottom-[20px] right-[16px] z-50 flex size-[64px] items-center justify-center rounded-full bg-[#25d366] drop-shadow-[0_8px_12px_rgba(37,211,102,0.45)] transition-transform hover:scale-105"
       >
         <img src={asset("whatsapp-white.svg")} alt="" className="size-[26px] lg:size-[30px]" />
       </a>

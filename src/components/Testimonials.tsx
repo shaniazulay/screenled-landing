@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+import { countUp } from "./useReveal";
 import { asset, Card, LimeButton, PixelCluster, SectionTag, Sparkle } from "./ui";
 
 type Side = { label: string; img: string; labelSide: "left" | "right"; dim: number };
@@ -17,10 +19,10 @@ const QUOTE = "המסך בכניסה שינה את התנועה במתחם. אנ
 
 function SideCard({ c, className = "", style }: { c: Side; className?: string; style?: React.CSSProperties }) {
   return (
-    <div className={`overflow-hidden rounded-[24px] shadow-[0_24px_50px_rgba(10,14,41,0.28)] ${className}`} style={style}>
-      <img loading="lazy" src={asset(c.img)} alt={c.label} className="absolute inset-0 size-full object-cover" />
+    <div className={`card-lift zoom-parent group overflow-hidden rounded-[24px] shadow-[0_24px_50px_rgba(10,14,41,0.28)] ${className}`} style={style}>
+      <img loading="lazy" src={asset(c.img)} alt={c.label} className="zoom-img absolute inset-0 size-full object-cover" />
       <span className="absolute inset-0 bg-gradient-to-b from-[rgba(5,8,26,0)] from-45% to-[rgba(5,8,26,0.85)]" />
-      <span className="absolute inset-0" style={{ background: `rgba(21,21,25,${c.dim})` }} />
+      <span className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0" style={{ background: `rgba(21,21,25,${c.dim})` }} />
       <span className={`absolute bottom-[20px] whitespace-nowrap font-heebo text-[16px] font-bold leading-[24px] text-white ${c.labelSide === "left" ? "left-[20px]" : "right-[20px]"}`}>
         {c.label}
       </span>
@@ -30,8 +32,8 @@ function SideCard({ c, className = "", style }: { c: Side; className?: string; s
 
 function ActiveCard({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <figure className={`m-0 overflow-hidden rounded-[24px] shadow-[0_30px_60px_rgba(10,14,41,0.4)] ${className}`} style={style}>
-      <img loading="lazy" src={asset("project-2.png")} alt="קיר וידאו באטריום קניון" className="absolute inset-0 size-full object-cover" />
+    <figure className={`card-lift zoom-parent m-0 overflow-hidden rounded-[24px] shadow-[0_30px_60px_rgba(10,14,41,0.4)] ${className}`} style={style}>
+      <img loading="lazy" src={asset("project-2.png")} alt="קיר וידאו באטריום קניון" className="zoom-img absolute inset-0 size-full object-cover" />
       <span className="absolute inset-0 bg-gradient-to-b from-[rgba(5,8,26,0)] from-45% to-[rgba(5,8,26,0.85)]" />
       <span className="absolute right-[20px] top-[20px] rounded-full bg-white/[0.18] px-[10px] py-[5px] font-heebo text-[12px] font-medium leading-[18px] text-white backdrop-blur-[5px]">
         המלצת וידאו · 0:48
@@ -42,7 +44,7 @@ function ActiveCard({ className = "", style }: { className?: string; style?: Rea
         <span className="font-heebo text-[16px] font-bold leading-[24px] text-white">שם הלקוח</span>
         <span className="font-heebo text-[13px] leading-[19px] text-white/75">מנהל/ת שיווק · קניון</span>
       </figcaption>
-      <button className="absolute bottom-[28px] left-[28px] flex size-[54px] items-center justify-center rounded-full bg-white transition-transform hover:scale-105" aria-label="הפעלת סרטון">
+      <button className="pulse-ring absolute bottom-[28px] left-[28px] flex size-[54px] items-center justify-center rounded-full bg-white transition-transform hover:scale-110" aria-label="הפעלת סרטון">
         <img loading="lazy" src={asset("icon-play.svg")} alt="" className="ml-[2px] size-[22px]" />
       </button>
     </figure>
@@ -50,6 +52,8 @@ function ActiveCard({ className = "", style }: { className?: string; style?: Rea
 }
 
 export default function Testimonials() {
+  const rating = useRef<HTMLSpanElement>(null);
+  useEffect(() => countUp(rating.current, 5, 1), []);
   return (
     <Card id="testimonials" className="px-[20px] pb-[32px] pt-[40px] sm:px-[40px] xl:px-[89px] xl:pb-[96px] xl:pt-[110px]">
       <PixelCluster color="indigo" style={{ left: 30, top: 30 }} className="hidden xl:block" />
@@ -71,7 +75,7 @@ export default function Testimonials() {
           <span className="font-mont text-[40px] font-bold leading-[49px] text-indigo" dir="ltr">
             G
           </span>
-          <span className="font-mont text-[40px] font-extrabold leading-[49px] text-navy" dir="ltr">
+          <span ref={rating} className="font-mont text-[40px] font-extrabold leading-[49px] text-navy" dir="ltr">
             5.0
           </span>
           <span className="flex flex-col items-start gap-[4px]">
@@ -86,9 +90,13 @@ export default function Testimonials() {
       <div className="relative -mx-[89px] hidden h-[520px] xl:block">
         <div className="absolute left-1/2 top-0 h-[520px] w-0">
           {CARDS.map((c) => (
-            <SideCard key={c.label} c={c} className="absolute" style={{ left: c.x, top: c.size.top, width: c.size.w, height: c.size.h }} />
+            <div key={c.label} data-reveal="scale" className="absolute" style={{ left: c.x, top: c.size.top, width: c.size.w, height: c.size.h, ["--d" as string]: `${c.size === MID ? 150 : 300}ms` }}>
+              <SideCard c={c} className="relative size-full" />
+            </div>
           ))}
-          <ActiveCard className="absolute left-[-200px] top-0 h-[520px] w-[400px]" />
+          <div data-reveal="scale" className="absolute left-[-200px] top-0 h-[520px] w-[400px]">
+            <ActiveCard className="relative size-full" />
+          </div>
         </div>
       </div>
 

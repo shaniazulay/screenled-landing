@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-canvas font-heebo text-navy;
+    margin: 0;
+    overflow-x: clip;
+  }
+  p {
+    margin: 0;
+  }
+}
+
+@layer utilities {
+  .glass-dark {
+    background: rgba(21, 21, 25, 0.55);
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  .outline-num {
+    color: transparent;
+    -webkit-text-stroke: 1.4px #121633;
+  }
+}
+
+/* Marquee: the track holds two identical sets; start offset matches the design (-1283px of a 1867px set). */
+@keyframes marquee {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.marquee-track {
+  animation: marquee 40s linear infinite;
+  animation-delay: -12.51s;
+}
+
+@keyframes live-ring {
+  from {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+.live-ring {
+  animation: live-ring 1200ms ease-out infinite;
+  transform-origin: center;
+}
+
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.orbit {
+  animation: orbit 14s linear infinite;
+}
+
+@keyframes wheel {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
+.scroll-wheel {
+  animation: wheel 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .live-ring,
+  .orbit,
+  .scroll-wheel {
+    animation: none;
+  }
+  .marquee-track {
+    transform: translateX(-1283px);
+  }
+}

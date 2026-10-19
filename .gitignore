@@ -1,0 +1,6 @@
+node_modules
+dist
+.pixel-perfect/node_modules
+.pixel-perfect/round*
+.pixel-perfect/
+.claude/

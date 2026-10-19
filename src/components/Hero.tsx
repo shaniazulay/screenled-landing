@@ -1,0 +1,280 @@
+import { asset, GlassChip, PixelCluster, Sparkle } from "./ui";
+import { useFitScale } from "./useFitScale";
+
+const NAV = [
+  { label: "פתרונות", href: "#domains" },
+  { label: "מוצרים", href: "#products" },
+  { label: "פרויקטים", href: "#projects" },
+  { label: "תהליך עבודה", href: "#process" },
+  { label: "אודות", href: "#why" },
+  { label: "צור קשר", href: "#contact" },
+];
+
+const CATALOG = [
+  { name: "קבינט LED פנים P2.5", price: "₪1,890" },
+  { name: "מסך LED חוץ P4", price: "₪3,450" },
+  { name: "עמוד פרסום LED Poster", price: "₪8,900" },
+  { name: "מסך LED שקוף", price: "₪5,200" },
+];
+
+const PHONE = "054-4228606";
+
+function Logo() {
+  return (
+    <a href="#top" className="flex items-center gap-[10px]" dir="ltr" aria-label="SCREENLED">
+      <span className="rounded-[6px] bg-white px-[10px] py-[4px] font-mont text-[20px] font-extrabold leading-[24px] text-ink">SCREEN</span>
+      <span className="font-mont text-[22px] font-bold leading-[27px] text-white">LED</span>
+    </a>
+  );
+}
+
+function CatalogButton({ name, price }: { name: string; price: string }) {
+  return (
+    <a
+      href="#products"
+      className="group flex h-[64px] w-full items-center justify-between rounded-[20px] bg-lime pl-[14px] pr-[22px] drop-shadow-[0_10px_12px_rgba(0,0,0,0.22)] transition-[filter] duration-200 hover:brightness-105"
+    >
+      <span className="flex flex-col items-start text-right">
+        <span className="whitespace-nowrap font-heebo text-[17px] font-semibold leading-[25px] text-ink">{name}</span>
+        <span className="whitespace-nowrap font-heebo text-[13px] leading-[19px] text-ink/70">החל מ- {price}</span>
+      </span>
+      <img src={asset("catalog-arrow.svg")} alt="" className="size-[36px] transition-transform duration-[250ms] ease-out group-hover:rotate-45" />
+    </a>
+  );
+}
+
+function Stars({ size }: { size: number }) {
+  return (
+    <span className="flex gap-[6px]" dir="ltr">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <span key={i} className="relative" style={{ width: size, height: size }}>
+          <span className="absolute inset-[0_2.45%_9.55%_2.45%]">
+            <img src={asset("star-rating.svg")} alt="" className="block size-full max-w-none" />
+          </span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function LivePulse() {
+  return (
+    <span className="relative block size-[28px]">
+      <span className="live-ring absolute left-[9px] top-[9px] size-[10px] rounded-full bg-lime/70" />
+      <img src={asset("live-pulse.svg")} alt="" className="absolute inset-0 size-full" />
+    </span>
+  );
+}
+
+function HeroHeadline({ className = "" }: { className?: string }) {
+  return (
+    <h1 className={`font-rubik font-bold text-white ${className}`}>
+      <span className="block">המסך שלכם</span>
+      <span className="block">
+        יעצור <span className="text-lime">כל</span>
+      </span>
+      <span className="block text-lime">עובר אורח</span>
+    </h1>
+  );
+}
+
+const SUB = "‏SCREENLED מתכננת, מספקת ומתקינה קירות וידאו ומסכי LED מהיצרנים המובילים בעולם, בהתאמה מלאה לכל גודל ומטרה.";
+
+function SecondaryActions() {
+  return (
+    <div className="flex flex-wrap items-center gap-[12px]">
+      <a
+        href={`tel:${PHONE}`}
+        className="flex items-center gap-[10px] rounded-full bg-white py-[6px] pl-[6px] pr-[18px] shadow-[0_8px_20px_rgba(0,0,0,0.18)]"
+      >
+        <span className="font-mont text-[17px] font-bold leading-[21px] text-ink" dir="ltr">
+          {PHONE}
+        </span>
+        <span className="flex size-[34px] items-center justify-center rounded-full bg-lime">
+          <img src={asset("phone-icon.svg")} alt="" className="size-[16px]" />
+        </span>
+      </a>
+      <a href="https://wa.me/972544228606" className="rounded-full border-[1.2px] border-white/80 px-[18px] py-[10px] font-rubik text-[15px] font-medium leading-[18px] text-white transition-colors hover:bg-white/10">
+        וואטסאפ
+      </a>
+      <a href="#contact" className="rounded-full border-[1.2px] border-white/80 px-[18px] py-[10px] font-rubik text-[15px] font-medium leading-[18px] text-white transition-colors hover:bg-white/10">
+        השאירו פרטים
+      </a>
+    </div>
+  );
+}
+
+/** Desktop hero: the exact 1392×940 Figma composition, scaled down to fit narrower screens. */
+function HeroDesktop() {
+  const { ref, scale } = useFitScale<HTMLDivElement>(1392);
+  return (
+    <div ref={ref} className="hidden lg:block" style={{ height: 940 * scale }}>
+      <div className="relative h-[940px] w-[1392px] origin-top-right overflow-hidden rounded-[36px] bg-night" style={{ transform: `scale(${scale})` }}>
+        {/* Shaped violet panel */}
+        <div
+          className="absolute left-[24px] top-[16px] h-[900px] w-[1344px] overflow-hidden"
+          style={{
+            WebkitMaskImage: `url(${asset("hero-panel-mask.svg")})`,
+            maskImage: `url(${asset("hero-panel-mask.svg")})`,
+            WebkitMaskSize: "100% 100%",
+            maskSize: "100% 100%",
+            backgroundImage: `url(${asset("hero-panel.svg")})`,
+            backgroundSize: "100% 100%",
+          }}
+        >
+          <span className="absolute left-[102px] top-[220px] size-[620px]">
+            <img src={asset("violet-glow.svg")} alt="" className="absolute inset-[-27.42%] block size-[154.84%] max-w-none" />
+          </span>
+          <img src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="absolute left-0 top-[84px] h-[820px] w-[760px] object-cover opacity-[0.92]" />
+          <span
+            className="absolute left-0 top-[84px] h-[820px] w-[760px]"
+            style={{ backgroundImage: "linear-gradient(to right, rgba(75,79,216,0.15), rgba(79,79,220,0.35) 55%, #5250de)" }}
+          />
+          <span className="absolute left-0 top-0 h-[220px] w-[760px] bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
+        </div>
+
+        {/* Header row */}
+        <div className="absolute left-[1157px] top-[42px]">
+          <Logo />
+        </div>
+        <nav className="absolute right-[325px] top-[47px] flex gap-[38px]" aria-label="ניווט ראשי">
+          {NAV.map((n) => (
+            <a key={n.label} href={n.href} className="whitespace-nowrap font-heebo text-[15px] leading-[22px] text-white transition-opacity hover:opacity-75">
+              {n.label}
+            </a>
+          ))}
+        </nav>
+        <a href="#contact" className="group absolute left-[80px] top-[39px] flex items-center gap-[14px]">
+          <span className="whitespace-nowrap font-rubik text-[17px] font-medium leading-[20px] text-white">קבלו הצעת מחיר</span>
+          <img src={asset("tab-arrow.svg")} alt="" className="size-[38px] transition-transform duration-200 group-hover:rotate-45" />
+        </a>
+
+        {/* Copy */}
+        <div className="absolute right-[110px] top-[146px] flex w-[542px] flex-col items-start gap-[26px]">
+          <span className="rounded-full border-[1.2px] border-white/90 px-[16px] py-[6px] font-rubik text-[15px] leading-[18px] text-white">קירות וידאו ומסכי LED</span>
+          <HeroHeadline className="whitespace-nowrap text-[108px] leading-[104px] tracking-[-2.16px]" />
+          <p className="w-[520px] font-heebo text-[19px] leading-[30px] text-white/90">{SUB}</p>
+          <span className="h-[1.2px] w-[220px] bg-white/80" />
+          <SecondaryActions />
+        </div>
+
+        {/* Left column: live chip, quick catalog, rating, dots */}
+        <GlassChip className="absolute left-[48px] top-[128px] !gap-[6px] !py-[5px] !pl-[8px] !pr-[14px]">
+          <span className="font-heebo text-[12px] font-medium leading-[18px] text-white/75">· המסך דולק עכשיו</span>
+          <span className="font-mont text-[12px] font-bold tracking-[1.68px]" dir="ltr">
+            LIVE
+          </span>
+          <LivePulse />
+        </GlassChip>
+
+        <div className="absolute left-[48px] top-[435px] flex w-[300px] flex-col items-end gap-[12px]">
+          <span className="flex items-center gap-[8px] rounded-full bg-[rgba(21,21,25,0.55)] px-[14px] py-[6px] backdrop-blur-[6px]">
+            <span className="font-heebo text-[14px] font-medium leading-[21px] text-white">ניווט מהיר לקטלוג</span>
+            <img src={asset("dot-lime.svg")} alt="" className="size-[7px]" />
+          </span>
+          {CATALOG.map((c) => (
+            <CatalogButton key={c.name} {...c} />
+          ))}
+        </div>
+
+        <div className="absolute left-[48px] top-[800px] flex h-[37px] items-center gap-[6px] rounded-full bg-white/[0.14] px-[14px] backdrop-blur-[6px]">
+          <Stars size={13} />
+          <span className="font-heebo text-[14px] font-medium leading-[21px] text-white">5.0 בגוגל</span>
+        </div>
+
+        <div className="absolute left-[52px] top-[876px] flex h-[31px] items-center gap-[6px] rounded-[14px] bg-[#1e1e24] px-[18px]" dir="ltr" aria-hidden>
+          <span className="size-[7px] rounded-[4px] bg-[#7c7cf0]" />
+          <span className="h-[7px] w-[22px] rounded-[4px] bg-white" />
+          <span className="size-[7px] rounded-[4px] bg-[#7c7cf0]" />
+          <span className="size-[7px] rounded-[4px] bg-[#7c7cf0]" />
+          <span className="size-[7px] rounded-[4px] bg-[#7c7cf0]" />
+        </div>
+
+        {/* Primary CTA sitting in the panel notch */}
+        <a
+          href="#contact"
+          className="group absolute left-[1030px] top-[840px] flex h-[76px] w-[338px] items-center justify-between rounded-[22px] bg-lime pl-[22px] pr-[28px] transition-[filter] hover:brightness-105"
+        >
+          <span className="font-rubik text-[20px] font-medium leading-[24px] text-ink">לשיחת ייעוץ חינם</span>
+          <img src={asset("hero-cta-arrow.svg")} alt="" className="size-[40px] transition-transform duration-200 group-hover:rotate-45" />
+        </a>
+
+        {/* Jewels */}
+        <GlassChip icon="icon-chip-white.svg" className="absolute left-[571px] top-[720px]">
+          חזית מסחרית · מרכז העיר
+        </GlassChip>
+        <span className="absolute left-[856px] top-[766px] h-[40px] w-[26px] rounded-[13px] border-[1.4px] border-white/60" aria-hidden>
+          <span className="scroll-wheel absolute left-[8.7px] top-[5.2px] h-[8px] w-[3px] rounded-[2px] bg-lime" />
+        </span>
+        <Sparkle src="sparkle-hero-22.svg" size={22} style={{ left: 706, top: 226.4 }} />
+        <Sparkle src="sparkle-hero-10.svg" size={10} style={{ left: 732, top: 204.4 }} />
+        <Sparkle src="sparkle-hero-12.svg" size={12} style={{ left: 1236, top: 526.4 }} />
+        <Sparkle src="sparkle-9.svg" size={9} style={{ left: 536, top: 276 }} />
+        <Sparkle src="sparkle-7.svg" size={7} style={{ left: 446, top: 536 }} />
+        <PixelCluster color="lime" mirror style={{ left: 1286, top: 872 }} />
+      </div>
+    </div>
+  );
+}
+
+/** Mobile / tablet hero: same content, stacked. */
+function HeroMobile() {
+  return (
+    <div className="relative overflow-hidden rounded-[28px] bg-night p-[10px] lg:hidden">
+      <div className="flex items-center justify-between px-[10px] pb-[14px] pt-[8px]">
+        <Logo />
+        <a href="#contact" className="flex items-center gap-[10px]">
+          <span className="font-rubik text-[15px] font-medium text-white">קבלו הצעת מחיר</span>
+          <img src={asset("tab-arrow.svg")} alt="" className="size-[32px]" />
+        </a>
+      </div>
+      <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#4b4fd8] to-[#5b4fe0]">
+        <div className="relative h-[300px] sm:h-[380px]">
+          <img src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="absolute inset-0 size-full object-cover opacity-[0.92]" />
+          <span className="absolute inset-0 bg-gradient-to-b from-[rgba(75,79,216,0.25)] via-[rgba(79,79,220,0.35)] to-[#5250de]" />
+          <GlassChip className="absolute right-[16px] top-[16px] !gap-[6px] !py-[4px] !pl-[6px] !pr-[12px]">
+            <span className="font-heebo text-[12px] font-medium text-white/75">· המסך דולק עכשיו</span>
+            <span className="font-mont text-[12px] font-bold tracking-[1.68px]" dir="ltr">
+              LIVE
+            </span>
+            <LivePulse />
+          </GlassChip>
+        </div>
+        <div className="relative -mt-[60px] flex flex-col items-start gap-[18px] px-[20px] pb-[24px] sm:px-[32px]">
+          <span className="rounded-full border-[1.2px] border-white/90 px-[14px] py-[5px] font-rubik text-[14px] text-white">קירות וידאו ומסכי LED</span>
+          <HeroHeadline className="text-[52px] leading-[52px] tracking-[-1px] sm:text-[72px] sm:leading-[70px]" />
+          <p className="font-heebo text-[17px] leading-[27px] text-white/90">{SUB}</p>
+          <SecondaryActions />
+          <div className="mt-[6px] flex w-full flex-col gap-[10px]">
+            <span className="flex w-fit items-center gap-[8px] rounded-full bg-[rgba(21,21,25,0.55)] px-[14px] py-[6px]">
+              <span className="font-heebo text-[14px] font-medium text-white">ניווט מהיר לקטלוג</span>
+              <img src={asset("dot-lime.svg")} alt="" className="size-[7px]" />
+            </span>
+            <div className="grid gap-[10px] sm:grid-cols-2">
+              {CATALOG.map((c) => (
+                <CatalogButton key={c.name} {...c} />
+              ))}
+            </div>
+          </div>
+          <div className="flex h-[37px] items-center gap-[6px] rounded-full bg-white/[0.14] px-[14px]">
+            <Stars size={13} />
+            <span className="font-heebo text-[14px] font-medium text-white">5.0 בגוגל</span>
+          </div>
+        </div>
+      </div>
+      <a href="#contact" className="mt-[10px] flex h-[64px] items-center justify-between rounded-[20px] bg-lime pl-[16px] pr-[22px]">
+        <span className="font-rubik text-[18px] font-medium text-ink">לשיחת ייעוץ חינם</span>
+        <img src={asset("hero-cta-arrow.svg")} alt="" className="size-[38px]" />
+      </a>
+    </div>
+  );
+}
+
+export default function Hero() {
+  return (
+    <header id="top">
+      <HeroDesktop />
+      <HeroMobile />
+    </header>
+  );
+}

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 const TOTAL = 3000; // visible time before the exit starts
 const EXIT = 750; // band wipe duration (incl. stagger)
 const BANDS = 7;
-const FLY = 900; // particle flight time
+const FLY = 1000; // particle flight time
 const SPREAD = 300; // max launch delay spread
 
 type P = { sx: number; sy: number; tx: number; ty: number; d: number; s: number; c: string; spin: number };
@@ -163,10 +163,14 @@ export default function Preloader() {
           const tw = t < 1 ? 0.55 + 0.45 * Math.sin(now / 60 + p.tx) : 1;
           ctx.globalAlpha = Math.min(1, t * 3) * tw;
           ctx.fillStyle = p.c;
-          const s = p.s * (1 + (1 - e) * 0.8);
+          const s = p.s * (1 + (1 - e) * 1.2);
+          // LED glow while in flight
+          ctx.shadowColor = p.c;
+          ctx.shadowBlur = t < 1 ? 8 : 3;
           ctx.fillRect(x - s / 2, y - s / 2, s, s);
         }
         ctx.globalAlpha = 1;
+        ctx.shadowBlur = 0;
         if (!done && settled > pts.length * 0.9) {
           done = true;
           window.clearTimeout(failSafe);

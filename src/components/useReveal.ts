@@ -27,11 +27,19 @@ export function useReveal() {
       root.querySelectorAll<HTMLElement>(SELECTOR).forEach((el) => {
         if (!el.classList.contains("is-in")) io.observe(el);
       });
-    watch(document);
+    // Wait for the loading screen so the hero entrance plays when it is actually visible.
+    let started = false;
+    const begin = () => {
+      if (started) return;
+      started = true;
+      watch(document);
+    };
+    if (document.documentElement.dataset.loaded) begin();
+    else window.addEventListener("preloader-done", begin, { once: true });
     const mo = new MutationObserver((muts) =>
       muts.forEach((m) =>
         m.addedNodes.forEach((n) => {
-          if (n instanceof HTMLElement) {
+          if (started && n instanceof HTMLElement) {
             if (n.matches(SELECTOR)) io.observe(n);
             watch(n);
           }
@@ -40,6 +48,7 @@ export function useReveal() {
     );
     mo.observe(document.body, { childList: true, subtree: true });
     return () => {
+      window.removeEventListener("preloader-done", begin);
       io.disconnect();
       mo.disconnect();
     };

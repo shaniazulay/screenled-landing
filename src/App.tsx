@@ -14,6 +14,7 @@ import MobileHome from "@/components/mobile/MobileHome";
 import FitSection from "@/components/FitSection";
 import { useReveal } from "@/components/useReveal";
 import { useMotion } from "@/components/useMotion";
+import Preloader from "@/components/Preloader";
 
 const CANVAS_GLOWS = [
   { left: 1100, top: 600 },
@@ -27,6 +28,7 @@ export default function App() {
   useMotion();
   return (
     <>
+    <Preloader />
     <div className="scroll-progress" aria-hidden />
     <MobileHome />
     <div className="relative mx-auto hidden max-w-[1440px] overflow-clip lg:block">

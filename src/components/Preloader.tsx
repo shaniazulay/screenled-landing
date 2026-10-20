@@ -1,7 +1,20 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 const TOTAL = 3000; // visible time before the exit starts
-const EXIT = 1150; // "screen opens into the site" transition
+const EXIT = 1250; // longest exit transition
+
+/** Exit variants to compare: ?exit=window (default) | pixels | tv */
+export type ExitKind = "window" | "pixels" | "tv";
+export const EXITS: { id: ExitKind; label: string }[] = [
+  { id: "window", label: "1 · חלון נפתח" },
+  { id: "pixels", label: "2 · פסיפס LED" },
+  { id: "tv", label: "3 · טלוויזיה נדלקת" },
+];
+export const exitKind = (): ExitKind => {
+  const v = new URLSearchParams(window.location.search).get("exit");
+  return v === "pixels" || v === "tv" ? v : "window";
+};
+const TILE = 72; // mosaic tile size (px)
 const FLY = 1250; // particle flight time
 const SPREAD = 320; // max launch delay spread
 
@@ -21,6 +34,16 @@ export default function Preloader() {
   // opens to the full viewport; a thin lime frame rides the edge of the opening.
   const [bg, setBg] = useState<CSSProperties>({});
   const [frame, setFrame] = useState<CSSProperties>({ opacity: 0 });
+  const [kind] = useState<ExitKind>(exitKind);
+  // mosaic: tile grid + the logo centre each tile's delay is measured from
+  const [grid, setGrid] = useState({ cols: 0, rows: 0, cx: 0, cy: 0 });
+  useEffect(() => {
+    if (kind !== "pixels") return;
+    const set = () => setGrid((g) => ({ ...g, cols: Math.ceil(window.innerWidth / TILE), rows: Math.ceil(window.innerHeight / TILE) }));
+    set();
+    window.addEventListener("resize", set);
+    return () => window.removeEventListener("resize", set);
+  }, [kind]);
   const overlay = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const word = useRef<HTMLSpanElement>(null);
@@ -48,7 +71,20 @@ export default function Preloader() {
 
     const t1 = window.setTimeout(() => {
       const r = box.current?.getBoundingClientRect();
-      if (r) {
+      const W0 = window.innerWidth;
+      const H0 = window.innerHeight;
+      const holeAt0 = (l: number, t: number, rr: number, bb: number) =>
+        `polygon(evenodd, 0 0, ${W0}px 0, ${W0}px ${H0}px, 0 ${H0}px, 0 0, ${l}px ${t}px, ${rr}px ${t}px, ${rr}px ${bb}px, ${l}px ${bb}px, ${l}px ${t}px)`;
+      if (kind === "pixels" && r) {
+        setGrid((g) => ({ ...g, cx: (r.left + r.right) / 2, cy: (r.top + r.bottom) / 2 }));
+      } else if (kind === "tv") {
+        // logo collapses to a line (CSS), then the backdrop opens from a 2px horizontal slit
+        setBg({ clipPath: holeAt0(-6, H0 / 2 - 1, W0 + 6, H0 / 2 + 1), transition: "none" });
+        window.setTimeout(
+          () => setBg({ clipPath: holeAt0(-6, -6, W0 + 6, H0 + 6), transition: "clip-path 0.55s cubic-bezier(0.7, 0, 0.2, 1)" }),
+          430,
+        );
+      } else if (r) {
         const W = window.innerWidth;
         const H = window.innerHeight;
         const holeAt = (l: number, t: number, rr: number, bb: number) =>
@@ -222,11 +258,33 @@ export default function Preloader() {
     <div
       ref={overlay}
       data-lenis-prevent
-      className={`preloader ${phase === "out" ? "is-out" : ""} ${assembled ? "is-assembled" : ""}`}
+      className={`preloader exit-${kind} ${phase === "out" ? "is-out" : ""} ${assembled ? "is-assembled" : ""}`}
       role="status"
       aria-label="טוען את האתר"
     >
-      <span className="pl-bg" style={bg} aria-hidden />
+      {kind === "pixels" ? (
+        <span className="pl-mosaic" aria-hidden>
+          {Array.from({ length: grid.cols * grid.rows }).map((_, i) => {
+            const c = i % grid.cols;
+            const rr = Math.floor(i / grid.cols);
+            const d = Math.hypot(c * TILE + TILE / 2 - grid.cx, rr * TILE + TILE / 2 - grid.cy);
+            return (
+              <span
+                key={i}
+                style={{ left: c * TILE, top: rr * TILE, ["--d" as string]: `${Math.round(d * 0.75 + ((i * 37) % 9) * 14)}ms` }}
+              />
+            );
+          })}
+        </span>
+      ) : (
+        <span className="pl-bg" style={bg} aria-hidden />
+      )}
+      {kind === "tv" && (
+        <>
+          <span className="pl-tvline" aria-hidden />
+          <span className="pl-scanlines" aria-hidden />
+        </>
+      )}
       <span className="pl-frame" style={frame} aria-hidden />
 
       <div className="pl-dots" aria-hidden />
@@ -266,5 +324,19 @@ export default function Preloader() {
 
       <canvas ref={canvas} className="pl-canvas" aria-hidden />
     </div>
+  );
+}
+
+/** Temporary switcher for comparing the three exit transitions (reloads the page with ?exit=…). */
+export function ExitSwitch() {
+  const current = exitKind();
+  return (
+    <nav className="exit-switch" aria-label="השוואת מעברים">
+      {EXITS.map((e) => (
+        <a key={e.id} href={`?exit=${e.id}`} className={e.id === current ? "on" : ""}>
+          {e.label}
+        </a>
+      ))}
+    </nav>
   );
 }

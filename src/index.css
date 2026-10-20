@@ -593,3 +593,55 @@ html:not([data-loaded]) .slide-up-in { animation-play-state: paused; opacity: 0;
 /* Projects wall: strip of two identical sets drifting right in a loop */
 @keyframes wall-drift { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 .wall-strip { animation: wall-drift var(--dur, 32s) linear infinite; }
+
+/* ── Exit 2: LED mosaic — tiles flash lime and switch off in a wave from the logo ── */
+.pl-mosaic { position: absolute; inset: 0; overflow: hidden; }
+.pl-mosaic > span { position: absolute; width: 73px; height: 73px; background: #151519; }
+.preloader.is-out .pl-mosaic > span { animation: pl-tile 0.5s cubic-bezier(0.5, 0, 0.3, 1) var(--d) forwards; }
+@keyframes pl-tile {
+  0% { background: #151519; transform: scale(1); }
+  30% { background: #d4ff5a; transform: scale(0.86); border-radius: 6px; box-shadow: 0 0 16px rgba(212, 255, 90, 0.8); }
+  60% { background: #5457e0; transform: scale(0.55); border-radius: 4px; opacity: 0.8; }
+  100% { transform: scale(0); opacity: 0; }
+}
+.exit-pixels.is-out .pl-stage { animation: pl-stage-pop 0.35s ease forwards; }
+@keyframes pl-stage-pop { to { opacity: 0; transform: scale(0.8); filter: blur(4px); } }
+.exit-pixels .pl-frame { display: none; }
+
+/* ── Exit 3: TV switch-on — logo collapses into a glowing line that opens to the site ── */
+.exit-tv .pl-frame { display: none; }
+.exit-tv.is-out .pl-stage { animation: pl-tv-collapse 0.42s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
+@keyframes pl-tv-collapse {
+  0% { transform: none; filter: none; }
+  55% { transform: scale(1.04, 0.02); filter: brightness(3); }
+  100% { transform: scale(0, 0.02); filter: brightness(4); opacity: 0; }
+}
+.pl-tvline {
+  position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; z-index: 4;
+  background: #fff; box-shadow: 0 0 18px 4px rgba(212, 255, 90, 0.9), 0 0 60px 10px rgba(212, 255, 90, 0.35);
+  transform: scaleX(0); opacity: 0; pointer-events: none;
+}
+.exit-tv.is-out .pl-tvline { animation: pl-tvline 0.95s cubic-bezier(0.6, 0, 0.2, 1) forwards; }
+@keyframes pl-tvline {
+  0% { transform: scaleX(0); opacity: 1; }
+  40% { transform: scaleX(1); opacity: 1; }
+  55% { transform: scaleX(1) scaleY(1); opacity: 1; }
+  100% { transform: scaleX(1) scaleY(60); opacity: 0; }
+}
+.pl-scanlines {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 2px, transparent 2px 4px);
+}
+.exit-tv.is-out .pl-scanlines { animation: pl-scan-fade 1.2s ease 0.4s forwards; }
+@keyframes pl-scan-fade { 0% { opacity: 0.9; } 100% { opacity: 0; } }
+
+/* exit comparison switcher */
+.exit-switch {
+  position: fixed; left: 50%; top: 14px; transform: translateX(-50%); z-index: 90;
+  display: flex; gap: 6px; padding: 6px; border-radius: 999px;
+  background: rgba(21, 21, 25, 0.88); backdrop-filter: blur(8px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.exit-switch a {
+  padding: 8px 14px; border-radius: 999px; font: 500 13px/1 Rubik, sans-serif; color: #fff; text-decoration: none; white-space: nowrap;
+}
+.exit-switch a.on { background: #d4ff5a; color: #111114; }

@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 
-const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
 /**
@@ -13,7 +12,7 @@ const finePointer = () => window.matchMedia("(hover: hover) and (pointer: fine)"
  */
 export function useMotion() {
   useEffect(() => {
-    if (reduced()) return;
+    // Motion is part of the brand experience, so it runs even when the OS asks for reduced motion.
     const root = document.documentElement;
     const cleanups: (() => void)[] = [];
 

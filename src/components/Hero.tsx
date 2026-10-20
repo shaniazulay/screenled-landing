@@ -1,5 +1,7 @@
 import { asset, GlassChip, PixelCluster, Sparkle } from "./ui";
+import { useEffect, useRef, useState } from "react";
 import { useFitScale } from "./useFitScale";
+import HeroPixels from "./HeroPixels";
 
 const NAV = [
   { label: "פתרונות", href: "#domains" },
@@ -33,8 +35,8 @@ function CatalogButton({ name, price, i = 0 }: { name: string; price: string; i?
     <a
       href="#products"
       data-reveal="left"
-      style={{ ["--d" as string]: `${350 + i * 90}ms` }}
-      className="btn-lime group flex h-[64px] w-full items-center justify-between rounded-[20px] bg-lime pl-[14px] pr-[22px] drop-shadow-[0_10px_12px_rgba(0,0,0,0.22)]"
+      style={{ ["--d" as string]: `${350 + i * 90}ms`, ["--sw" as string]: `${1.5 + i * 0.35}s` }}
+      className="btn-lime auto-sweep group flex h-[64px] w-full items-center justify-between rounded-[20px] bg-lime pl-[14px] pr-[22px] drop-shadow-[0_10px_12px_rgba(0,0,0,0.22)]"
     >
       <span className="flex flex-col items-start text-right">
         <span className="whitespace-nowrap font-heebo text-[17px] font-semibold leading-[25px] text-ink">{name}</span>
@@ -75,7 +77,7 @@ function HeroHeadline({ className = "" }: { className?: string }) {
         המסך שלכם
       </span>
       <span className="block" data-reveal style={{ ["--d" as string]: "280ms" }}>
-        יעצור <span className="text-lime">כל</span>
+        יעצור <span className="shimmer">כל</span>
       </span>
       <span className="block" data-reveal style={{ ["--d" as string]: "410ms" }}>
         <span className="shimmer">עובר אורח</span>
@@ -97,7 +99,7 @@ function SecondaryActions() {
           {PHONE}
         </span>
         <span className="flex size-[34px] items-center justify-center rounded-full bg-lime">
-          <img loading="lazy" src={asset("phone-icon.svg")} alt="" className="size-[16px]" />
+          <img loading="lazy" src={asset("phone-icon.svg")} alt="" className="ring-wiggle size-[16px]" />
         </span>
       </a>
       <a href="https://wa.me/972544228606" className="btn-ghost rounded-full border-[1.2px] border-white/80 px-[18px] py-[10px] font-rubik text-[15px] font-medium leading-[18px] text-white hover:border-white hover:bg-white/10">
@@ -166,9 +168,30 @@ function HeroDesktop() {
   const liveBottom = 16 + band + 28 * k + 40 * k;
   const kCat = Math.max(1, Math.min(k, (catalogBottom - liveBottom - 16) / 337));
 
+  // Mouse parallax: --px / --py in −1…1 drive the photo, copy and side column in opposite directions.
+  const canvas = useRef<HTMLDivElement>(null);
+  const onMove = (e: React.PointerEvent) => {
+    const el = canvas.current;
+    if (!el || e.pointerType !== "mouse") return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--px", (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(3));
+    el.style.setProperty("--py", (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
+  };
+  const onLeave = () => {
+    canvas.current?.style.setProperty("--px", "0");
+    canvas.current?.style.setProperty("--py", "0");
+  };
+  // Slider dots cycle like a live playlist.
+  const [dot, setDot] = useState(1);
+  useEffect(() => {
+    const t = window.setInterval(() => setDot((d) => (d + 1) % 5), 2800);
+    return () => window.clearInterval(t);
+  }, []);
+
   return (
-    <div ref={ref} className="relative hidden overflow-hidden lg:block" style={{ height: 940 * scale }}>
+    <div ref={ref} className="relative hidden overflow-hidden lg:block" style={{ height: 940 * scale }} onPointerMove={onMove} onPointerLeave={onLeave}>
       <div
+        ref={canvas}
         className="absolute right-0 top-0 h-[940px] origin-top-right overflow-hidden rounded-[36px] bg-night"
         style={{ width: canvasW, transform: `scale(${scale})` }}
       >
@@ -186,7 +209,7 @@ function HeroDesktop() {
               {...{ fetchpriority: "high" }}
               src={asset("hero-photo.png")}
               alt="מסך LED ענק על חזית בניין בלילה"
-              className="ken-burns sd-hero-photo size-full object-cover opacity-[0.92]"
+              className="ken-burns-hero sd-hero-photo par-photo size-full object-cover opacity-[0.92]"
             />
           </div>
           <span
@@ -199,6 +222,10 @@ function HeroDesktop() {
             }}
           />
           {/* soften the photo-fade edge into the panel fill */}
+          <span className="absolute left-0 overflow-hidden" style={{ width: photoW, top: photoTop, height: 904 - photoTop }}>
+            <span className="hero-sweep" />
+          </span>
+          <HeroPixels count={22} width={P - 40} height={900} />
           <span className="absolute w-[260px] bg-gradient-to-r from-[#5250de] to-[rgba(82,80,222,0)]" style={{ left: photoW - 1, top: photoTop, height: 904 - photoTop }} />
           <span style={{ width: photoW, top: photoTop - 84 }} className="absolute left-0 h-[220px] bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
         </div>
@@ -230,8 +257,8 @@ function HeroDesktop() {
         </div>
 
         {/* Copy */}
-        <div className="sd-hero-copy absolute right-[110px] flex w-[542px] flex-col items-start gap-[26px]" style={{ top: 16 + band + 46 }}>
-          <span data-reveal className="rounded-full border-[1.2px] border-white/90 px-[16px] py-[6px] font-rubik text-[15px] leading-[18px] text-white" style={ui("right top")}>
+        <div className="sd-hero-copy par-copy absolute right-[110px] flex w-[542px] flex-col items-start gap-[26px]" style={{ top: 16 + band + 46 }}>
+          <span data-reveal className="spin-border rounded-full border-[1.2px] border-white/90 px-[16px] py-[6px] font-rubik text-[15px] leading-[18px] text-white" style={ui("right top")}>
             קירות וידאו ומסכי LED
           </span>
           <HeroHeadline className="whitespace-nowrap text-[108px] leading-[104px] tracking-[-2.16px]" />
@@ -253,7 +280,7 @@ function HeroDesktop() {
           <LivePulse />
         </GlassChip>
 
-        <div className="absolute flex w-[300px] flex-col items-end gap-[12px]" style={{ left: 24 + 24 * k, bottom: 940 - catalogBottom, transform: `scale(${kCat})`, transformOrigin: "left bottom" }}>
+        <div className="par-side absolute flex w-[300px] flex-col items-end gap-[12px]" style={{ left: 24 + 24 * k, bottom: 940 - catalogBottom, transform: `scale(${kCat})`, transformOrigin: "left bottom" }}>
           <span className="flex items-center gap-[8px] rounded-full bg-[rgba(21,21,25,0.55)] px-[14px] py-[6px] backdrop-blur-[6px]">
             <span className="font-heebo text-[14px] font-medium leading-[21px] text-white">ניווט מהיר לקטלוג</span>
             <img loading="lazy" src={asset("dot-lime.svg")} alt="" className="size-[7px]" />
@@ -278,11 +305,13 @@ function HeroDesktop() {
           dir="ltr"
           aria-hidden
         >
-          <span className="size-[7px] rounded-[4px] bg-[#7c7cf0]" />
-          <span className="h-[7px] w-[22px] rounded-[4px] bg-white" />
-          <span className="size-[7px] rounded-[4px] bg-[#7c7cf0]" />
-          <span className="size-[7px] rounded-[4px] bg-[#7c7cf0]" />
-          <span className="size-[7px] rounded-[4px] bg-[#7c7cf0]" />
+          {Array.from({ length: 5 }).map((_, i) => (
+            <span
+              key={i}
+              className="h-[7px] rounded-[4px] transition-all duration-500"
+              style={{ width: i === dot ? 22 : 7, background: i === dot ? "#fff" : "#7c7cf0" }}
+            />
+          ))}
         </div>
 
         {/* Primary CTA sitting in the panel notch */}
@@ -291,10 +320,12 @@ function HeroDesktop() {
             href="#contact"
             data-reveal="scale"
             style={{ ["--d" as string]: "850ms" }}
-            className="btn-lime group flex h-[76px] w-[338px] items-center justify-between rounded-[22px] bg-lime pl-[22px] pr-[28px]"
+            className="btn-lime breathe group flex h-[76px] w-[338px] items-center justify-between rounded-[22px] bg-lime pl-[22px] pr-[28px]"
           >
             <span className="font-rubik text-[20px] font-medium leading-[24px] text-ink">לשיחת ייעוץ חינם</span>
-            <img loading="lazy" src={asset("hero-cta-arrow.svg")} alt="" className="size-[40px] transition-transform duration-200 group-hover:rotate-45" />
+            <span className="nudge inline-flex">
+              <img loading="lazy" src={asset("hero-cta-arrow.svg")} alt="" className="size-[40px] transition-transform duration-200 group-hover:rotate-45" />
+            </span>
           </a>
         </div>
 

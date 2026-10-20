@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { asset, PixelCluster, SectionTag, Sparkle } from "../ui";
+import HeroPixels from "../HeroPixels";
 
 export const m = (name: string) => asset(`m/${name}`);
 
@@ -103,20 +104,22 @@ export function MHero() {
           </span>
           <div className="absolute left-0 top-[40px] h-[290px] w-full overflow-hidden">
             <img loading="eager" {...{ fetchpriority: "high" }} src={asset("hero-photo.png")} alt="מסך LED ענק על חזית בניין בלילה" className="ken-burns sd-hero-photo size-full object-cover" />
+            <span className="hero-sweep" />
           </div>
+          <HeroPixels count={14} width={w - 20} height={779} />
           <span className="absolute left-0 top-[39px] h-[111px] w-full bg-gradient-to-b from-[#4b4fd8] to-[rgba(75,79,216,0)]" />
           <span className="absolute left-0 top-[180px] h-[151px] w-full bg-gradient-to-b from-[rgba(77,79,218,0)] to-[#4d4fda]" />
         </div>
 
         {/* Copy */}
         <div className="absolute inset-x-0 top-[269px] flex flex-col items-start gap-[16px] px-[20px]">
-          <span data-reveal className="rounded-full border-[1.1px] border-white/85 px-[14px] py-[5px] font-rubik text-[13px] font-medium leading-[15px] text-white">קירות וידאו ומסכי LED</span>
+          <span data-reveal className="spin-border rounded-full border-[1.1px] border-white/85 px-[14px] py-[5px] font-rubik text-[13px] font-medium leading-[15px] text-white">קירות וידאו ומסכי LED</span>
           <h1 className="font-rubik text-[42px] font-bold leading-[44px] tracking-[-0.63px] text-white">
             <span className="block" data-reveal style={{ ["--d" as string]: "120ms" }}>
               <span className="font-extrabold">המסך שלכם</span>
             </span>
             <span className="block" data-reveal style={{ ["--d" as string]: "240ms" }}>
-              יעצור <span className="text-lime">כל</span>
+              יעצור <span className="shimmer">כל</span>
             </span>
             <span className="block" data-reveal style={{ ["--d" as string]: "360ms" }}>
               <span className="shimmer">עובר אורח</span>
@@ -131,7 +134,7 @@ export function MHero() {
               {PHONE}
             </span>
             <span className="flex size-[40px] items-center justify-center rounded-full bg-lime">
-              <img loading="lazy" src={m("phone.svg")} alt="" className="size-[18px]" />
+              <img loading="lazy" src={m("phone.svg")} alt="" className="ring-wiggle size-[18px]" />
             </span>
           </a>
           <div className="flex w-full gap-[8px]">
@@ -189,7 +192,7 @@ export function MHero() {
           <span className="size-[5px] rounded-[3px] bg-[#7c7cf0]" />
           <span className="size-[5px] rounded-[3px] bg-[#7c7cf0]" />
         </span>
-        <a href="#contact-m" data-reveal="scale" style={{ ["--d" as string]: "600ms" }} className="btn-lime absolute right-0 top-[713.2px] flex h-[74px] w-[224px] items-center justify-between rounded-[18px] bg-lime pl-[10px] pr-[18px]">
+        <a href="#contact-m" data-reveal="scale" style={{ ["--d" as string]: "600ms" }} className="btn-lime breathe absolute right-0 top-[713.2px] flex h-[74px] w-[224px] items-center justify-between rounded-[18px] bg-lime pl-[10px] pr-[18px]">
           <span className="font-rubik text-[16px] font-medium leading-[19px] text-ink">לשיחת ייעוץ חינם</span>
           <img loading="lazy" src={m("arrow-dark-34.svg")} alt="" className="size-[34px]" />
         </a>
@@ -204,7 +207,7 @@ export function MHero() {
         </span>
         <div className="grid w-full grid-cols-2 gap-[8px]">
           {CATALOG.map((c, i) => (
-            <a key={c.name} href="#products-m" data-reveal style={{ ["--d" as string]: `${i * 80}ms` }} className="btn-lime flex h-[62px] items-center gap-[8px] rounded-[16px] bg-lime py-[6px] pl-[10px] pr-[6px]">
+            <a key={c.name} href="#products-m" data-reveal style={{ ["--d" as string]: `${i * 80}ms`, ["--sw" as string]: `${1.5 + i * 0.35}s` }} className="btn-lime auto-sweep flex h-[62px] items-center gap-[8px] rounded-[16px] bg-lime py-[6px] pl-[10px] pr-[6px]">
               <img loading="lazy" src={asset(c.img)} alt="" className="size-[48px] shrink-0 rounded-[11px] object-cover" />
               <span className="flex min-w-0 flex-1 flex-col gap-px">
                 <span className="font-rubik text-[13px] font-semibold leading-[16px] text-ink">{c.name}</span>

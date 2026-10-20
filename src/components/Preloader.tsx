@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 const TOTAL = 3000; // visible time before the exit starts
 const EXIT = 1250; // longest exit transition
 
-/** Exit variants to compare: ?exit=window (default) | pixels | tv */
+/** Exit variants: pixels (default, the chosen LED mosaic) | window | tv via ?exit= */
 export type ExitKind = "window" | "pixels" | "tv";
 export const EXITS: { id: ExitKind; label: string }[] = [
   { id: "window", label: "1 · חלון נפתח" },
@@ -12,7 +12,7 @@ export const EXITS: { id: ExitKind; label: string }[] = [
 ];
 export const exitKind = (): ExitKind => {
   const v = new URLSearchParams(window.location.search).get("exit");
-  return v === "pixels" || v === "tv" ? v : "window";
+  return v === "window" || v === "tv" ? v : "pixels";
 };
 const TILE = 72; // mosaic tile size (px)
 const FLY = 1250; // particle flight time

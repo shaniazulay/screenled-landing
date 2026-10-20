@@ -476,7 +476,8 @@ html.lenis, html.lenis body { height: auto; }
 .preloader.is-out .pl-word > span { animation: none !important; opacity: 0; }
 .preloader.is-out .pl-led,
 .preloader.is-out .pl-tag,
-.preloader.is-out .pl-meter { opacity: 0; transform: translateY(-8px); transition: opacity 0.25s ease, transform 0.25s ease; }
+.preloader.is-out .pl-meter,
+.preloader.is-out .pl-led > span { animation: none !important; opacity: 0 !important; transition: opacity 0.18s ease; }
 
 /* Logo — hidden until the particle swarm has assembled it */
 .pl-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; transition: opacity 0.5s ease 0.15s; }

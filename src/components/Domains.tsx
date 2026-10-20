@@ -63,7 +63,7 @@ export default function Domains() {
         {/* Column 1 (right): featured + intro + controls */}
         <div className="flex flex-col gap-[12px]">
           <div className="zoom-parent relative h-[312px] overflow-hidden rounded-[20px]">
-            <img key={f.img} loading="lazy" src={asset(f.img)} alt={f.title} className="fade-in zoom-img absolute inset-0 size-full object-cover" />
+            <img key={f.img} loading="eager" src={asset(f.img)} alt={f.title} className="fade-in zoom-img absolute inset-0 size-full object-cover" />
             <span className="absolute inset-0 bg-gradient-to-l from-[rgba(5,8,26,0.75)] to-[rgba(5,8,26,0)] to-60%" />
             <div key={f.title} className="fade-in absolute bottom-[32px] left-[24px] right-[24px] flex flex-col items-start gap-[4px] xl:left-[32px] xl:right-[32px]">
               <span className="font-rubik text-[34px] font-bold leading-[40px] tracking-[-0.52px] text-white sm:text-[52px] sm:leading-[58px]">{f.title}</span>

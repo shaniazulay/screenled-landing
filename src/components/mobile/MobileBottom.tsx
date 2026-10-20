@@ -274,8 +274,8 @@ export function MContact() {
         </span>
       ))}
       <div className="relative flex w-full gap-[8px]">
-        <a href={`tel:${PHONE}`} className="flex h-[48px] min-w-0 flex-1 items-center justify-center gap-[8px] rounded-full border-[1.2px] border-white/80 px-[12px]">
-          <span className="font-mont text-[14px] font-bold leading-[17px] text-white" dir="ltr">
+        <a href={`tel:${PHONE}`} className="flex h-[48px] min-w-0 flex-1 items-center justify-center gap-[6px] rounded-full border-[1.2px] border-white/80 px-[8px]">
+          <span className="whitespace-nowrap font-mont text-[clamp(12px,3.6vw,14px)] font-bold leading-[17px] text-white" dir="ltr">
             {PHONE}
           </span>
           <img loading="lazy" src={m("phone-white.svg")} alt="" className="size-[16px]" />

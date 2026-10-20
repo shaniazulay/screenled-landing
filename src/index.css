@@ -16,6 +16,9 @@
   p {
     margin: 0;
   }
+  /* balanced line breaks: no single orphan word on a heading line */
+  h1, h2, h3, blockquote { text-wrap: balance; }
+  p { text-wrap: pretty; }
 }
 
 @layer utilities {

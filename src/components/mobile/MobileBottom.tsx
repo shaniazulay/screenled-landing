@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { countUp } from "../useReveal";
+import CoverFlow, { CoverDots, MOBILE_SLOTS } from "../CoverFlow";
 import { asset, PixelCluster, SectionTag } from "../ui";
 import { m, MCard, MLimeButton } from "./MobileTop";
 
@@ -198,20 +199,8 @@ export function MHowItWorks() {
 
 /* ───────────────────────── Testimonials ───────────────────────── */
 
-function SideCard({ img, label, className, labelRight, labelSize }: { img: string; label: string; className: string; labelRight: number; labelSize: number }) {
-  return (
-    <div className={`absolute top-[45px] h-[290px] w-[170px] overflow-hidden rounded-[20px] shadow-[0_18px_36px_rgba(10,14,41,0.28)] ${className}`}>
-      <img loading="lazy" src={asset(img)} alt={label} className="absolute inset-0 size-full object-cover" />
-      <span className="absolute inset-x-0 bottom-0 h-[159.5px] bg-gradient-to-b from-[rgba(5,8,26,0)] to-[rgba(5,8,26,0.85)]" />
-      <span className="absolute inset-0 bg-[rgba(10,14,41,0.3)]" />
-      <span className="absolute top-[255px] whitespace-nowrap font-heebo font-bold text-white" style={{ right: labelRight, fontSize: labelSize, lineHeight: "19px" }}>
-        {label}
-      </span>
-    </div>
-  );
-}
-
 export function MTestimonials() {
+  const [active, setActive] = useState(0);
   const rating = useRef<HTMLSpanElement>(null);
   useEffect(() => countUp(rating.current, 5, 1), []);
   return (
@@ -236,35 +225,10 @@ export function MTestimonials() {
           <span className="font-heebo text-[11px] leading-[16px] text-slate-muted">על סמך ביקורות בגוגל</span>
         </span>
       </div>
-      <div className="relative h-[380px] w-[326px] shrink-0">
-        <SideCard img="domain-museum.png" label="מוזיאון" className="left-[-60px]" labelRight={84} labelSize={13} />
-        <SideCard img="testi-production.png" label="חברת הפקות" className="left-[216px]" labelRight={66} labelSize={11} />
-        <figure className="absolute left-[45px] top-0 m-0 h-[380px] w-[236px] overflow-hidden rounded-[20px] shadow-[0_18px_36px_rgba(10,14,41,0.28)]">
-          <img loading="lazy" src={asset("project-2.png")} alt="קיר וידאו באטריום קניון" className="absolute inset-0 size-full object-cover" />
-          <span className="absolute inset-x-0 bottom-0 h-[209px] bg-gradient-to-b from-[rgba(5,8,26,0)] to-[rgba(5,8,26,0.85)]" />
-          <span className="absolute right-[14px] top-[14px] rounded-full bg-white/[0.18] px-[10px] py-[4px] font-rubik text-[11px] font-medium leading-[13px] text-white backdrop-blur-[6px]">המלצת וידאו · 0:48</span>
-          <figcaption className="absolute inset-x-0 bottom-0 flex flex-col items-start gap-[8px] px-[18px] pb-[18px]">
-            <img loading="lazy" src={m("stars-68.svg")} alt="5 כוכבים" className="h-[12px] w-[68px]" />
-            <blockquote className="m-0 font-heebo text-[15px] font-medium leading-[22px] text-white">המסך בכניסה שינה את התנועה במתחם. אנשים עוצרים, מצלמים ונכנסים.</blockquote>
-            <span className="flex w-full items-center justify-between">
-              <span className="flex flex-col items-start">
-                <span className="font-heebo text-[14px] font-bold leading-[21px] text-white">שם הלקוח</span>
-                <span className="font-heebo text-[11px] leading-[16px] text-white/70">מנהל/ת שיווק · קניון</span>
-              </span>
-              <button className="pulse-ring relative size-[42px] rounded-full bg-white" aria-label="הפעלת סרטון">
-                <img loading="lazy" src={m("play.svg")} alt="" className="absolute left-[13px] top-[12px] size-[18px]" />
-              </button>
-            </span>
-          </figcaption>
-        </figure>
+      <div className="-mx-[20px] w-[calc(100%+40px)]">
+        <CoverFlow slots={MOBILE_SLOTS} height={380} active={active} onActive={setActive} compact />
       </div>
-      <div className="flex gap-[6px]" dir="ltr" aria-hidden>
-        <span className="size-[6px] rounded-[3px] bg-[rgba(18,22,51,0.18)]" />
-        <span className="size-[6px] rounded-[3px] bg-[rgba(18,22,51,0.18)]" />
-        <span className="h-[6px] w-[20px] rounded-[3px] bg-indigo" />
-        <span className="size-[6px] rounded-[3px] bg-[rgba(18,22,51,0.18)]" />
-        <span className="size-[6px] rounded-[3px] bg-[rgba(18,22,51,0.18)]" />
-      </div>
+      <CoverDots active={active} onActive={setActive} small />
       <MLimeButton label="לכל ההמלצות" href="#testimonials-m" />
     </MCard>
   );

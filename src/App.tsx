@@ -56,9 +56,8 @@ export default function App() {
         </FitSection>
         {/* Shown at its natural design size (taller than a short laptop screen) so it matches Figma exactly */}
         <HowItWorks />
-        <FitSection>
-          <Testimonials />
-        </FitSection>
+        {/* Full design size so the title and the cover flow stay large */}
+        <Testimonials />
         <FitSection>
           <Contact />
         </FitSection>

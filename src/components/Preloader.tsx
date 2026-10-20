@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 const TOTAL = 3000; // visible time before the exit starts
-const EXIT = 950; // "screen opens into the site" transition
+const EXIT = 1150; // "screen opens into the site" transition
 const FLY = 1250; // particle flight time
 const SPREAD = 320; // max launch delay spread
 
@@ -17,9 +17,10 @@ export default function Preloader() {
   const [phase, setPhase] = useState<"in" | "out" | "gone">("in");
   const [assembled, setAssembled] = useState(false);
   const [count, setCount] = useState(0);
-  // The dark backdrop is a giant shadow around this "window"; growing it from the logo box to the
-  // full viewport reveals the site through the SCREEN box.
-  const [hole, setHole] = useState<CSSProperties>({ left: "50%", top: "50%", width: 0, height: 0, borderRadius: 12 });
+  // Exit: the dark backdrop gets a rectangular hole (clip-path, even-odd) at the SCREEN box, which then
+  // opens to the full viewport; a thin lime frame rides the edge of the opening.
+  const [bg, setBg] = useState<CSSProperties>({});
+  const [frame, setFrame] = useState<CSSProperties>({ opacity: 0 });
   const overlay = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const word = useRef<HTMLSpanElement>(null);
@@ -48,26 +49,35 @@ export default function Preloader() {
     const t1 = window.setTimeout(() => {
       const r = box.current?.getBoundingClientRect();
       if (r) {
-        const radius = parseFloat(getComputedStyle(box.current!).borderRadius) || 12;
-        setHole({ left: r.left, top: r.top, width: r.width, height: r.height, borderRadius: radius, transition: "none" });
+        const W = window.innerWidth;
+        const H = window.innerHeight;
+        const holeAt = (l: number, t: number, rr: number, bb: number) =>
+          `polygon(evenodd, 0 0, ${W}px 0, ${W}px ${H}px, 0 ${H}px, 0 0, ${l}px ${t}px, ${rr}px ${t}px, ${rr}px ${bb}px, ${l}px ${bb}px, ${l}px ${t}px)`;
+        const ease = "cubic-bezier(0.8, 0, 0.15, 1)";
+        setBg({ clipPath: holeAt(r.left, r.top, r.right, r.bottom), transition: "none" });
+        setFrame({ left: r.left, top: r.top, width: r.width, height: r.height, opacity: 1, transition: "none" });
         // next frames: open the window to the whole screen
         requestAnimationFrame(() =>
-          requestAnimationFrame(() =>
-            setHole({
-              left: 0,
-              top: 0,
-              width: window.innerWidth,
-              height: window.innerHeight,
-              borderRadius: 0,
-              transition: "left 0.85s cubic-bezier(0.85, 0, 0.15, 1) 0.12s, top 0.85s cubic-bezier(0.85, 0, 0.15, 1) 0.12s, width 0.85s cubic-bezier(0.85, 0, 0.15, 1) 0.12s, height 0.85s cubic-bezier(0.85, 0, 0.15, 1) 0.12s, border-radius 0.85s ease 0.12s",
-            }),
-          ),
+          requestAnimationFrame(() => {
+            setBg({ clipPath: holeAt(-6, -6, W + 6, H + 6), transition: `clip-path 0.9s ${ease} 0.15s` });
+            setFrame({
+              left: -6,
+              top: -6,
+              width: W + 12,
+              height: H + 12,
+              opacity: 0,
+              transition: `left 0.9s ${ease} 0.15s, top 0.9s ${ease} 0.15s, width 0.9s ${ease} 0.15s, height 0.9s ${ease} 0.15s, opacity 0.35s ease 0.75s`,
+            });
+          }),
         );
       }
       setPhase("out");
       html.style.overflow = "";
-      html.dataset.loaded = "1";
-      window.dispatchEvent(new Event("preloader-done"));
+      // let the opening start before the page entrance animations kick in
+      window.setTimeout(() => {
+        html.dataset.loaded = "1";
+        window.dispatchEvent(new Event("preloader-done"));
+      }, 350);
     }, TOTAL);
     const t2 = window.setTimeout(() => setPhase("gone"), TOTAL + EXIT + 100);
     return () => {
@@ -216,7 +226,8 @@ export default function Preloader() {
       role="status"
       aria-label="טוען את האתר"
     >
-      <span className="pl-hole" style={hole} aria-hidden />
+      <span className="pl-bg" style={bg} aria-hidden />
+      <span className="pl-frame" style={frame} aria-hidden />
 
       <div className="pl-dots" aria-hidden />
       <div className="pl-glow" aria-hidden />

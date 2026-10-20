@@ -436,21 +436,17 @@ html.lenis, html.lenis body { height: auto; }
 
 /* ═══════════════════════ Preloader ═══════════════════════ */
 .preloader { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; overflow: hidden; }
-/* The backdrop: a transparent window with a huge dark shadow around it */
-.pl-hole {
+/* Backdrop with an opening (clip-path) and the lime frame that rides its edge */
+.pl-bg { position: absolute; inset: 0; background: #151519; will-change: clip-path; }
+.pl-frame {
   position: absolute;
-  box-shadow: 0 0 0 2px rgba(212, 255, 90, 0), 0 0 0 300vmax #151519;
+  border: 2px solid #d4ff5a;
+  border-radius: 10px;
+  box-shadow: 0 0 22px rgba(212, 255, 90, 0.55), inset 0 0 18px rgba(212, 255, 90, 0.25);
   pointer-events: none;
+  z-index: 3;
 }
 .preloader.is-out { pointer-events: none; }
-.preloader.is-out .pl-hole {
-  box-shadow: 0 0 0 2px #d4ff5a, 0 0 28px 4px rgba(212, 255, 90, 0.55), 0 0 0 300vmax #151519;
-  animation: pl-hole-rim 0.95s ease forwards;
-}
-@keyframes pl-hole-rim {
-  0%, 70% { filter: none; }
-  100% { box-shadow: 0 0 0 2px rgba(212, 255, 90, 0), 0 0 0 0 rgba(212, 255, 90, 0), 0 0 0 300vmax #151519; }
-}
 
 /* LED dot field + soft violet glow */
 .pl-dots {
@@ -476,7 +472,8 @@ html.lenis, html.lenis body { height: auto; }
 /* On exit the box empties (its white fill and letters fade) so the site shows through it */
 .preloader.is-out .pl-fill,
 .preloader.is-out .pl-word,
-.preloader.is-out .pl-scan { opacity: 0; transition: opacity 0.14s ease; }
+.preloader.is-out .pl-scan { animation: none !important; opacity: 0 !important; transition: opacity 0.14s ease; }
+.preloader.is-out .pl-word > span { animation: none !important; opacity: 0; }
 .preloader.is-out .pl-led,
 .preloader.is-out .pl-tag,
 .preloader.is-out .pl-meter { opacity: 0; transform: translateY(-8px); transition: opacity 0.25s ease, transform 0.25s ease; }

@@ -3,20 +3,20 @@ import { useEffect } from "react";
 const SELECTOR = "[data-reveal], .grow-x";
 
 /**
- * Adds `is-in` to every [data-reveal] element (and .grow-x bars) once it scrolls into view.
+ * Marks with a `data-in` attribute (survives React className updates) every [data-reveal] element (and .grow-x bars) once it scrolls into view.
  * Watches the DOM too, so elements mounted later (layout switches) are picked up.
  */
 export function useReveal() {
   useEffect(() => {
     if (!("IntersectionObserver" in window)) {
-      document.querySelectorAll(SELECTOR).forEach((el) => el.classList.add("is-in"));
+      document.querySelectorAll(SELECTOR).forEach((el) => el.setAttribute("data-in", ""));
       return;
     }
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            e.target.classList.add("is-in");
+            e.target.setAttribute("data-in", "");
             io.unobserve(e.target);
           }
         });
@@ -25,7 +25,7 @@ export function useReveal() {
     );
     const watch = (root: ParentNode) =>
       root.querySelectorAll<HTMLElement>(SELECTOR).forEach((el) => {
-        if (!el.classList.contains("is-in")) io.observe(el);
+        if (!el.hasAttribute("data-in")) io.observe(el);
       });
     // Wait for the loading screen so the hero entrance plays when it is actually visible.
     let started = false;

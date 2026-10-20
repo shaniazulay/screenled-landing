@@ -125,7 +125,7 @@
 [data-reveal="left"] { translate: -32px 0; }
 [data-reveal="right"] { translate: 32px 0; }
 [data-reveal="scale"] { translate: none; scale: 0.94; }
-[data-reveal].is-in {
+[data-reveal][data-in] {
   opacity: 1;
   translate: none;
   scale: none;
@@ -249,7 +249,7 @@
 
 /* Progress bar fill grows when revealed */
 .grow-x { scale: 0 1; transform-origin: right; transition: scale 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.4s; }
-.is-in .grow-x, .grow-x.is-in { scale: 1 1; }
+[data-in] .grow-x, .grow-x[data-in] { scale: 1 1; }
 
 @media not all /* motion is part of the brand: these reduced-motion fallbacks are switched off */ {
   [data-reveal] { opacity: 1; translate: none; scale: none; transition: none; }

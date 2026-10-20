@@ -404,9 +404,13 @@ export function MProjects() {
       <div className="relative h-[270px] w-full overflow-hidden">
         <img loading="lazy" src={m("rim.svg")} alt="" className="absolute inset-0 size-full" />
         <div className="absolute inset-x-0 top-[10px] h-[250px]" style={wallMask}>
-          {M_PANELS.map((p) => (
-            <img key={p.img} loading="lazy" src={asset(p.img)} alt="" className="absolute top-0 h-full object-cover" style={{ left: `${p.left}%`, width: "33.74%" }} />
-          ))}
+          <div className="wall-strip absolute inset-y-0 left-0 flex" style={{ width: `${35.58 * 10}%`, ["--dur" as string]: "24s" }}>
+            {[...M_PANELS, ...M_PANELS].map((p, i) => (
+              <span key={i} className="h-full shrink-0" style={{ width: "10%", paddingInline: "0.5%" }}>
+                <img loading="lazy" src={asset(p.img)} alt="" className="size-full object-cover" />
+              </span>
+            ))}
+          </div>
           <span className="absolute inset-0" style={{ backgroundImage: "linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(0,0,0,0.55) 100%)" }} />
         </div>
         <span className="absolute left-1/2 top-[196px] -translate-x-1/2 whitespace-nowrap rounded-full border border-white/[0.18] bg-[rgba(21,21,25,0.6)] px-[10px] py-[4px] font-rubik text-[11px] font-medium leading-[13px] text-white backdrop-blur-[6px]">

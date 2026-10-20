@@ -13,13 +13,13 @@ export default function ProblemSolution() {
       <div className="relative grid gap-[32px] xl:grid-cols-[minmax(0,560fr)_minmax(0,580fr)] xl:gap-[74px]">
         <div className="flex flex-col items-start gap-[18px] xl:gap-[22px]">
           <span className="rounded-full bg-night px-[14px] py-[5px] font-rubik text-[14px] font-semibold leading-[17px] text-white">הבעיה</span>
-          <h2 className="font-rubik text-[30px] font-semibold leading-[40px] text-navy xl:text-[38px] xl:leading-[48px]">תצוגה בינונית היא כסף שהולך לאיבוד</h2>
+          <h2 className="font-rubik text-[30px] font-semibold leading-[40px] text-navy xl:text-[46px] xl:leading-[56px]">תצוגה בינונית היא כסף שהולך לאיבוד</h2>
           <p className="font-heebo text-[17px] leading-[29px] text-slate-body xl:text-[18px] xl:leading-[31px]">
             הלקוחות שלכם מוצפים במסרים מכל כיוון. שלט רגיל או מסך עמום פשוט לא נקלטים. אפשר להשקיע הרבה בתוכן ובשיווק, אבל אם התצוגה עצמה לא מרשימה, המסר לא מגיע ליעדו והלקוח ממשיך הלאה.
           </p>
           <span className="h-px w-full bg-[rgba(27,33,64,0.1)]" />
           <span className="rounded-full bg-lime px-[14px] py-[5px] font-rubik text-[14px] font-semibold leading-[17px] text-ink">הפתרון</span>
-          <h2 className="font-rubik text-[30px] font-semibold leading-[40px] text-navy xl:text-[38px] xl:leading-[48px]">
+          <h2 className="font-rubik text-[30px] font-semibold leading-[40px] text-navy xl:text-[46px] xl:leading-[56px]">
             תצוגה שמושכת את הקהל <span className="text-indigo">פנימה</span>
           </h2>
           <p className="font-heebo text-[17px] leading-[29px] text-slate-body xl:text-[18px] xl:leading-[31px]">

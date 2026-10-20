@@ -30,7 +30,7 @@ function ProductCard({ p, i }: { p: (typeof PRODUCTS)[number]; i: number }) {
         </span>
       )}
       <div className="flex flex-1 flex-col items-start gap-[8px] p-[22px]">
-        <h3 className="font-heebo text-[20px] font-bold leading-[28px] text-navy">{p.name}</h3>
+        <h3 className="font-heebo text-[20px] font-bold leading-[28px] text-navy xl:text-[22px] xl:leading-[30px]">{p.name}</h3>
         <p className="font-heebo text-[14px] leading-[21px] text-slate-body">{p.spec}</p>
         <div className="flex-1" />
         <div className="flex items-baseline gap-[8px]">
@@ -66,7 +66,7 @@ export default function Products() {
       <div className="relative flex flex-col gap-[24px] xl:h-[200px] xl:flex-row xl:items-start xl:justify-between xl:gap-0">
         <div className="flex flex-col items-start gap-[14px] xl:-mr-[2px]">
           <SectionTag label="מוצרים מובילים" num="02" />
-          <h2 className="sd-text font-rubik text-[34px] font-semibold leading-[42px] text-navy xl:text-[46px] xl:leading-[58px]">
+          <h2 className="sd-text font-rubik text-[34px] font-semibold leading-[42px] text-navy xl:text-[56px] xl:leading-[66px]">
             הנבחרים <span className="text-indigo">מהקטלוג שלנו</span>
           </h2>
           <div className="flex flex-wrap gap-[8px] xl:mr-[7px] xl:mt-[29px]">

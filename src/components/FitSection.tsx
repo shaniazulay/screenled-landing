@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
+const MIN_SCALE = 0.85;
 const RESERVE = 48; // page padding above + below a section
 const MIN_VIEWPORT = 1280; // fit only where the full desktop layout is used
 
@@ -37,7 +38,8 @@ export default function FitSection({ children }: { children: ReactNode }) {
       const w = o.clientWidth;
       i.style.width = `${w / s}px`;
       const h = i.offsetHeight; // layout height, unaffected by the transform
-      const next = Math.min(1, (window.innerHeight - RESERVE) / h);
+      // never shrink text below 85% of the design size; a little scrolling is better than tiny headings
+      const next = Math.max(MIN_SCALE, Math.min(1, (window.innerHeight - RESERVE) / h));
       if (Math.abs(next - s) > 0.002 && passes < 8) {
         passes++;
         s = next;

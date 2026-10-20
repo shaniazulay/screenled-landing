@@ -80,38 +80,6 @@ export function useMotion() {
     cleanups.push(() => io.disconnect());
 
     if (finePointer()) {
-      /* ── Cursor ring ── */
-      const ring = document.createElement("div");
-      ring.className = "cursor-ring";
-      document.body.appendChild(ring);
-      let mx = -100,
-        my = -100,
-        cx = -100,
-        cy = -100;
-      const onMove = (e: PointerEvent) => {
-        mx = e.clientX;
-        my = e.clientY;
-        const t = e.target as HTMLElement;
-        ring.classList.toggle("is-link", !!t.closest("a, button, [role=button], .tilt"));
-        ring.classList.toggle("is-dark", !!t.closest(".bg-night, .bg-lime"));
-      };
-      const follow = () => {
-        cx += (mx - cx) * 0.2;
-        cy += (my - cy) * 0.2;
-        ring.style.transform = `translate(${cx}px, ${cy}px)`;
-        ringRaf = requestAnimationFrame(follow);
-      };
-      let ringRaf = requestAnimationFrame(follow);
-      const hide = () => (mx = my = -100);
-      window.addEventListener("pointermove", onMove);
-      document.addEventListener("pointerleave", hide);
-      cleanups.push(() => {
-        cancelAnimationFrame(ringRaf);
-        window.removeEventListener("pointermove", onMove);
-        document.removeEventListener("pointerleave", hide);
-        ring.remove();
-      });
-
       /* ── Magnetic buttons, tilt cards, spotlight ── */
       let magnet: HTMLElement | null = null;
       let tilt: HTMLElement | null = null;

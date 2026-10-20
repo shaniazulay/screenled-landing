@@ -168,19 +168,6 @@ function HeroDesktop() {
   const liveBottom = 16 + band + 28 * k + 40 * k;
   const kCat = Math.max(1, Math.min(k, (catalogBottom - liveBottom - 16) / 337));
 
-  // Mouse parallax: --px / --py in −1…1 drive the photo, copy and side column in opposite directions.
-  const canvas = useRef<HTMLDivElement>(null);
-  const onMove = (e: React.PointerEvent) => {
-    const el = canvas.current;
-    if (!el || e.pointerType !== "mouse") return;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty("--px", (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(3));
-    el.style.setProperty("--py", (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
-  };
-  const onLeave = () => {
-    canvas.current?.style.setProperty("--px", "0");
-    canvas.current?.style.setProperty("--py", "0");
-  };
   // Slider dots cycle like a live playlist.
   const [dot, setDot] = useState(1);
   useEffect(() => {
@@ -189,9 +176,8 @@ function HeroDesktop() {
   }, []);
 
   return (
-    <div ref={ref} className="relative hidden overflow-hidden lg:block" style={{ height: 940 * scale }} onPointerMove={onMove} onPointerLeave={onLeave}>
+    <div ref={ref} className="relative hidden overflow-hidden lg:block" style={{ height: 940 * scale }}>
       <div
-        ref={canvas}
         className="absolute right-0 top-0 h-[940px] origin-top-right overflow-hidden rounded-[36px] bg-night"
         style={{ width: canvasW, transform: `scale(${scale})` }}
       >
@@ -209,7 +195,7 @@ function HeroDesktop() {
               {...{ fetchpriority: "high" }}
               src={asset("hero-photo.png")}
               alt="מסך LED ענק על חזית בניין בלילה"
-              className="ken-burns-hero sd-hero-photo par-photo size-full object-cover opacity-[0.92]"
+              className="ken-burns-hero sd-hero-photo size-full object-cover opacity-[0.92]"
             />
           </div>
           <span
@@ -257,7 +243,7 @@ function HeroDesktop() {
         </div>
 
         {/* Copy */}
-        <div className="sd-hero-copy par-copy absolute right-[110px] flex w-[542px] flex-col items-start gap-[26px]" style={{ top: 16 + band + 46 }}>
+        <div className="sd-hero-copy absolute right-[110px] flex w-[542px] flex-col items-start gap-[26px]" style={{ top: 16 + band + 46 }}>
           <span data-reveal className="spin-border rounded-full border-[1.2px] border-white/90 px-[16px] py-[6px] font-rubik text-[15px] leading-[18px] text-white" style={ui("right top")}>
             קירות וידאו ומסכי LED
           </span>
@@ -280,7 +266,7 @@ function HeroDesktop() {
           <LivePulse />
         </GlassChip>
 
-        <div className="par-side absolute flex w-[300px] flex-col items-end gap-[12px]" style={{ left: 24 + 24 * k, bottom: 940 - catalogBottom, transform: `scale(${kCat})`, transformOrigin: "left bottom" }}>
+        <div className="absolute flex w-[300px] flex-col items-end gap-[12px]" style={{ left: 24 + 24 * k, bottom: 940 - catalogBottom, transform: `scale(${kCat})`, transformOrigin: "left bottom" }}>
           <span className="flex items-center gap-[8px] rounded-full bg-[rgba(21,21,25,0.55)] px-[14px] py-[6px] backdrop-blur-[6px]">
             <span className="font-heebo text-[14px] font-medium leading-[21px] text-white">ניווט מהיר לקטלוג</span>
             <img loading="lazy" src={asset("dot-lime.svg")} alt="" className="size-[7px]" />

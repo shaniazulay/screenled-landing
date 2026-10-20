@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1344" height="900" viewBox="0 0 1344 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path id="Hero Panel (mask)" d="M0 28C0 12.5356 12.5356 0 28 0H254C269.464 0 282 12.5356 282 28V56C282 71.4644 294.536 84 310 84H1316C1331.46 84 1344 96.5356 1344 112V784C1344 799.464 1331.46 812 1316 812H1020C1004.54 812 992 824.536 992 840V872C992 887.464 979.464 900 964 900H194C178.536 900 166 887.464 166 872V872C166 856.536 153.464 844 138 844H28C12.5356 844 0 831.464 0 816V28Z" fill="url(#paint0_linear_0_6)"/>
+<defs>
+<linearGradient id="paint0_linear_0_6" x1="0" y1="0" x2="451.201" y2="898.392" gradientUnits="userSpaceOnUse">
+<stop stop-color="#4B4FD8"/>
+<stop offset="1" stop-color="#5B4FE0"/>
+</linearGradient>
+</defs>
+</svg>

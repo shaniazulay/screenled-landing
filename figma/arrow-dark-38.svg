@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Circle Arrow" clip-path="url(#clip0_0_4)">
+<path id="Vector" d="M37.05 19C37.05 28.9687 28.9687 37.05 19 37.05C9.03126 37.05 0.95 28.9687 0.95 19C0.95 9.03126 9.03126 0.95 19 0.95C28.9687 0.95 37.05 9.03126 37.05 19Z" stroke-width="1.6" stroke="#111114"/>
+<path id="Vector_2" d="M23.275 23.275L14.725 14.725M21.85 14.725H14.725V21.85" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke="#111114"/>
+</g>
+<defs>
+<clipPath id="clip0_0_4">
+<rect width="38" height="38" fill="white"/>
+</clipPath>
+</defs>
+</svg>
